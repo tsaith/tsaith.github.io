@@ -1,595 +1,202 @@
 <!DOCTYPE html>
-<html lang="en"
->
-<head>
-    <title>Web - TH's Notes</title>
-    <!-- Using the latest rendering mode for IE -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
 
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
 
-
-
-<style type="text/css">
-
-/*some stuff for output/input prompts*/
-div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.cell.selected{border-radius:4px;border:thin #ababab solid}
-div.cell.edit_mode{border-radius:4px;border:thin #008000 solid}
-div.cell{width:100%;padding:5px 5px 5px 0;margin:0;outline:none}
-div.prompt{min-width:11ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}
-@media (max-width:480px){div.prompt{text-align:left}}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}
-div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;line-height:1.21429em}
-div.prompt:empty{padding-top:0;padding-bottom:0}
-div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;}
-div.inner_cell{width:90%;}
-div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;}
-div.input_prompt{color:navy;border-top:1px solid transparent;}
-div.output_wrapper{margin-top:5px;position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
-div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:4px;-webkit-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);-moz-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);}
-div.output_collapsed{margin:0px;padding:0px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
-div.out_prompt_overlay{height:100%;padding:0px 0.4em;position:absolute;border-radius:4px;}
-div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000000;-moz-box-shadow:inset 0 0 1px #000000;box-shadow:inset 0 0 1px #000000;background:rgba(240, 240, 240, 0.5);}
-div.output_prompt{color:darkred;}
-
-a.anchor-link:link{text-decoration:none;padding:0px 20px;visibility:hidden;}
-h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible;}
-/* end stuff for output/input prompts*/
-
-
-.highlight-ipynb .hll { background-color: #ffffcc }
-.highlight-ipynb  { background: #f8f8f8; }
-.highlight-ipynb .c { color: #408080; font-style: italic } /* Comment */
-.highlight-ipynb .err { border: 1px solid #FF0000 } /* Error */
-.highlight-ipynb .k { color: #008000; font-weight: bold } /* Keyword */
-.highlight-ipynb .o { color: #666666 } /* Operator */
-.highlight-ipynb .cm { color: #408080; font-style: italic } /* Comment.Multiline */
-.highlight-ipynb .cp { color: #BC7A00 } /* Comment.Preproc */
-.highlight-ipynb .c1 { color: #408080; font-style: italic } /* Comment.Single */
-.highlight-ipynb .cs { color: #408080; font-style: italic } /* Comment.Special */
-.highlight-ipynb .gd { color: #A00000 } /* Generic.Deleted */
-.highlight-ipynb .ge { font-style: italic } /* Generic.Emph */
-.highlight-ipynb .gr { color: #FF0000 } /* Generic.Error */
-.highlight-ipynb .gh { color: #000080; font-weight: bold } /* Generic.Heading */
-.highlight-ipynb .gi { color: #00A000 } /* Generic.Inserted */
-.highlight-ipynb .go { color: #888888 } /* Generic.Output */
-.highlight-ipynb .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
-.highlight-ipynb .gs { font-weight: bold } /* Generic.Strong */
-.highlight-ipynb .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-.highlight-ipynb .gt { color: #0044DD } /* Generic.Traceback */
-.highlight-ipynb .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
-.highlight-ipynb .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
-.highlight-ipynb .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
-.highlight-ipynb .kp { color: #008000 } /* Keyword.Pseudo */
-.highlight-ipynb .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
-.highlight-ipynb .kt { color: #B00040 } /* Keyword.Type */
-.highlight-ipynb .m { color: #666666 } /* Literal.Number */
-.highlight-ipynb .s { color: #BA2121 } /* Literal.String */
-.highlight-ipynb .na { color: #7D9029 } /* Name.Attribute */
-.highlight-ipynb .nb { color: #008000 } /* Name.Builtin */
-.highlight-ipynb .nc { color: #0000FF; font-weight: bold } /* Name.Class */
-.highlight-ipynb .no { color: #880000 } /* Name.Constant */
-.highlight-ipynb .nd { color: #AA22FF } /* Name.Decorator */
-.highlight-ipynb .ni { color: #999999; font-weight: bold } /* Name.Entity */
-.highlight-ipynb .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
-.highlight-ipynb .nf { color: #0000FF } /* Name.Function */
-.highlight-ipynb .nl { color: #A0A000 } /* Name.Label */
-.highlight-ipynb .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
-.highlight-ipynb .nt { color: #008000; font-weight: bold } /* Name.Tag */
-.highlight-ipynb .nv { color: #19177C } /* Name.Variable */
-.highlight-ipynb .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
-.highlight-ipynb .w { color: #bbbbbb } /* Text.Whitespace */
-.highlight-ipynb .mf { color: #666666 } /* Literal.Number.Float */
-.highlight-ipynb .mh { color: #666666 } /* Literal.Number.Hex */
-.highlight-ipynb .mi { color: #666666 } /* Literal.Number.Integer */
-.highlight-ipynb .mo { color: #666666 } /* Literal.Number.Oct */
-.highlight-ipynb .sb { color: #BA2121 } /* Literal.String.Backtick */
-.highlight-ipynb .sc { color: #BA2121 } /* Literal.String.Char */
-.highlight-ipynb .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
-.highlight-ipynb .s2 { color: #BA2121 } /* Literal.String.Double */
-.highlight-ipynb .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
-.highlight-ipynb .sh { color: #BA2121 } /* Literal.String.Heredoc */
-.highlight-ipynb .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
-.highlight-ipynb .sx { color: #008000 } /* Literal.String.Other */
-.highlight-ipynb .sr { color: #BB6688 } /* Literal.String.Regex */
-.highlight-ipynb .s1 { color: #BA2121 } /* Literal.String.Single */
-.highlight-ipynb .ss { color: #19177C } /* Literal.String.Symbol */
-.highlight-ipynb .bp { color: #008000 } /* Name.Builtin.Pseudo */
-.highlight-ipynb .vc { color: #19177C } /* Name.Variable.Class */
-.highlight-ipynb .vg { color: #19177C } /* Name.Variable.Global */
-.highlight-ipynb .vi { color: #19177C } /* Name.Variable.Instance */
-.highlight-ipynb .il { color: #666666 } /* Literal.Number.Integer.Long */
-</style>
-
-<style type="text/css">
-/* Overrides of notebook CSS for static HTML export */
-div.entry-content {
-  overflow: visible;
-  padding: 8px;
-}
-.input_area {
-  padding: 0.2em;
-}
-
-a.heading-anchor {
- white-space: normal;
-}
-
-.rendered_html
-code {
- font-size: .8em;
-}
-
-pre.ipynb {
-  color: black;
-  background: #f7f7f7;
-  border: none;
-  box-shadow: none;
-  margin-bottom: 0;
-  padding: 0;
-  margin: 0px;
-  font-size: 13px;
-}
-
-/* remove the prompt div from text cells */
-div.text_cell .prompt {
-    display: none;
-}
-
-/* remove horizontal padding from text cells, */
-/* so it aligns with outer body text */
-div.text_cell_render {
-    padding: 0.5em 0em;
-}
-
-img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
-</style>
-
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
-<script type="text/javascript">
-init_mathjax = function() {
-    if (window.MathJax) {
-        // MathJax loaded
-        MathJax.Hub.Config({
-            tex2jax: {
-                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
-            },
-            displayAlign: 'left', // Change this to 'center' to center equations.
-            "HTML-CSS": {
-                styles: {'.MathJax_Display': {"margin": 0}}
-            }
-        });
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-    }
-}
-init_mathjax();
+<meta property="og:title" content="TH&#39;s Notes"/>
+<meta name="twitter:title" content="TH&#39;s Notes">
+<meta property="og:url" content="http://tsaith.github.io" />
+<meta property="og:site_name" content="TH&#39;s Notes" />
+<meta property="og:article:author" content="Andrew Tsai" />
+        <title>TH&#39;s Notes
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/custom.css" media="screen">
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH&#39;s Notes - Full Atom Feed" />
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-59791323-1', 'auto');
+    ga('send', 'pageview');
 </script>
-
-
-    <meta name="author" content="Andrew Tsai" />
-    <meta name="keywords" content="Web" />
-
-    <!-- Open Graph tags -->
-        <meta property="og:site_name" content="TH's Notes" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="TH's Notes"/>
-        <meta property="og:url" content="http://tsaith.github.io"/>
-        <meta property="og:description" content="TH's Notes"/>
-
-
-    <!-- Bootstrap -->
-        <link rel="stylesheet" href="http://tsaith.github.io/theme/css/bootstrap.min.css" type="text/css"/>
-    <link href="http://tsaith.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
-
-    <link href="http://tsaith.github.io/theme/css/pygments/native.css" rel="stylesheet">
-    <link href="http://tsaith.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://tsaith.github.io/theme/css/style.css" type="text/css"/>
-
-        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="TH's Notes ATOM Feed"/>
-
-</head>
-<body>
-
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="http://tsaith.github.io/" class="navbar-brand">
-TH's Notes            </a>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                        <li >
-                            <a href="http://tsaith.github.io/category/machine-learning.html">Machine learning</a>
-                        </li>
-                        <li >
-                            <a href="http://tsaith.github.io/category/misc.html">Misc</a>
-                        </li>
-                        <li >
-                            <a href="http://tsaith.github.io/category/review.html">Review</a>
-                        </li>
-                        <li class="active">
-                            <a href="http://tsaith.github.io/category/web.html">Web</a>
-                        </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><span>
-                <form class="navbar-search" action="/search">
-                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
-                </form></span>
-              </li>
-              <li><a href="http://tsaith.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<div class="row-fluid">
+
+    <div class="row-fluid">
+
     </div>
-</div> <!-- /.navbar -->
-<!-- Banner -->
-<!-- End Banner -->
-<div class="container">
-    <div class="row">
-        <div class="col-sm-9">
 
+    <div class="row-fluid">
+        <div class="span8 offset2">
+            <header>
+            <h1 id="recent-posts">Recent Posts <a id="allposts" href="http://tsaith.github.io/archives.html">all posts</a></h1>
+            </header>
+        <div class="recent-posts">
             <article>
-                <h2><a href="http://tsaith.github.io/shi-zuo-jian-yi-de-sou-xun-gong-neng.html">實作簡易的搜尋功能</a></h2>
-                <div class="summary"><p>在電子商務中，商品的搜尋是很重要的一環，
-這裡將介紹如何實作簡易的搜尋功能。</p>
-<p>倘若我們現在希望開發一個搜尋影片的功能;
-假設影片的類別名稱是 Video，
-首先在 config/routes.rb 裡面加入 search 的路徑</p>
-<div class="highlight"><pre>  <span class="n">resources</span> <span class="ss">:videos</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:show</span><span class="o">]</span> <span class="k">do</span>
-    <span class="n">collection</span> <span class="k">do</span>
-      <span class="n">get</span> <span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;videos#search&#39;</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-</pre></div>
-
-
-<p>接著在 app/controllers/videos_controller.rb 裡面加入
-search action</p>
-<div class="highlight"><pre>  <span class="k">def</span> <span class="nf">search</span>
-    <span class="vi">@videos</span> <span class="o">=</span> <span class="no">Video</span><span class="o">.</span><span class="n">search_by_title</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="s1">&#39;search_term&#39;</span><span class="o">]</span><span class="p">)</span>
-  <span class="k">end</span>
-</pre></div>
-
-
-<p>然後在 app/models/video.rb 裡面新增 search_by_title ...</p>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/shi-zuo-jian-yi-de-sou-xun-gong-neng.html">more ...</a>
+                <a href="http://tsaith.github.io/create-an-iam-user-for-elasticbeanstalk.html">Create an IAM user for ElasticBeanstalk  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-05-11T00:00:00+08:00">一 11 5月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/an-quan-di-she-ding-rails-you-jian-mi-ma.html">安全地設定 Rails 郵件密碼</a></h2>
-                <div class="summary"><p>將密碼寫進程式通常不是個好主意，因為當我們使用版本控制系統(例如 git)
-儲存程式時，密碼也將會被一併存入，如果是開源的專案，
-那麼任意人都可以取得這資訊;為避免此問題，
-我們可以使用環境變數讓 Rails 較安全地存取密碼資訊。</p>
-<h3>設定郵件密碼</h3>
-<p>這裡以 config/environments/ 下的 production.rb 為例子，
-在 password 這裡，我們可以使用 ENV 來讀取系統的環境變數。</p>
-<div class="highlight"><pre>  <span class="c1"># Delivery method of mailer</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">delivery_method</span> <span class="o">=</span> <span class="ss">:smtp</span>
-
-  <span class="c1"># Settings of the mailer</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="ss">address</span><span class="p">:</span> <span class="s2">&quot;smtp.gmail.com&quot;</span><span class="p">,</span>
-    <span class="ss">port</span><span class="p">:</span> <span class="mi">587</span><span class="p">,</span>
-    <span class="ss">domain</span><span class="p">:</span> <span class="s2">&quot;gmail.com ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/an-quan-di-she-ding-rails-you-jian-mi-ma.html">more ...</a>
+                <a href="http://tsaith.github.io/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html">Set up a postgres-backed rails app with ElasticBeanstalk  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-05-11T00:00:00+08:00">一 11 5月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/zai-rails-zhong-shi-yong-postgressql.html">在 Rails 中使用 PostgresSQL</a></h2>
-                <div class="summary"><p><a href="http://www.postgresql.org/">PostgreSQL</a> 是目前相當受歡迎的一套開源資料庫，
-下面將說明如何在 Rails 中使用它。</p>
-<h3>安裝套件</h3>
-<p>如若開發環境是 Mac 的話，請執行下列步驟</p>
-<ul>
-<li>下載 <a href="http://postgresapp.com/">Postgres.app</a> ，放到 /Applications/ 資料夾下</li>
-<li>在 ~/.profile 加入</li>
-</ul>
-<div class="highlight"><pre><span class="x">export PATH=</span><span class="p">$</span><span class="nv">PATH</span><span class="x">:/Applications/Postgres.app/Contents/Versions/9.3/bin</span>
-<span class="x">export PGHOST=localhost</span>
-</pre></div>
-
-
-<p>(假設版本號是 9.3)</p>
-<h3>設定 Rails 資料庫</h3>
-<ul>
-<li>編輯 config/database.yml 內容如下</li>
-</ul>
-<div class="highlight"><pre><span class="n">development</span><span class="o">:</span>
-  <span class="n">adapter</span><span class="o">:</span> <span class="n">postgresql</span>
-  <span class="n">encoding</span><span class="o">:</span> <span class="n">unicode</span>
-  <span class="n">database ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/zai-rails-zhong-shi-yong-postgressql.html">more ...</a>
+                <a href="http://tsaith.github.io/wait-for-ajax-with-capybara-automatically.html">Wait for Ajax with Capybara Automatically  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-05-06T00:00:00+08:00">三 06 5月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/zai-rails-shi-yong-gmail-fa-song-you-jian.html">在 Rails 使用 gmail 發送郵件</a></h2>
-                <div class="summary"><p>建構網站時，發送信件往往是重要的一項功能，
-例如，當使用者註冊或變更個人設定時，
-這時候網站可以發送確認信函以提高安全性;
-這裡將介紹如何在 Rails 中使用 gmail 發送郵件。</p>
-<h3>設定郵件環境</h3>
-<p>編輯 config/environments/ 下的 development.rb 和 production.rb 兩個檔案，
-設定 <code>delivery_method</code> 和 <code>smtp_settings</code> 如下</p>
-<div class="highlight"><pre>  <span class="c1"># Don&#39;t care if the mailer can&#39;t send.</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">raise_delivery_errors</span> <span class="o">=</span> <span class="kp">false</span>
-
-  <span class="c1"># Delivery method of mailer</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">delivery_method</span> <span class="o">=</span> <span class="ss">:smtp</span>
-
-  <span class="c1"># Settings of the ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/zai-rails-shi-yong-gmail-fa-song-you-jian.html">more ...</a>
+                <a href="http://tsaith.github.io/install-rbenv-and-rails-on-ubuntu.html">Install rbenv and rails on ubuntu  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/zai-rails-zhong-shi-yong-module.html">在 Rails 中使用 module</a></h2>
-                <div class="summary"><p>在開發 Rails 時，我們常常遇到一種情況，
-不同的物件模型需要用到相同的功能，
-這時候可以考慮將這功能包裝成一個模組，
-以方便調用。</p>
-<h3>設定搜尋路徑</h3>
-<p>首先，在 config/application.rb 裡面加入 <code>config.autoload_paths += %W(#{config.root}/lib)</code> 設定 lib 為 modules 的存放路徑。</p>
-<div class="highlight"><pre><span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s1">&#39;../boot&#39;</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
-
-<span class="nb">require</span> <span class="s1">&#39;rails/all&#39;</span>
-
-<span class="c1"># Require the gems listed in Gemfile, including any gems</span>
-<span class="c1"># you&#39;ve limited to :test, :development, or :production ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/zai-rails-zhong-shi-yong-module.html">more ...</a>
+                <a href="http://tsaith.github.io/install-sidekiq-and-redis-on-ubuntu.html">Install Sidekiq and Redis on Ubuntu  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/zhi-zuo-he-fa-bu-gem.html">製作和發佈 gem</a></h2>
-                <div class="summary"><p>當我們在某個專案中完成了某個功能並且模組化後，
-倘若其他專案也需要同樣功能，
-或是希望分享給開源社群時，
-這時候就可以將它製作成 gem 方便大家使用。</p>
-<h3>製作過程</h3>
-<ul>
-<li>新增一個 gem 的資料夾，假設名稱為 voteable-gem</li>
-<li>進入資料夾中，新增 lib 資料夾，並將寫好的程式檔案放進 lib/</li>
-</ul>
-<div class="highlight"><pre><span class="nv">$ </span>ls lib
-voteable_th.rb
-</pre></div>
-
-
-<p>在上面的範例中，voteable_th.rb 是一個用來投票的模組，內容如下</p>
-<div class="highlight"><pre><span class="k">module</span> <span class="nn">VoteableTh</span>
-  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span> <span class="no">Concern</span>
-
-  <span class="n">included</span> <span class="k">do</span>
-    <span class="n">has_many</span> <span class="ss">:votes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:voteable</span><span class="p">,</span> <span class="ss">:dependent</span> <span class="o">=&gt;</span> <span class="ss">:destroy</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">total_votes</span>
-    <span class="n">up_votes</span> <span class="o">-</span> <span class="n">down_votes</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">up_votes</span>
-    <span class="nb">self</span><span class="o">.</span><span class="n">votes ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/zhi-zuo-he-fa-bu-gem.html">more ...</a>
+                <a href="http://tsaith.github.io/setting-up-a-rails-production-server-on-ubuntu.html">Setting up a rails production server on Ubuntu  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/zai-rails-zhong-shi-yong-ajax.html">在 Rails 中使用 Ajax</a></h2>
-                <div class="summary"><p>假設有一個投票功能，每次按文章左側的上下箭頭可以表示贊成或反對，
-但我們不希望使用者每次投票時，瀏覽器都必須重新載入頁面，
-這時候可以使用 <a href="http://zh.wikipedia.org/wiki/AJAX">Ajax</a> 技術來實現。</p>
-<p><img src="https://farm8.staticflickr.com/7518/15646273670_3d1f14d6e4_b.jpg"></p>
-<p><img src="https://farm8.staticflickr.com/7564/15807472506_af32ac663c_b.jpg"></p>
-<h3>設定 routes</h3>
-<p>對應上面的範例，我們先設定 config/routes.rb，
-因為投票動作本身沒有 view， 所以將動作設定為 post</p>
-<div class="highlight"><pre><span class="n">resources</span> <span class="ss">:posts</span> <span class="k">do</span>
-  <span class="n">member</span> <span class="k">do</span>
-    <span class="n">post</span> <span class="ss">:vote</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</pre></div>
-
-
-<h3>設定 view</h3>
-<p>接著開啟 html 檔案 app/views/posts/_post.html.erb
-加入 <code>remote: true</code>，來呼叫 javascript 動作</p>
-<div class="highlight"><pre><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">div</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;post_vote_error_ ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/zai-rails-zhong-shi-yong-ajax.html">more ...</a>
+                <a href="http://tsaith.github.io/setting-up-logrotate-for-production-server.html">Setting up logrotate for production server  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/she-ding-polymorphic-association.html">設定 polymorphic association</a></h2>
-                <div class="summary"><p>假設我們有個布告版，上面可以張貼文章和留言，
-如果我們希望新增一個功能讓使用者可以對文章或留言進行投票，
-這時候可以透過 polymorphic association 來描述
-Vote 和 Post 以及 Comment 三個物件模型之間的關係。</p>
-<h3>新增 Table</h3>
-<p>首先，在資料庫中新增一個 votes table 來儲存投票資訊;
-在 votes 中，
-<code>voteable_type</code> 和 <code>voteable_id</code> 分別代表被投票物件的名稱和 id。
-新增完成後，查看 db/schema.rb 如下</p>
-<div class="highlight"><pre><span class="n">create_table</span> <span class="s2">&quot;votes&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-  <span class="n">t</span><span class="o">.</span><span class="n">boolean</span>  <span class="s2">&quot;vote&quot;</span>
-  <span class="n">t</span><span class="o">.</span><span class="n">integer</span>  <span class="s2">&quot;user_id&quot;</span>
-  <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;voteable_type&quot;</span>
-  <span class="n">t ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/she-ding-polymorphic-association.html">more ...</a>
+                <a href="http://tsaith.github.io/setting-up-nginxunicorn-production-server.html">Setting up Nginx+Unicorn production server  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/bu-shu-zhuan-an-dao-heroku.html">部署專案到 Heroku</a></h2>
-                <div class="summary"><p><a href="https://www.heroku.com">Heroku</a> 是個相當受歡迎的雲端平台，
-為開發者建構了網站運行所需要的環境，
-原則上，使用者只要將自己的應用程式部署上去便可直接運行;
-目前，它還提供了免費試用的方案，相當適合學生練習實作。
-而使用方法簡介如下</p>
-<ul>
-<li>
-<p>先到 Keroku 官網進行<a href="https://id.heroku.com/login">註冊</a></p>
-</li>
-<li>
-<p>註冊後，登入官網然後下載 Heroku toolbelt 並且安裝</p>
-</li>
-<li>
-<p>打開終端機，執行 <code>heroku login</code> 來登入使用者資訊並上傳 public ssh key</p>
-</li>
-<li>
-<p>在專案下，執行 <code>heroku create</code></p>
-</li>
-</ul>
-<div class="highlight"><pre><span class="nv">$ </span>heroku create
-Creating agile-sea-7701... <span class="k">done</span>, stack is cedar-14
-https://agile-sea-7701.herokuapp.com/ <span class="p">|</span> git@heroku.com:agile-sea-7701.git
-Git remote heroku ...</pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/bu-shu-zhuan-an-dao-heroku.html">more ...</a>
+                <a href="http://tsaith.github.io/deploy-production-with-capistrano.html">Deploy production with Capistrano  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-03-19T00:00:00+08:00">四 19 3月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
             <article>
-                <h2><a href="http://tsaith.github.io/zai-rails-shi-zuo-yan-zheng-ji-zhi.html">在 Rails 實作驗證機制</a></h2>
-                <div class="summary"><p>在網路應用中，使用者驗證是一項常見的重要功能，
-雖然使用現成的 gem
-(例如 <a href="https://github.com/plataformatec/devise">Devise</a>)，
-可以快速實現出功能原型，但是卻會因為對套件內部架構的不熟悉，
-而無法輕易修改或擴充新功能;
-所以，這裡將敘述如何單純地使用 Rails 的內建功能來實作驗證機制，
-希望讓讀者對其中的工作原理有透徹的認識。</p>
-<h3>安裝 <code>bcrypt-ruby</code></h3>
-<p>為了支援密碼驗證，我們先在 Gemfile 中加入</p>
-<div class="highlight"><pre>gem &#39;bcrypt-ruby&#39;, &#39;3.0.1&#39;
-</pre></div>
-
-
-<p>然後執行 bundle 進行套件安裝。</p>
-<h3>設定資料庫</h3>
-<p>假設我們的使用者資料表名稱為 users，
-先在 users 中新增一個 password_digest 的字串欄位，
-然後在 db/schema 確認如下</p>
-<div class="highlight"><pre>  <span class="n">create_table</span> <span class="s2">&quot;users&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-    <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;username&quot;</span>
-    <span class="n">t ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tsaith.github.io/zai-rails-shi-zuo-yan-zheng-ji-zhi.html">more ...</a>
+                <a href="http://tsaith.github.io/is-your-site-accessible-from-china.html">Is your site accessible from China?  </a>
+                <section>
+                    posted in
+                <a href="http://tsaith.github.io/categories.html#web-ref">Web</a>
+                <div class="recent-posts-time">
+                <time pubdate="pubdate" datetime="2015-02-28T00:00:00+08:00">六 28 2月 2015</time>
                 </div>
+                </section>
             </article>
-            <hr/>
-
-        <ul class="pagination">
-                <li class="prev"><a href="http://tsaith.github.io/category/web5.html">&laquo;</a>
-                </li>
-                    <li class=""><a
-                            href="http://tsaith.github.io/category/web.html">1</a></li>
-                    <li class=""><a
-                            href="http://tsaith.github.io/category/web2.html">2</a></li>
-                    <li class=""><a
-                            href="http://tsaith.github.io/category/web3.html">3</a></li>
-                    <li class=""><a
-                            href="http://tsaith.github.io/category/web4.html">4</a></li>
-                    <li class=""><a
-                            href="http://tsaith.github.io/category/web5.html">5</a></li>
-                    <li class="active"><a
-                            href="http://tsaith.github.io/category/web6.html">6</a></li>
-                    <li class=""><a
-                            href="http://tsaith.github.io/category/web7.html">7</a></li>
-                    <li class=""><a
-                            href="http://tsaith.github.io/category/web8.html">8</a></li>
-                <li class="next"><a
-                        href="http://tsaith.github.io/category/web7.html">&raquo;</a></li>
-        </ul>
         </div>
-        <div class="col-sm-3" id="sidebar">
-            <aside>
-
-<section class="well well-sm">
-    <ul class="list-group list-group-flush">
-            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
-              <ul class="list-group" id="social">
-                <li class="list-group-item"><a href="https://github.com/tsaith"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
-                <li class="list-group-item"><a href="https://twitter.com/tsunghuatsai"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a></li>
-                <li class="list-group-item"><a href="https://linkedin.com/in/tsunghua"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
-              </ul>
-            </li>
-
-
-
-            <li class="list-group-item"><a href="http://tsaith.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
-                <ul class="list-group " id="tags">
-                </ul>
-            </li>
-    </ul>
-</section>
-            </aside>
         </div>
     </div>
 </div>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
 <footer>
-   <div class="container">
-      <hr>
-      <div class="row">
-         <div class="col-xs-10">&copy; 2015 Andrew Tsai
-            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
-            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
-         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
-      </div>
-   </div>
-</footer>
-<script src="http://tsaith.github.io/theme/js/jquery.min.js"></script>
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://tsaith.github.io/theme/js/bootstrap.min.js"></script>
-
-<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="http://tsaith.github.io/theme/js/respond.min.js"></script>
-
-    <!-- Disqus -->
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'th-notes'; // required: replace example with your forum shortname
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.type = 'text/javascript';
-            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-        }());
-    </script>
-    <!-- End Disqus Code -->
-    <!-- Google Analytics -->
-    <script type="text/javascript">
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-59791323-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function () {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-    <!-- End Google Analytics Code -->
-
-</body>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>        <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
 </html>
