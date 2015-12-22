@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>Archives - TH's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<style type="text/css">
+
+/*some stuff for output/input prompts*/
+div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.cell.selected{border-radius:4px;border:thin #ababab solid}
+div.cell.edit_mode{border-radius:4px;border:thin #008000 solid}
+div.cell{width:100%;padding:5px 5px 5px 0;margin:0;outline:none}
+div.prompt{min-width:11ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}
+@media (max-width:480px){div.prompt{text-align:left}}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;line-height:1.21429em}
+div.prompt:empty{padding-top:0;padding-bottom:0}
+div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;}
+div.inner_cell{width:90%;}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;}
+div.input_prompt{color:navy;border-top:1px solid transparent;}
+div.output_wrapper{margin-top:5px;position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:4px;-webkit-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);-moz-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);}
+div.output_collapsed{margin:0px;padding:0px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.out_prompt_overlay{height:100%;padding:0px 0.4em;position:absolute;border-radius:4px;}
+div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000000;-moz-box-shadow:inset 0 0 1px #000000;box-shadow:inset 0 0 1px #000000;background:rgba(240, 240, 240, 0.5);}
+div.output_prompt{color:darkred;}
+
+a.anchor-link:link{text-decoration:none;padding:0px 20px;visibility:hidden;}
+h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible;}
+/* end stuff for output/input prompts*/
+
+
+.highlight-ipynb .hll { background-color: #ffffcc }
+.highlight-ipynb  { background: #f8f8f8; }
+.highlight-ipynb .c { color: #408080; font-style: italic } /* Comment */
+.highlight-ipynb .err { border: 1px solid #FF0000 } /* Error */
+.highlight-ipynb .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight-ipynb .o { color: #666666 } /* Operator */
+.highlight-ipynb .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight-ipynb .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight-ipynb .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight-ipynb .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight-ipynb .gd { color: #A00000 } /* Generic.Deleted */
+.highlight-ipynb .ge { font-style: italic } /* Generic.Emph */
+.highlight-ipynb .gr { color: #FF0000 } /* Generic.Error */
+.highlight-ipynb .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight-ipynb .gi { color: #00A000 } /* Generic.Inserted */
+.highlight-ipynb .go { color: #888888 } /* Generic.Output */
+.highlight-ipynb .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight-ipynb .gs { font-weight: bold } /* Generic.Strong */
+.highlight-ipynb .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight-ipynb .gt { color: #0044DD } /* Generic.Traceback */
+.highlight-ipynb .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight-ipynb .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight-ipynb .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight-ipynb .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight-ipynb .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight-ipynb .kt { color: #B00040 } /* Keyword.Type */
+.highlight-ipynb .m { color: #666666 } /* Literal.Number */
+.highlight-ipynb .s { color: #BA2121 } /* Literal.String */
+.highlight-ipynb .na { color: #7D9029 } /* Name.Attribute */
+.highlight-ipynb .nb { color: #008000 } /* Name.Builtin */
+.highlight-ipynb .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight-ipynb .no { color: #880000 } /* Name.Constant */
+.highlight-ipynb .nd { color: #AA22FF } /* Name.Decorator */
+.highlight-ipynb .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight-ipynb .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight-ipynb .nf { color: #0000FF } /* Name.Function */
+.highlight-ipynb .nl { color: #A0A000 } /* Name.Label */
+.highlight-ipynb .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight-ipynb .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight-ipynb .nv { color: #19177C } /* Name.Variable */
+.highlight-ipynb .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight-ipynb .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight-ipynb .mf { color: #666666 } /* Literal.Number.Float */
+.highlight-ipynb .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight-ipynb .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight-ipynb .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight-ipynb .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight-ipynb .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight-ipynb .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight-ipynb .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight-ipynb .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight-ipynb .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight-ipynb .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight-ipynb .sx { color: #008000 } /* Literal.String.Other */
+.highlight-ipynb .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight-ipynb .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight-ipynb .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight-ipynb .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight-ipynb .vc { color: #19177C } /* Name.Variable.Class */
+.highlight-ipynb .vg { color: #19177C } /* Name.Variable.Global */
+.highlight-ipynb .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight-ipynb .il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+div.entry-content {
+  overflow: visible;
+  padding: 8px;
+}
+.input_area {
+  padding: 0.2em;
+}
+
+a.heading-anchor {
+ white-space: normal;
+}
+
+.rendered_html
+code {
+ font-size: .8em;
+}
+
+pre.ipynb {
+  color: black;
+  background: #f7f7f7;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0px;
+  font-size: 13px;
+}
+
+/* remove the prompt div from text cells */
+div.text_cell .prompt {
+    display: none;
+}
+
+/* remove horizontal padding from text cells, */
+/* so it aligns with outer body text */
+div.text_cell_render {
+    padding: 0.5em 0em;
+}
+
+img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
+</style>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+}
+init_mathjax();
+</script>
+
+
+        <meta name="author" content="Andrew Tsai" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="TH's Notes" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="TH's Notes"/>
+        <meta property="og:url" content=""/>
+        <meta property="og:description" content="TH's Notes"/>
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+TH's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/machine-learning.html">Machine learning</a>
+                        </li>
+                        <li >
+                            <a href="/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="/category/review.html">Review</a>
+                        </li>
+                        <li >
+                            <a href="/category/web.html">Web</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <h1>Archives for TH's Notes</h1>
+        <div id="archives">
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-12-03T10:20:00+08:00">四 03 12月 2015</time></span>
+                    <a href="/my-first-post.html">My First Post</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-11-18T00:00:00+08:00">三 18 11月 2015</time></span>
+                    <a href="/install-theano-and-cuda-toolkit-75-on-osx.html">Install Theano and CUDA Toolkit 7.5 on OSX</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-11-11T00:00:00+08:00">三 11 11月 2015</time></span>
+                    <a href="/implement-the-exercises-of-ufldl-tutorial-with-python-3.html">Implement the exercises of UFLDL Tutorial with python 3</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-10-10T00:00:00+08:00">六 10 10月 2015</time></span>
+                    <a href="/a-quick-demo-on-face-detection-with-python-3-and-opencv-3.html">A quick demo on face detection with python 3 and opencv 3</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-09-30T00:00:00+08:00">三 30 9月 2015</time></span>
+                    <a href="/a-python-binding-of-compressive-tracking.html">A Python binding of Compressive Tracking</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-09-30T00:00:00+08:00">三 30 9月 2015</time></span>
+                    <a href="/combine-images-into-a-video-with-python-3-and-opencv-3.html">Combine images into a video with Python 3 and OpenCv 3</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-09-30T00:00:00+08:00">三 30 9月 2015</time></span>
+                    <a href="/write-a-python-script-to-define-the-detecting-region-by-clicking-and-dragging-mouse.html">Write a python script to define the detecting region by clicking and dragging mouse</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-09-09T00:00:00+08:00">三 09 9月 2015</time></span>
+                    <a href="/define-a-detection-window-on-image-with-mouse-through-python-3-and-opencv-3.html">Define a detection window on image with mouse through Python 3 and OpenCV 3</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-09-02T00:00:00+08:00">三 02 9月 2015</time></span>
+                    <a href="/record-video-with-python-3-opencv-3-on-osx.html">Record video with Python 3 + OpenCV 3 on OSX</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-09-01T00:00:00+08:00">二 01 9月 2015</time></span>
+                    <a href="/manage-project-packages-with-virtualenv.html">Manage project packages with virtualenv</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-08-31T00:00:00+08:00">一 31 8月 2015</time></span>
+                    <a href="/install-opencv-3-for-python-3-on-osx.html">Install OpenCV 3 for Python 3 on OSX</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-08-23T00:00:00+08:00">日 23 8月 2015</time></span>
+                    <a href="/a-quick-demo-to-recognizing-hand-written-digits-with-logistic-regression.html">A quick demo to recognizing hand-written digits with logistic regression</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-08-23T00:00:00+08:00">日 23 8月 2015</time></span>
+                    <a href="/automatically-reload-modules-in-ipython.html">Automatically reload modules in IPython</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-08-23T00:00:00+08:00">日 23 8月 2015</time></span>
+                    <a href="/visualize-data-with-ipython.html">Visualize data with IPython</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-08-01T00:00:00+08:00">六 01 8月 2015</time></span>
+                    <a href="/set-up-the-python-environment-for-computer-vision.html">Set up the python environment for computer vision</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-05-11T00:00:00+08:00">一 11 5月 2015</time></span>
+                    <a href="/create-an-iam-user-for-elasticbeanstalk.html">Create an IAM user for ElasticBeanstalk</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-05-11T00:00:00+08:00">一 11 5月 2015</time></span>
+                    <a href="/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html">Set up a postgres-backed rails app with ElasticBeanstalk</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-05-06T00:00:00+08:00">三 06 5月 2015</time></span>
+                    <a href="/wait-for-ajax-with-capybara-automatically.html">Wait for Ajax with Capybara Automatically</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time></span>
+                    <a href="/create-a-user-account-to-deploy-production-on-ubuntu.html">Create a user account to deploy production on ubuntu</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time></span>
+                    <a href="/install-rbenv-and-rails-on-ubuntu.html">Install rbenv and rails on ubuntu</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time></span>
+                    <a href="/install-sidekiq-and-redis-on-ubuntu.html">Install Sidekiq and Redis on Ubuntu</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time></span>
+                    <a href="/setting-up-a-rails-production-server-on-ubuntu.html">Setting up a rails production server on Ubuntu</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time></span>
+                    <a href="/setting-up-logrotate-for-production-server.html">Setting up logrotate for production server</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-03-30T00:00:00+08:00">一 30 3月 2015</time></span>
+                    <a href="/setting-up-nginxunicorn-production-server.html">Setting up Nginx+Unicorn production server</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-03-19T00:00:00+08:00">四 19 3月 2015</time></span>
+                    <a href="/deploy-production-with-capistrano.html">Deploy production with Capistrano</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-28T00:00:00+08:00">六 28 2月 2015</time></span>
+                    <a href="/is-your-site-accessible-from-china.html">Is your site accessible from China?</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-19T00:00:00+08:00">四 19 2月 2015</time></span>
+                    <a href="/vi-mode-in-command-line-and-rails-console.html">Vi-mode in command-line and Rails Console</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-18T00:00:00+08:00">三 18 2月 2015</time></span>
+                    <a href="/custom-domain-for-your-app-on-heroku.html">Custom domain for your app on Heroku</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-16T00:00:00+08:00">一 16 2月 2015</time></span>
+                    <a href="/adding-google-analytics-to-octopress.html">Adding google analytics to octopress</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-13T00:00:00+08:00">五 13 2月 2015</time></span>
+                    <a href="/zai-rails-zhong-an-zhuang-yu-she-ding-bootstrap.html">在 Rails 中安裝與設定 Bootstrap</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-10T00:00:00+08:00">二 10 2月 2015</time></span>
+                    <a href="/zai-rails-zhong-chu-li-xin-yong-qia-fu-kuan-shi-bai.html">在 Rails 中處理信用卡付款失敗</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-07T00:00:00+08:00">六 07 2月 2015</time></span>
+                    <a href="/cha-kan-jiao-yi-ji-lu-de-hou-tai-gong-neng.html">查看交易記錄的後台功能</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-06T00:00:00+08:00">五 06 2月 2015</time></span>
+                    <a href="/yi-zhao-qian-shu-fang-an-jin-xing-shou-fei.html">依照簽署方案進行收費</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-02T00:00:00+08:00">一 02 2月 2015</time></span>
+                    <a href="/shi-yong-service-objects-bian-xie-zhu-ce-fu-wu.html">使用 Service Objects 編寫註冊服務</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-02-01T00:00:00+08:00">日 01 2月 2015</time></span>
+                    <a href="/shi-yong-decorator-zuo-wei-wu-jian-de-biao-da-ceng.html">使用 Decorator 作為物件的表達層</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-30T00:00:00+08:00">五 30 1月 2015</time></span>
+                    <a href="/zai-zheng-he-ce-shi-zhong-zhi-xing-javascript.html">在整合測試中執行 Javascript</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-27T00:00:00+08:00">二 27 1月 2015</time></span>
+                    <a href="/zai-ce-shi-zhong-mo-ni-wu-jian-xing-wei.html">在測試中模擬物件行為</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-26T00:00:00+08:00">一 26 1月 2015</time></span>
+                    <a href="/du-li-de-api-ce-shi.html">獨立的 API 測試</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-22T00:00:00+08:00">四 22 1月 2015</time></span>
+                    <a href="/zai-ce-shi-zhong-shi-yong-database-cleaner.html">在測試中使用 Database Cleaner</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-17T00:00:00+08:00">六 17 1月 2015</time></span>
+                    <a href="/xin-yong-qia-jiao-yi-fu-wu-stripe.html">信用卡交易服務: Stripe</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-16T00:00:00+08:00">五 16 1月 2015</time></span>
+                    <a href="/shi-yong-figaro-she-ding-huan-jing-bian-shu.html">使用 Figaro 設定環境變數</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-14T00:00:00+08:00">三 14 1月 2015</time></span>
+                    <a href="/guan-li-zhe-deng-ru-ji-zhi.html">管理者登入機制</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-14T00:00:00+08:00">三 14 1月 2015</time></span>
+                    <a href="/shi-yong-carrierwave-shang-chuan-dang-an-dao-aws-s3.html">使用 CarrierWave 上傳檔案到 AWS S3</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-13T00:00:00+08:00">二 13 1月 2015</time></span>
+                    <a href="/jian-shi-chan-pin-cuo-wu-sentry.html">監視產品錯誤: Sentry</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-13T00:00:00+08:00">二 13 1月 2015</time></span>
+                    <a href="/shi-yong-paratropper-zi-dong-hua-bu-shu-liu-cheng.html">使用 paratropper 自動化部署流程</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-13T00:00:00+08:00">二 13 1月 2015</time></span>
+                    <a href="/zai-heroku-shang-jia-she-staging-server.html">在 Heroku 上架設 staging server</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-12T00:00:00+08:00">一 12 1月 2015</time></span>
+                    <a href="/shi-yong-percol-jin-xing-mo-hu-sou-xun.html">使用 Percol 進行模糊搜尋</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-12T00:00:00+08:00">一 12 1月 2015</time></span>
+                    <a href="/shi-yong-procfile-he-foreman.html">使用 Procfile 和 Foreman</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-12T00:00:00+08:00">一 12 1月 2015</time></span>
+                    <a href="/zai-heroku-shang-jia-she-concurrent-server.html">在 Heroku 上架設 concurrent server</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-11T00:00:00+08:00">日 11 1月 2015</time></span>
+                    <a href="/shi-yong-sidekiq-chu-li-bei-jing-gong-zuo.html">使用 Sidekiq 處理背景工作</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-10T00:00:00+08:00">六 10 1月 2015</time></span>
+                    <a href="/heroku-shang-de-you-jian-fu-wu-mailgun.html">Heroku 上的郵件服務: Mailgun</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-09T00:00:00+08:00">五 09 1月 2015</time></span>
+                    <a href="/shi-yong-concerns-bang-model-shou-shen.html">使用 Concerns 幫 Model 瘦身</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-08T00:00:00+08:00">四 08 1月 2015</time></span>
+                    <a href="/zai-wang-zhan-zhong-jia-ru-invite-gong-neng.html">在網站中加入 Invite 功能</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-05T00:00:00+08:00">一 05 1月 2015</time></span>
+                    <a href="/zai-emacs-zhong-shi-yong-vim-evil.html">在 Emacs 中使用 Vim: Evil</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-05T00:00:00+08:00">一 05 1月 2015</time></span>
+                    <a href="/zheng-he-ce-shi-de-you-jian-gong-ju-capybara-email.html">整合測試的郵件工具: capybara-email</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-03T00:00:00+08:00">六 03 1月 2015</time></span>
+                    <a href="/bian-ji-qi-emacs.html">編輯器: Emacs</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-03T00:00:00+08:00">六 03 1月 2015</time></span>
+                    <a href="/bian-ji-qi-vim.html">編輯器: Vim</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2015-01-03T00:00:00+08:00">六 03 1月 2015</time></span>
+                    <a href="/cong-rvm-qian-yi-dao-rbenv.html">從 rvm 遷移到 rbenv</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-31T00:00:00+08:00">三 31 12月 2014</time></span>
+                    <a href="/shi-yong-letter_opener-jian-shi-you-jian.html">使用 letter_opener 檢視郵件</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-31T00:00:00+08:00">三 31 12月 2014</time></span>
+                    <a href="/shi-yong-rspec-zai-functional-tests-li-mian-ce-shi-you-jian.html">使用 RSpec 在 Functional Tests 裡面測試郵件</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-31T00:00:00+08:00">三 31 12月 2014</time></span>
+                    <a href="/shi-zuo-follow-she-jiao-gong-neng.html">實作 Follow 社交功能</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-31T00:00:00+08:00">三 31 12月 2014</time></span>
+                    <a href="/tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html">透過郵件允許使用者重設密碼</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-23T00:00:00+08:00">二 23 12月 2014</time></span>
+                    <a href="/shi-yong-dan-yi-chou-xiang-ceng-zhuan-xie-ce-shi.html">使用單一抽象層撰寫測試</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-22T00:00:00+08:00">一 22 12月 2014</time></span>
+                    <a href="/zai-rspec-zhong-shi-yong-macros.html">在 RSpec 中使用 Macros</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-22T00:00:00+08:00">一 22 12月 2014</time></span>
+                    <a href="/zai-rspec-zhong-shi-yong-shared-examples.html">在 RSpec 中使用 shared examples</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-16T00:00:00+08:00">二 16 12月 2014</time></span>
+                    <a href="/bash-zhong-chang-yong-de-kuai-jie-jian.html">Bash 中常用的快捷鍵</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-15T00:00:00+08:00">一 15 12月 2014</time></span>
+                    <a href="/hao-yong-de-debug-gong-ju-pry.html">好用的 Debug 工具: Pry</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-15T00:00:00+08:00">一 15 12月 2014</time></span>
+                    <a href="/kuai-su-qi-dong-rails-pow.html">快速啟動 rails: pow</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-07T00:00:00+08:00">日 07 12月 2014</time></span>
+                    <a href="/shi-yong-rspec-xie-feature-tests.html">使用 RSpec 寫 Feature Tests</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-07T00:00:00+08:00">日 07 12月 2014</time></span>
+                    <a href="/shi-yong-rspec-zhuan-xie-functional-tests.html">使用 RSpec 撰寫 Functional Tests</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-07T00:00:00+08:00">日 07 12月 2014</time></span>
+                    <a href="/shi-yong-rspec-zhuan-xie-unit-tests.html">使用 RSpec 撰寫 Unit Tests</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-06T00:00:00+08:00">六 06 12月 2014</time></span>
+                    <a href="/shi-yong-rspec-zuo-zi-dong-ce-shi.html">使用 RSpec 做自動測試</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-05T00:00:00+08:00">五 05 12月 2014</time></span>
+                    <a href="/iterm2-zhong-hao-yong-de-she-ding.html">iTerm2 中好用的設定</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-12-02T00:00:00+08:00">二 02 12月 2014</time></span>
+                    <a href="/shi-zuo-jian-yi-de-sou-xun-gong-neng.html">實作簡易的搜尋功能</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-26T00:00:00+08:00">三 26 11月 2014</time></span>
+                    <a href="/an-quan-di-she-ding-rails-you-jian-mi-ma.html">安全地設定 Rails 郵件密碼</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-26T00:00:00+08:00">三 26 11月 2014</time></span>
+                    <a href="/zai-rails-zhong-shi-yong-postgressql.html">在 Rails 中使用 PostgresSQL</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-23T00:00:00+08:00">日 23 11月 2014</time></span>
+                    <a href="/zai-rails-shi-yong-gmail-fa-song-you-jian.html">在 Rails 使用 gmail 發送郵件</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-21T00:00:00+08:00">五 21 11月 2014</time></span>
+                    <a href="/zai-rails-zhong-shi-yong-module.html">在 Rails 中使用 module</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-21T00:00:00+08:00">五 21 11月 2014</time></span>
+                    <a href="/zhi-zuo-he-fa-bu-gem.html">製作和發佈 gem</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-20T00:00:00+08:00">四 20 11月 2014</time></span>
+                    <a href="/zai-rails-zhong-shi-yong-ajax.html">在 Rails 中使用 Ajax</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-15T00:00:00+08:00">六 15 11月 2014</time></span>
+                    <a href="/she-ding-polymorphic-association.html">設定 polymorphic association</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-13T00:00:00+08:00">四 13 11月 2014</time></span>
+                    <a href="/bu-shu-zhuan-an-dao-heroku.html">部署專案到 Heroku</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-09T00:00:00+08:00">日 09 11月 2014</time></span>
+                    <a href="/zai-rails-shi-zuo-yan-zheng-ji-zhi.html">在 Rails 實作驗證機制</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-03T00:00:00+08:00">一 03 11月 2014</time></span>
+                    <a href="/vim-de-chang-yong-zhi-ling.html">Vim 的常用指令</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-11-01T00:00:00+08:00">六 01 11月 2014</time></span>
+                    <a href="/zai-google-chrome-zhong-zi-ding-kuai-jie-jian.html">在 Google Chrome 中自定快捷鍵</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-29T00:00:00+08:00">三 29 10月 2014</time></span>
+                    <a href="/zai-bu-luo-ge-zhong-jia-ru-flickr-tu-pian.html">在部落格中加入 Flickr 圖片</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-29T00:00:00+08:00">三 29 10月 2014</time></span>
+                    <a href="/zai-rails-zhong-she-ding-duo-dui-duo-guan-lian-xing.html">在 Rails 中設定多對多關聯性</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-29T00:00:00+08:00">三 29 10月 2014</time></span>
+                    <a href="/zai-rails-zhong-she-ding-routes.html">在 Rails 中設定 routes</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-29T00:00:00+08:00">三 29 10月 2014</time></span>
+                    <a href="/zai-rails-zhong-she-ding-yi-dui-duo-guan-lian-xing.html">在 Rails 中設定一對多關聯性</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-28T00:00:00+08:00">二 28 10月 2014</time></span>
+                    <a href="/homebrew-mac-zhuan-shu-de-tao-jian-guan-li-zhe.html">Homebrew: Mac 專屬的套件管理者</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-28T00:00:00+08:00">二 28 10月 2014</time></span>
+                    <a href="/yi-tao-mian-fei-de-sqlite-zi-liao-ku-liu-lan-qi.html">一套免費的 SQLite 資料庫瀏覽器</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-27T00:00:00+08:00">一 27 10月 2014</time></span>
+                    <a href="/shi-yong-guardlivereload-zi-dong-shua-xin-liu-lan-qi.html">使用 Guard::LiveReload 自動刷新瀏覽器</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-26T00:00:00+08:00">日 26 10月 2014</time></span>
+                    <a href="/an-zhuang-he-shi-yong-git.html">安裝和使用 Git</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-26T00:00:00+08:00">日 26 10月 2014</time></span>
+                    <a href="/chan-sheng-ssh-key.html">產生 SSH Key</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-25T00:00:00+08:00">六 25 10月 2014</time></span>
+                    <a href="/dui-octopress-jin-xing-ke-zhi-hua.html">對 Octopress 進行客製化</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-25T00:00:00+08:00">六 25 10月 2014</time></span>
+                    <a href="/zai-octopress-shi-yong-whitespace-theme.html">在 Octopress 使用 Whitespace theme</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-23T00:00:00+08:00">四 23 10月 2014</time></span>
+                    <a href="/shi-yong-octopress-jian-gou-bu-luo-ge.html">使用 Octopress 建構部落格</a>
+                </p>
+                <p>
+                    <span class="categories-timestamp"><time datetime="2014-10-22T00:00:00+08:00">三 22 10月 2014</time></span>
+                    <a href="/zai-mac-shang-an-zhuang-rails.html">在 Mac 上安裝 Rails</a>
+                </p>
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/tsaith"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/tsunghuatsai"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a></li>
+                <li class="list-group-item"><a href="https://linkedin.com/in/tsunghua"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
+              </ul>
+            </li>
+
+
+
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                </ul>
+            </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Andrew Tsai
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>

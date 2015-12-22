@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>Install Theano and CUDA Toolkit 7.5 on OSX - TH's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<style type="text/css">
+
+/*some stuff for output/input prompts*/
+div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.cell.selected{border-radius:4px;border:thin #ababab solid}
+div.cell.edit_mode{border-radius:4px;border:thin #008000 solid}
+div.cell{width:100%;padding:5px 5px 5px 0;margin:0;outline:none}
+div.prompt{min-width:11ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}
+@media (max-width:480px){div.prompt{text-align:left}}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;line-height:1.21429em}
+div.prompt:empty{padding-top:0;padding-bottom:0}
+div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;}
+div.inner_cell{width:90%;}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;}
+div.input_prompt{color:navy;border-top:1px solid transparent;}
+div.output_wrapper{margin-top:5px;position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:4px;-webkit-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);-moz-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);}
+div.output_collapsed{margin:0px;padding:0px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.out_prompt_overlay{height:100%;padding:0px 0.4em;position:absolute;border-radius:4px;}
+div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000000;-moz-box-shadow:inset 0 0 1px #000000;box-shadow:inset 0 0 1px #000000;background:rgba(240, 240, 240, 0.5);}
+div.output_prompt{color:darkred;}
+
+a.anchor-link:link{text-decoration:none;padding:0px 20px;visibility:hidden;}
+h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible;}
+/* end stuff for output/input prompts*/
+
+
+.highlight-ipynb .hll { background-color: #ffffcc }
+.highlight-ipynb  { background: #f8f8f8; }
+.highlight-ipynb .c { color: #408080; font-style: italic } /* Comment */
+.highlight-ipynb .err { border: 1px solid #FF0000 } /* Error */
+.highlight-ipynb .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight-ipynb .o { color: #666666 } /* Operator */
+.highlight-ipynb .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight-ipynb .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight-ipynb .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight-ipynb .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight-ipynb .gd { color: #A00000 } /* Generic.Deleted */
+.highlight-ipynb .ge { font-style: italic } /* Generic.Emph */
+.highlight-ipynb .gr { color: #FF0000 } /* Generic.Error */
+.highlight-ipynb .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight-ipynb .gi { color: #00A000 } /* Generic.Inserted */
+.highlight-ipynb .go { color: #888888 } /* Generic.Output */
+.highlight-ipynb .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight-ipynb .gs { font-weight: bold } /* Generic.Strong */
+.highlight-ipynb .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight-ipynb .gt { color: #0044DD } /* Generic.Traceback */
+.highlight-ipynb .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight-ipynb .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight-ipynb .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight-ipynb .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight-ipynb .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight-ipynb .kt { color: #B00040 } /* Keyword.Type */
+.highlight-ipynb .m { color: #666666 } /* Literal.Number */
+.highlight-ipynb .s { color: #BA2121 } /* Literal.String */
+.highlight-ipynb .na { color: #7D9029 } /* Name.Attribute */
+.highlight-ipynb .nb { color: #008000 } /* Name.Builtin */
+.highlight-ipynb .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight-ipynb .no { color: #880000 } /* Name.Constant */
+.highlight-ipynb .nd { color: #AA22FF } /* Name.Decorator */
+.highlight-ipynb .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight-ipynb .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight-ipynb .nf { color: #0000FF } /* Name.Function */
+.highlight-ipynb .nl { color: #A0A000 } /* Name.Label */
+.highlight-ipynb .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight-ipynb .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight-ipynb .nv { color: #19177C } /* Name.Variable */
+.highlight-ipynb .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight-ipynb .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight-ipynb .mf { color: #666666 } /* Literal.Number.Float */
+.highlight-ipynb .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight-ipynb .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight-ipynb .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight-ipynb .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight-ipynb .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight-ipynb .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight-ipynb .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight-ipynb .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight-ipynb .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight-ipynb .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight-ipynb .sx { color: #008000 } /* Literal.String.Other */
+.highlight-ipynb .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight-ipynb .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight-ipynb .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight-ipynb .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight-ipynb .vc { color: #19177C } /* Name.Variable.Class */
+.highlight-ipynb .vg { color: #19177C } /* Name.Variable.Global */
+.highlight-ipynb .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight-ipynb .il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+div.entry-content {
+  overflow: visible;
+  padding: 8px;
+}
+.input_area {
+  padding: 0.2em;
+}
+
+a.heading-anchor {
+ white-space: normal;
+}
+
+.rendered_html
+code {
+ font-size: .8em;
+}
+
+pre.ipynb {
+  color: black;
+  background: #f7f7f7;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0px;
+  font-size: 13px;
+}
+
+/* remove the prompt div from text cells */
+div.text_cell .prompt {
+    display: none;
+}
+
+/* remove horizontal padding from text cells, */
+/* so it aligns with outer body text */
+div.text_cell_render {
+    padding: 0.5em 0em;
+}
+
+img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
+</style>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+}
+init_mathjax();
+</script>
+
+<link rel="canonical" href="/install-theano-and-cuda-toolkit-75-on-osx.html">
+
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="keywords" content="python" />
+        <meta name="description" content="This post describes the steps I used to install Theano on my Mac (OSX 10.9.5) with NVIDIA GeForce GTX 660M graphics card. Install Theano Please use pip to install Theano as below $ pip install Theano Then, create the ~/.theanorc with content as [global] mode=FAST_RUN floatX = float32 device ..." />
+
+        <meta property="og:site_name" content="TH's Notes" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Install Theano and CUDA Toolkit 7.5 on OSX"/>
+        <meta property="og:url" content="/install-theano-and-cuda-toolkit-75-on-osx.html"/>
+        <meta property="og:description" content="This post describes the steps I used to install Theano on my Mac (OSX 10.9.5) with NVIDIA GeForce GTX 660M graphics card. Install Theano Please use pip to install Theano as below $ pip install Theano Then, create the ~/.theanorc with content as [global] mode=FAST_RUN floatX = float32 device ..."/>
+        <meta property="article:published_time" content="2015-11-18" />
+            <meta property="article:section" content="Machine learning" />
+            <meta property="article:tag" content="python" />
+            <meta property="article:author" content="Andrew Tsai" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+TH's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/category/machine-learning.html">Machine learning</a>
+                        </li>
+                        <li >
+                            <a href="/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="/category/review.html">Review</a>
+                        </li>
+                        <li >
+                            <a href="/category/web.html">Web</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/install-theano-and-cuda-toolkit-75-on-osx.html"
+                       rel="bookmark"
+                       title="Permalink to Install Theano and CUDA Toolkit 7.5 on OSX">
+                        Install Theano and CUDA Toolkit 7.5 on OSX
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-11-18T00:00:00+08:00"> 三 18 11月 2015</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/python.html">python</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This post describes the steps I used to install <a href="http://deeplearning.net/software/theano/tutorial/">Theano</a> on my Mac (OSX 10.9.5) with NVIDIA GeForce GTX 660M graphics card.</p>
+<h3>Install Theano</h3>
+<p>Please use <code>pip</code> to install Theano as below</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install Theano
+</pre></div>
+
+
+<p>Then, create the <code>~/.theanorc</code> with content as</p>
+<div class="highlight"><pre><span class="k">[global]</span>
+<span class="na">mode</span><span class="o">=</span><span class="s">FAST_RUN</span>
+<span class="na">floatX</span> <span class="o">=</span> <span class="s">float32</span>
+<span class="na">device</span> <span class="o">=</span> <span class="s">gpu</span>
+
+<span class="k">[nvcc]</span>
+<span class="na">fastmath</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+
+
+<h3>Install CUDA Toolkit</h3>
+<p>Download the package of CUDA Toolkit 7.5 from the official <a href="https://developer.nvidia.com/cuda-downloads">link</a>.</p>
+<h3>Install cuDNN</h3>
+<p>Next, we have to register on NVIDIA to be able to download <a href="https://developer.nvidia.com/cudnn">cuDNN</a>,
+which is a GPU-accelerated library of primitives for deep neural networks.</p>
+<p>After downloading,
+please uncompress the package and copy the header file and libraries to <code>include</code> and <code>lib</code> under the root directory of CUDA Toolkit (e.g. /usr/local/cuda), respectively.</p>
+<div class="highlight"><pre><span class="nv">$ </span>tar xzf cudnn-7.0-osx-x64-v3.0-prod.tgz
+<span class="nv">$ </span><span class="nb">cd </span>cuda
+<span class="nv">$ </span>sudo cp include/cudnn.h /usr/local/cuda/include/
+<span class="nv">$ </span>sudo cp lib/libcudnn* /usr/local/cuda/lib/
+</pre></div>
+
+
+<h3>Add environment variables</h3>
+<p>Add the following environment variables to <code>~/.bash_profile</code>.</p>
+<div class="highlight"><pre><span class="err">#</span><span class="x"> Theano</span>
+<span class="x">export CUDA_ROOT=&quot;/usr/local/cuda&quot;</span>
+<span class="x">export THEANO_FLAGS=&quot;mode=FAST_RUN,device=gpu,floatX=float32&quot;</span>
+
+<span class="err">#</span><span class="x"> CUDA</span>
+<span class="x">export LD_LIBRARY_PATH=&quot;</span><span class="p">$</span><span class="nv">CUDA_ROOT</span><span class="x">/lib:</span><span class="p">$</span><span class="nv">LD_LIBRARY_PATH</span><span class="x">&quot;</span>
+<span class="x">export PATH=&quot;</span><span class="p">$</span><span class="nv">CUDA_ROOT</span><span class="x">/bin:</span><span class="p">$</span><span class="nv">PATH</span><span class="x">&quot;</span>
+</pre></div>
+
+
+<p>You may want to execute <code>source ~/.bash_profile</code> to validate the settings right away.</p>
+<h3>Testing</h3>
+<p>Now, we can run a test code to see if the Theano works as expected.</p>
+<p>{% codeblock test.py %}
+from theano import function, config, shared, sandbox
+import theano.tensor as T
+import numpy
+import time</p>
+<p>vlen = 10 * 30 * 768  # 10 x #cores x # threads per core
+iters = 1000</p>
+<p _="%" endcodeblock="endcodeblock">rng = numpy.random.RandomState(22)
+x = shared(numpy.asarray(rng.rand(vlen), config.floatX))
+f = function([], T.exp(x))
+print(f.maker.fgraph.toposort())
+t0 = time.time()
+for i in range(iters):
+    r = f()
+t1 = time.time()
+print("Looping %d times took %f seconds" % (iters, t1 - t0))
+print("Result is %s" % (r,))
+if numpy.any([isinstance(x.op, T.Elemwise) for x in f.maker.fgraph.toposort()]):
+    print('Used the cpu')
+else:
+    print('Used the gpu')</p>
+<p>Let's run this code on CPU and GPU, separately.</p>
+<p>CPU case:</p>
+<div class="highlight"><pre><span class="nv">$ THEANO_FLAGS</span><span class="o">=</span><span class="s1">&#39;device=cpu&#39;</span> python test.py
+<span class="o">[</span>Elemwise<span class="o">{</span>exp,no_inplace<span class="o">}(</span>&lt;TensorType<span class="o">(</span>float32, vector<span class="o">)</span>&gt;<span class="o">)]</span>
+Looping <span class="m">1000</span> <span class="nb">times </span>took 14.474722 seconds
+Result is <span class="o">[</span> 1.23178029  1.61879337  1.52278066 ...,  2.20771813  2.29967761
+  1.62323284<span class="o">]</span>
+Used the cpu
+</pre></div>
+
+
+<p>GPU case:</p>
+<div class="highlight"><pre><span class="nv">$ THEANO_FLAGS</span><span class="o">=</span><span class="s1">&#39;device=gpu&#39;</span> python test.py
+Using gpu device 0: GeForce GTX 660M <span class="o">(</span>CNMeM is disabled<span class="o">)</span>
+<span class="o">[</span>GpuElemwise<span class="o">{</span>exp,no_inplace<span class="o">}(</span>&lt;CudaNdarrayType<span class="o">(</span>float32, vector<span class="o">)</span>&gt;<span class="o">)</span>, HostFromGpu<span class="o">(</span>GpuElemwise<span class="o">{</span>exp,no_inplace<span class="o">}</span>.0<span class="o">)]</span>
+Looping <span class="m">1000</span> <span class="nb">times </span>took 0.517552 seconds
+Result is <span class="o">[</span> 1.23178029  1.61879349  1.52278066 ...,  2.20771813  2.29967761
+  1.62323296<span class="o">]</span>
+Used the gpu
+</pre></div>
+
+
+<p>Please note that Theano will have to compile the python code to generate C++/CUDA code when executing with GPU for the first time. Thus, the results shown above came from the execution of the second time.</p>
+<p>Finally, it can be observed that the runtime is greatly reduced when GPU is used : )</p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/tsaith"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/tsunghuatsai"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a></li>
+                <li class="list-group-item"><a href="https://linkedin.com/in/tsunghua"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
+              </ul>
+            </li>
+
+
+
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                </ul>
+            </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Andrew Tsai
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>

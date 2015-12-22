@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>透過郵件允許使用者重設密碼 - TH's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<style type="text/css">
+
+/*some stuff for output/input prompts*/
+div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.cell.selected{border-radius:4px;border:thin #ababab solid}
+div.cell.edit_mode{border-radius:4px;border:thin #008000 solid}
+div.cell{width:100%;padding:5px 5px 5px 0;margin:0;outline:none}
+div.prompt{min-width:11ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}
+@media (max-width:480px){div.prompt{text-align:left}}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;line-height:1.21429em}
+div.prompt:empty{padding-top:0;padding-bottom:0}
+div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;}
+div.inner_cell{width:90%;}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;}
+div.input_prompt{color:navy;border-top:1px solid transparent;}
+div.output_wrapper{margin-top:5px;position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:4px;-webkit-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);-moz-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);}
+div.output_collapsed{margin:0px;padding:0px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.out_prompt_overlay{height:100%;padding:0px 0.4em;position:absolute;border-radius:4px;}
+div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000000;-moz-box-shadow:inset 0 0 1px #000000;box-shadow:inset 0 0 1px #000000;background:rgba(240, 240, 240, 0.5);}
+div.output_prompt{color:darkred;}
+
+a.anchor-link:link{text-decoration:none;padding:0px 20px;visibility:hidden;}
+h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible;}
+/* end stuff for output/input prompts*/
+
+
+.highlight-ipynb .hll { background-color: #ffffcc }
+.highlight-ipynb  { background: #f8f8f8; }
+.highlight-ipynb .c { color: #408080; font-style: italic } /* Comment */
+.highlight-ipynb .err { border: 1px solid #FF0000 } /* Error */
+.highlight-ipynb .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight-ipynb .o { color: #666666 } /* Operator */
+.highlight-ipynb .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight-ipynb .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight-ipynb .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight-ipynb .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight-ipynb .gd { color: #A00000 } /* Generic.Deleted */
+.highlight-ipynb .ge { font-style: italic } /* Generic.Emph */
+.highlight-ipynb .gr { color: #FF0000 } /* Generic.Error */
+.highlight-ipynb .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight-ipynb .gi { color: #00A000 } /* Generic.Inserted */
+.highlight-ipynb .go { color: #888888 } /* Generic.Output */
+.highlight-ipynb .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight-ipynb .gs { font-weight: bold } /* Generic.Strong */
+.highlight-ipynb .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight-ipynb .gt { color: #0044DD } /* Generic.Traceback */
+.highlight-ipynb .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight-ipynb .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight-ipynb .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight-ipynb .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight-ipynb .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight-ipynb .kt { color: #B00040 } /* Keyword.Type */
+.highlight-ipynb .m { color: #666666 } /* Literal.Number */
+.highlight-ipynb .s { color: #BA2121 } /* Literal.String */
+.highlight-ipynb .na { color: #7D9029 } /* Name.Attribute */
+.highlight-ipynb .nb { color: #008000 } /* Name.Builtin */
+.highlight-ipynb .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight-ipynb .no { color: #880000 } /* Name.Constant */
+.highlight-ipynb .nd { color: #AA22FF } /* Name.Decorator */
+.highlight-ipynb .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight-ipynb .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight-ipynb .nf { color: #0000FF } /* Name.Function */
+.highlight-ipynb .nl { color: #A0A000 } /* Name.Label */
+.highlight-ipynb .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight-ipynb .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight-ipynb .nv { color: #19177C } /* Name.Variable */
+.highlight-ipynb .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight-ipynb .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight-ipynb .mf { color: #666666 } /* Literal.Number.Float */
+.highlight-ipynb .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight-ipynb .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight-ipynb .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight-ipynb .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight-ipynb .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight-ipynb .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight-ipynb .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight-ipynb .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight-ipynb .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight-ipynb .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight-ipynb .sx { color: #008000 } /* Literal.String.Other */
+.highlight-ipynb .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight-ipynb .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight-ipynb .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight-ipynb .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight-ipynb .vc { color: #19177C } /* Name.Variable.Class */
+.highlight-ipynb .vg { color: #19177C } /* Name.Variable.Global */
+.highlight-ipynb .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight-ipynb .il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+div.entry-content {
+  overflow: visible;
+  padding: 8px;
+}
+.input_area {
+  padding: 0.2em;
+}
+
+a.heading-anchor {
+ white-space: normal;
+}
+
+.rendered_html
+code {
+ font-size: .8em;
+}
+
+pre.ipynb {
+  color: black;
+  background: #f7f7f7;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0px;
+  font-size: 13px;
+}
+
+/* remove the prompt div from text cells */
+div.text_cell .prompt {
+    display: none;
+}
+
+/* remove horizontal padding from text cells, */
+/* so it aligns with outer body text */
+div.text_cell_render {
+    padding: 0.5em 0em;
+}
+
+img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
+</style>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+}
+init_mathjax();
+</script>
+
+<link rel="canonical" href="/tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html">
+
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="keywords" content="rails" />
+        <meta name="description" content="在許多網站的使用者登入頁面中， 通常會伴隨一個處理忘記密碼的連結， 點選後，將會寄出一封電子郵件讓使用者可以藉此重設個人密碼; 而這篇文章將介紹如何實做這項功能。 操作流程 讓我們先預覽一次整個操作流程，當訪問登入頁面時， 可以看到最下方有個 Forgot Password? 的連結 點選此連結後，會被導向新頁面， 在此可以寄送郵件到使用者的信箱 按下寄信後，將顯示信件已寄出的提示 接下來，使用者將會收到一封郵件，內含網頁連結， 點選後，將會被引導至變更密碼的頁面 最後，使用者可以在這個頁面中重新設定新的密碼 Routes 新增以下 routes config/routes.rb: get &#39;forgot_password&#39;, to: &#39;forgot_passwords#new&#39; resources :forgot_passwords, only: [:create] get &#39;forgot_password_confirmation&#39;, to: &#39;forgot_passwords#confirm&#39; resources :password_resets, only: [:show, :create] get ..." />
+
+        <meta property="og:site_name" content="TH's Notes" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="透過郵件允許使用者重設密碼"/>
+        <meta property="og:url" content="/tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html"/>
+        <meta property="og:description" content="在許多網站的使用者登入頁面中， 通常會伴隨一個處理忘記密碼的連結， 點選後，將會寄出一封電子郵件讓使用者可以藉此重設個人密碼; 而這篇文章將介紹如何實做這項功能。 操作流程 讓我們先預覽一次整個操作流程，當訪問登入頁面時， 可以看到最下方有個 Forgot Password? 的連結 點選此連結後，會被導向新頁面， 在此可以寄送郵件到使用者的信箱 按下寄信後，將顯示信件已寄出的提示 接下來，使用者將會收到一封郵件，內含網頁連結， 點選後，將會被引導至變更密碼的頁面 最後，使用者可以在這個頁面中重新設定新的密碼 Routes 新增以下 routes config/routes.rb: get &#39;forgot_password&#39;, to: &#39;forgot_passwords#new&#39; resources :forgot_passwords, only: [:create] get &#39;forgot_password_confirmation&#39;, to: &#39;forgot_passwords#confirm&#39; resources :password_resets, only: [:show, :create] get ..."/>
+        <meta property="article:published_time" content="2014-12-31" />
+            <meta property="article:section" content="Web" />
+            <meta property="article:tag" content="rails" />
+            <meta property="article:author" content="Andrew Tsai" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+TH's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/machine-learning.html">Machine learning</a>
+                        </li>
+                        <li >
+                            <a href="/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="/category/review.html">Review</a>
+                        </li>
+                        <li class="active">
+                            <a href="/category/web.html">Web</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html"
+                       rel="bookmark"
+                       title="Permalink to 透過郵件允許使用者重設密碼">
+                        透過郵件允許使用者重設密碼
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-12-31T00:00:00+08:00"> 三 31 12月 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/rails.html">rails</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>在許多網站的使用者登入頁面中，
+通常會伴隨一個處理忘記密碼的連結，
+點選後，將會寄出一封電子郵件讓使用者可以藉此重設個人密碼;
+而這篇文章將介紹如何實做這項功能。</p>
+<h3>操作流程</h3>
+<p>讓我們先預覽一次整個操作流程，當訪問登入頁面時，
+可以看到最下方有個 Forgot Password? 的連結</p>
+<p><img src="https://farm9.staticflickr.com/8563/15549305854_4fc7a19b13_b.jpg"></p>
+<p>點選此連結後，會被導向新頁面，
+在此可以寄送郵件到使用者的信箱</p>
+<p><img src="https://farm9.staticflickr.com/8602/15985772059_f5beaccf89_b.jpg"></p>
+<p>按下寄信後，將顯示信件已寄出的提示</p>
+<p><img src="https://farm8.staticflickr.com/7524/15984997938_e127612ea6_b.jpg"></p>
+<p>接下來，使用者將會收到一封郵件，內含網頁連結，
+點選後，將會被引導至變更密碼的頁面</p>
+<p><img src="https://farm8.staticflickr.com/7466/16145868716_66b3c7b0db_b.jpg"></p>
+<p>最後，使用者可以在這個頁面中重新設定新的密碼</p>
+<p><img src="https://farm9.staticflickr.com/8575/15984342530_3d82f8865a_b.jpg"></p>
+<h3>Routes</h3>
+<p>新增以下 routes
+config/routes.rb:</p>
+<div class="highlight"><pre><span class="n">get</span> <span class="s1">&#39;forgot_password&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;forgot_passwords#new&#39;</span>
+<span class="n">resources</span> <span class="ss">:forgot_passwords</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:create</span><span class="o">]</span>
+<span class="n">get</span> <span class="s1">&#39;forgot_password_confirmation&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;forgot_passwords#confirm&#39;</span>
+
+<span class="n">resources</span> <span class="ss">:password_resets</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:show</span><span class="p">,</span> <span class="ss">:create</span><span class="o">]</span>
+
+<span class="n">get</span> <span class="s1">&#39;expired_token&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;password_resets#expired_token&#39;</span>
+</pre></div>
+
+
+<h3>Database</h3>
+<p>在 users table 裡面加入 token 欄位</p>
+<p>db/schema.rb:</p>
+<div class="highlight"><pre><span class="n">create_table</span> <span class="s2">&quot;users&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;full_name&quot;</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;email&quot;</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;password_digest&quot;</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;role&quot;</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;slug&quot;</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">datetime</span> <span class="s2">&quot;created_at&quot;</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">datetime</span> <span class="s2">&quot;updated_at&quot;</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">string</span>   <span class="s2">&quot;token&quot;</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<h3>Views</h3>
+<p>在登入頁面新增 Forgot Password? 連結</p>
+<p>app/views/sessions/new.html.haml:</p>
+<div class="highlight"><pre><span class="nt">%section</span><span class="nc">.sign_in.container</span>
+  <span class="nc">.row</span>
+    <span class="nc">.col-sm-10.col-sm-offset-1</span>
+      <span class="p">=</span> <span class="n">bootstrap_form_tag</span> <span class="ss">url</span><span class="p">:</span> <span class="n">sign_in_path</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+        <span class="nt">%header</span>
+          <span class="nt">%h1</span> Sign in
+        <span class="nc">.row</span>
+          <span class="nc">.col-sm-4</span>
+            <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">email_field</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;Email Address&quot;</span><span class="p">,</span> <span class="ss">placeholder</span><span class="p">:</span> <span class="s1">&#39;user_name@example.com&#39;</span>
+        <span class="nc">.row</span>
+          <span class="nc">.col-sm-4</span>
+            <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">password_field</span> <span class="ss">:password</span>
+        <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span> <span class="s2">&quot;Sign in&quot;</span>
+        <span class="p">=</span> <span class="n">link_to</span> <span class="s2">&quot;Forgot Password?&quot;</span><span class="p">,</span> <span class="n">forgot_password_path</span> <span class="c1"># 加入這一行</span>
+</pre></div>
+
+
+<p>新增寄信頁面</p>
+<p>app/views/forgot_passwords/new.html.haml:</p>
+<div class="highlight"><pre><span class="nt">%section</span><span class="nc">.forgot_password.container</span>
+  <span class="nc">.row</span>
+    <span class="nc">.col-sm-10.col-bg-offset-1</span>
+      <span class="p">=</span> <span class="n">bootstrap_form_tag</span> <span class="ss">url</span><span class="p">:</span> <span class="n">forgot_passwords_path</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+        <span class="nt">%header</span>
+          <span class="nt">%h1</span> Forgot Password?
+          <span class="nt">%p</span> We will send you an email with a link that you can use to reset your password.
+        <span class="nc">.row</span>
+          <span class="nc">.col-sm-4</span>
+            <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">email_field</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;Email Address&quot;</span>
+        <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span> <span class="s2">&quot;Send Email&quot;</span>
+</pre></div>
+
+
+<p>順便一提，這邊使用了 <a href="https://github.com/bootstrap-ruby/rails-bootstrap-forms">rails-bootstrap-forms</a> 來快速建構具有
+<a href="http://getbootstrap.com/">twitter bootstrap-style</a> 的表格。</p>
+<p>新增確認頁面</p>
+<p>app/views/forgot_passwords/confirm.html.haml:</p>
+<div class="highlight"><pre><span class="nt">%section</span><span class="nc">.confirm_password_reset.container</span>
+  <span class="nc">.row</span>
+    <span class="nc">.col-sm-10.col-sm-offset-1</span>
+      <span class="nt">%p</span> We have sent an email with instruction to reset your password.
+</pre></div>
+
+
+<p>新增修改密碼頁面</p>
+<p>app/views/password_resets/show.html.haml:</p>
+<div class="highlight"><pre><span class="nt">%section</span><span class="nc">.reset_password.container</span>
+  <span class="nc">.row</span>
+    <span class="nc">.col-sm-10.col-sm-offset-1</span>
+      <span class="p">=</span> <span class="n">bootstrap_form_tag</span> <span class="ss">url</span><span class="p">:</span> <span class="n">password_resets_path</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+        <span class="nt">%header</span>
+          <span class="nt">%h1</span> Reset Your Password
+        <span class="nc">.row</span>
+          <span class="nc">.col-sm-4</span>
+            <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">password_field</span> <span class="ss">:password</span><span class="p">,</span> <span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;New Password&quot;</span>
+            <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">hidden_field</span> <span class="ss">:token</span><span class="p">,</span> <span class="ss">value</span><span class="p">:</span> <span class="vi">@token</span>
+        <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span> <span class="s2">&quot;Reset Password&quot;</span>
+</pre></div>
+
+
+<p>新增 token 已經過期的頁面</p>
+<p>app/views/password_resets/expired_token.html.haml:</p>
+<div class="highlight"><pre><span class="nt">%section</span><span class="nc">.invalid_token.container</span>
+  <span class="nc">.row</span>
+    <span class="nc">.col-sm-10.col-sm-offset-1</span>
+      <span class="nt">%p</span> Your reset password link is expired.
+</pre></div>
+
+
+<h3>Controllers</h3>
+<p>新增 ForgotPasswordsController</p>
+<p>app/controllers/forgot_passwords_controller.rb:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">ForgotPasswordsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">new</span> <span class="p">;</span> <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">email</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+
+    <span class="k">if</span> <span class="n">user</span>
+      <span class="n">user</span><span class="o">.</span><span class="n">generate_token</span>
+      <span class="no">AppMailer</span><span class="o">.</span><span class="n">send_password_reset</span><span class="p">(</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">deliver</span>
+      <span class="n">redirect_to</span> <span class="n">forgot_password_confirmation_path</span>
+    <span class="k">else</span>
+      <span class="n">flash</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">].</span><span class="n">blank?</span> <span class="p">?</span> <span class="s2">&quot;Email cannot be blank.&quot;</span> <span class="p">:</span> <span class="s2">&quot;There is no user with that email in the system.&quot;</span>
+      <span class="n">redirect_to</span> <span class="n">forgot_password_path</span>
+    <span class="k">end</span>
+
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">confirm</span> <span class="p">;</span> <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+
+
+<p>新增 PasswordResetsController</p>
+<p>app/controllers/password_resets_controller.rb:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">PasswordResetsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">token</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+    <span class="k">if</span> <span class="n">user</span>
+      <span class="vi">@token</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span>
+    <span class="k">else</span>
+      <span class="n">redirect_to</span> <span class="n">expired_token_path</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">token</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:token</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+    <span class="k">if</span> <span class="n">user</span>
+      <span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:password</span><span class="o">]</span>
+      <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">save</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">clear_token</span>
+        <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Your password has been changed. Please sign in.&quot;</span>
+      <span class="k">else</span>
+        <span class="n">flash</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Invalid new password. Password did not change.&quot;</span>
+      <span class="k">end</span>
+      <span class="n">redirect_to</span> <span class="n">sign_in_path</span>
+    <span class="k">else</span>
+      <span class="n">redirect_to</span> <span class="n">expired_token_path</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">expired_token</span> <span class="p">;</span> <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+
+
+<h3>Models</h3>
+<p>上面使用的 <code>generate_token</code> 和 <code>clear_token</code> methods
+定義在 User class 裡面</p>
+<p>app/models/user.rb:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+
+  <span class="o">...</span> <span class="err">其他程式碼</span> <span class="o">...</span>
+
+  <span class="k">def</span> <span class="nf">generate_token</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">update_column</span><span class="p">(</span><span class="ss">:token</span><span class="p">,</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">urlsafe_base64</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">clear_token</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">update_column</span><span class="p">(</span><span class="ss">:token</span><span class="p">,</span> <span class="kp">nil</span><span class="p">)</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+
+
+<h3>Mailer</h3>
+<p>在 development.rb 和 production.rb 裡面設定 :host 如下</p>
+<p>config/environments/development.rb:</p>
+<div class="highlight"><pre><span class="c1"># Mailer host</span>
+<span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">default_url_options</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost:3000&#39;</span> <span class="p">}</span>
+</pre></div>
+
+
+<p>config/environments/production.rb:</p>
+<div class="highlight"><pre><span class="c1"># Mailer host</span>
+<span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">default_url_options</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s1">&#39;你的主機&#39;</span> <span class="p">}</span>
+</pre></div>
+
+
+<p>然後新增 AppMailer</p>
+<p>app/mailers/app_mailer.rb:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">AppMailer</span> <span class="o">&lt;</span> <span class="no">ActionMailer</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">default</span> <span class="ss">from</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;MYFLIX_SMTP_USER_NAME&#39;</span><span class="o">]</span>
+
+  <span class="k">def</span> <span class="nf">send_password_reset</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+    <span class="n">mail</span><span class="p">(</span><span class="ss">to</span><span class="p">:</span> <span class="vi">@user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span> <span class="ss">subject</span><span class="p">:</span> <span class="s2">&quot;Please reset your password&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+
+
+<p>MYFLIX_SMTP_USER_NAME 是我們自定的環境變數，
+倘若不清楚如何使用環境變數來設定郵件的帳號或密碼，
+可參考<a href="/blog/2014/11/26/how-to-set-up-email-password-securely">這篇文章</a>。</p>
+<p>最後，新增信件內容</p>
+<p>app/views/app_mailer/send_password_reset.html.haml:</p>
+<div class="highlight"><pre><span class="nn">!!! 5</span>
+<span class="nt">%html</span>(<span class="na">lang=</span><span class="s">&quot;en-US&quot;</span>)
+  <span class="nt">%body</span>
+    <span class="nt">%p</span> Please click on the link below to reset your password:
+    <span class="nt">%p</span><span class="p">=</span> <span class="n">link_to</span> <span class="s2">&quot;Reset My Password&quot;</span><span class="p">,</span> <span class="n">password_reset_url</span><span class="p">(</span><span class="vi">@user</span><span class="o">.</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://github.com/tsaith"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/tsunghuatsai"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a></li>
+                <li class="list-group-item"><a href="https://linkedin.com/in/tsunghua"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
+              </ul>
+            </li>
+
+
+
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                </ul>
+            </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Andrew Tsai
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>
