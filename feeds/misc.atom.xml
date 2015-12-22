@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="/" rel="alternate"></link><link href="/feeds/misc.atom.xml" rel="self"></link><id>/</id><updated>2015-09-01T00:00:00+08:00</updated><entry><title>Manage project packages with virtualenv</title><link href="/manage-project-packages-with-virtualenv.html" rel="alternate"></link><updated>2015-09-01T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-09-01:manage-project-packages-with-virtualenv.html</id><summary type="html">&lt;p&gt;While developing two or more projects at the same time,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/misc.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2015-09-01T00:00:00+08:00</updated><entry><title>Manage project packages with virtualenv</title><link href="http://tsaith.github.io/manage-project-packages-with-virtualenv.html" rel="alternate"></link><updated>2015-09-01T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-09-01:manage-project-packages-with-virtualenv.html</id><summary type="html">&lt;p&gt;While developing two or more projects at the same time,
 it is unavoidable to switch among projects which may use the same python package of different version.
 In order to resolve the headache of package management,
 &lt;a href="https://virtualenv.pypa.io/en/latest/"&gt;virtualenv&lt;/a&gt; is designed to create isolated python environments.&lt;/p&gt;
@@ -41,7 +41,7 @@ In order to resolve the headache of package management,
 
 &lt;p&gt;To work on a existed project :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;workon project_name
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category></entry><entry><title>Create a user account to deploy production on ubuntu</title><link href="/create-a-user-account-to-deploy-production-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-30:create-a-user-account-to-deploy-production-on-ubuntu.html</id><summary type="html">&lt;p&gt;On production server, it is a good practice to create a user account (named &lt;code&gt;deployer&lt;/code&gt;) which is supposed to take care jobs of deployment. The steps are described as following.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category></entry><entry><title>Create a user account to deploy production on ubuntu</title><link href="http://tsaith.github.io/create-a-user-account-to-deploy-production-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-03-30:create-a-user-account-to-deploy-production-on-ubuntu.html</id><summary type="html">&lt;p&gt;On production server, it is a good practice to create a user account (named &lt;code&gt;deployer&lt;/code&gt;) which is supposed to take care jobs of deployment. The steps are described as following.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Log in the server as &lt;code&gt;root&lt;/code&gt; via &lt;code&gt;ssh&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -144,13 +144,13 @@ chmod 700 ~/.ssh
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Execute &lt;code&gt;Ctrl-x&lt;/code&gt; -&amp;gt; &lt;code&gt;Y&lt;/code&gt; -&amp;gt; &lt;code&gt;Enter&lt;/code&gt; to save and exit file.&lt;/p&gt;</summary><category term="linux"></category></entry><entry><title>Vi-mode in command-line and Rails Console</title><link href="/vi-mode-in-command-line-and-rails-console.html" rel="alternate"></link><updated>2015-02-19T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-19:vi-mode-in-command-line-and-rails-console.html</id><summary type="html">&lt;p&gt;Since both command-line and rails console treat characters with &lt;code&gt;readline&lt;/code&gt;,
+&lt;p&gt;Execute &lt;code&gt;Ctrl-x&lt;/code&gt; -&amp;gt; &lt;code&gt;Y&lt;/code&gt; -&amp;gt; &lt;code&gt;Enter&lt;/code&gt; to save and exit file.&lt;/p&gt;</summary><category term="linux"></category></entry><entry><title>Vi-mode in command-line and Rails Console</title><link href="http://tsaith.github.io/vi-mode-in-command-line-and-rails-console.html" rel="alternate"></link><updated>2015-02-19T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-19:vi-mode-in-command-line-and-rails-console.html</id><summary type="html">&lt;p&gt;Since both command-line and rails console treat characters with &lt;code&gt;readline&lt;/code&gt;,
 we can add the line below in &lt;code&gt;~/.inputrc&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;set editing-mode vi
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;to switch from the default &lt;code&gt;emacs-mode&lt;/code&gt; to &lt;code&gt;vi-mode&lt;/code&gt;.&lt;/p&gt;</summary><category term="rails"></category><category term="vim"></category><category term="emacs"></category></entry><entry><title>使用 Percol 進行模糊搜尋</title><link href="/shi-yong-percol-jin-xing-mo-hu-sou-xun.html" rel="alternate"></link><updated>2015-01-12T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-12:shi-yong-percol-jin-xing-mo-hu-sou-xun.html</id><summary type="html">&lt;p&gt;在開發專案時，我們常常需要在眾多資料夾下搜尋某個檔案，
+&lt;p&gt;to switch from the default &lt;code&gt;emacs-mode&lt;/code&gt; to &lt;code&gt;vi-mode&lt;/code&gt;.&lt;/p&gt;</summary><category term="rails"></category><category term="vim"></category><category term="emacs"></category></entry><entry><title>使用 Percol 進行模糊搜尋</title><link href="http://tsaith.github.io/shi-yong-percol-jin-xing-mo-hu-sou-xun.html" rel="alternate"></link><updated>2015-01-12T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-12:shi-yong-percol-jin-xing-mo-hu-sou-xun.html</id><summary type="html">&lt;p&gt;在開發專案時，我們常常需要在眾多資料夾下搜尋某個檔案，
 可是往往卻無法記得完整的檔案名稱，或是找到檔案後，
 希望能快速地將檔案路徑貼到其他應用程式上面。
 針對以上的問題，
@@ -285,7 +285,7 @@ function ppkill() {
 &lt;p&gt;&lt;img src="https://farm9.staticflickr.com/8659/16260930815_87c4d30484_b.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;直接執行 &lt;code&gt;h&lt;/code&gt;，可搜尋並拷貝歷史命令。
 &lt;img src="https://farm9.staticflickr.com/8644/15641025303_2ca6346fb7_b.jpg"&gt;&lt;/p&gt;
-&lt;p&gt;如果想強制離開搜尋畫面，請按 &lt;code&gt;Ctrl&lt;/code&gt;+ &lt;code&gt;c&lt;/code&gt;。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>在 Emacs 中使用 Vim: Evil</title><link href="/zai-emacs-zhong-shi-yong-vim-evil.html" rel="alternate"></link><updated>2015-01-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-05:zai-emacs-zhong-shi-yong-vim-evil.html</id><summary type="html">&lt;p&gt;過去十多年來，
+&lt;p&gt;如果想強制離開搜尋畫面，請按 &lt;code&gt;Ctrl&lt;/code&gt;+ &lt;code&gt;c&lt;/code&gt;。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>在 Emacs 中使用 Vim: Evil</title><link href="http://tsaith.github.io/zai-emacs-zhong-shi-yong-vim-evil.html" rel="alternate"></link><updated>2015-01-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-05:zai-emacs-zhong-shi-yong-vim-evil.html</id><summary type="html">&lt;p&gt;過去十多年來，
 Vim 一直都是筆者最喜愛的文字編輯器，
 然而就像其他許多資深的 Vim 使用者，
 我也總是對另一套神器 Emacs 感到好奇;
@@ -312,7 +312,7 @@ Vim 因為支援許多單鍵的編輯功能，
 
 
 &lt;h3&gt;使用方法&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;z&lt;/code&gt;: 在 Emacs 和 Vim 之間切接&lt;/p&gt;</summary><category term="emacs"></category></entry><entry><title>編輯器: Emacs</title><link href="/bian-ji-qi-emacs.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-03:bian-ji-qi-emacs.html</id><summary type="html">&lt;p&gt;GNU 計劃創始人 &lt;a href="http://zh.wikipedia.org/wiki/%E7%90%86%E6%9F%A5%E5%BE%B7%C2%B7%E6%96%AF%E6%89%98%E6%9B%BC"&gt;Richard Stallman&lt;/a&gt; 和 &lt;a href="http://zh.wikipedia.org/wiki/%E8%93%8B%E4%BC%8A%C2%B7%E5%8F%B2%E6%8F%90%E7%88%BE%E4%BA%8C%E4%B8%96"&gt;Guy Lewis Steele Jr.&lt;/a&gt; 在1975 年共同打造了 &lt;a href="http://zh.wikipedia.org/wiki/Emacs"&gt;Emacs&lt;/a&gt; (Editor MACroS)，
+&lt;p&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;z&lt;/code&gt;: 在 Emacs 和 Vim 之間切接&lt;/p&gt;</summary><category term="emacs"></category></entry><entry><title>編輯器: Emacs</title><link href="http://tsaith.github.io/bian-ji-qi-emacs.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-03:bian-ji-qi-emacs.html</id><summary type="html">&lt;p&gt;GNU 計劃創始人 &lt;a href="http://zh.wikipedia.org/wiki/%E7%90%86%E6%9F%A5%E5%BE%B7%C2%B7%E6%96%AF%E6%89%98%E6%9B%BC"&gt;Richard Stallman&lt;/a&gt; 和 &lt;a href="http://zh.wikipedia.org/wiki/%E8%93%8B%E4%BC%8A%C2%B7%E5%8F%B2%E6%8F%90%E7%88%BE%E4%BA%8C%E4%B8%96"&gt;Guy Lewis Steele Jr.&lt;/a&gt; 在1975 年共同打造了 &lt;a href="http://zh.wikipedia.org/wiki/Emacs"&gt;Emacs&lt;/a&gt; (Editor MACroS)，
 Emacs 使用 &lt;a href="http://zh.wikipedia.org/wiki/LISP"&gt;Lisp&lt;/a&gt; 作為功能擴充語言，
 具有強大的擴展性，與可客製性，
 還有各式各樣好用的套件，
@@ -480,7 +480,7 @@ Emacs 使用 &lt;a href="http://zh.wikipedia.org/wiki/LISP"&gt;Lisp&lt;/a&gt; �
 &lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;o&lt;/code&gt; 尋找 log&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;c&lt;/code&gt; 啟動 console&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;w&lt;/code&gt; 啟動 web-server&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="emacs"></category></entry><entry><title>編輯器: Vim</title><link href="/bian-ji-qi-vim.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-03:bian-ji-qi-vim.html</id><summary type="html">&lt;p&gt;在編程領域中，
+&lt;/ul&gt;</summary><category term="emacs"></category></entry><entry><title>編輯器: Vim</title><link href="http://tsaith.github.io/bian-ji-qi-vim.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-03:bian-ji-qi-vim.html</id><summary type="html">&lt;p&gt;在編程領域中，
 &lt;a href="http://zh.wikipedia.org/wiki/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B%E6%88%98"&gt;編輯器之戰&lt;/a&gt;的兩位主角
 &lt;a href="http://zh.wikipedia.org/wiki/Vi"&gt;Vi&lt;/a&gt; 和
 &lt;a href="http://zh.wikipedia.org/wiki/Emacs"&gt;Emacs&lt;/a&gt; 經歷幾十年的歲月後，
@@ -670,7 +670,7 @@ Rails 套件(語法顏色，快速切換檔案... 等)&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;Tab&lt;/code&gt; 補全程式碼&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;雖然 Vim 對初學者而言需要投入多一些的時間來熟悉，
-但只要上手後， 就會大幅提升你的編程效率。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Bash 中常用的快捷鍵</title><link href="/bash-zhong-chang-yong-de-kuai-jie-jian.html" rel="alternate"></link><updated>2014-12-16T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-16:bash-zhong-chang-yong-de-kuai-jie-jian.html</id><summary type="html">&lt;p&gt;目前 Mac 預設的 shell 是 Bash，這裡列出一些常用的快捷鍵。&lt;/p&gt;
+但只要上手後， 就會大幅提升你的編程效率。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Bash 中常用的快捷鍵</title><link href="http://tsaith.github.io/bash-zhong-chang-yong-de-kuai-jie-jian.html" rel="alternate"></link><updated>2014-12-16T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-16:bash-zhong-chang-yong-de-kuai-jie-jian.html</id><summary type="html">&lt;p&gt;目前 Mac 預設的 shell 是 Bash，這裡列出一些常用的快捷鍵。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;a&lt;/code&gt;: 將游標移到開頭&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;e&lt;/code&gt;: 將游標移到結尾&lt;/li&gt;
@@ -685,7 +685,7 @@ Rails 套件(語法顏色，快速切換檔案... 等)&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;d&lt;/code&gt;: 刪除游標後的一個字元&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;c&lt;/code&gt;: 中斷執行&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;z&lt;/code&gt;: 暫停程序並將它丟到背景&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>iTerm2 中好用的設定</title><link href="/iterm2-zhong-hao-yong-de-she-ding.html" rel="alternate"></link><updated>2014-12-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-05:iterm2-zhong-hao-yong-de-she-ding.html</id><summary type="html">&lt;p&gt;&lt;a href="http://iterm2.com/"&gt;iTerm2&lt;/a&gt; 被設計用來取代 Mac 內建的 Terminal;
+&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>iTerm2 中好用的設定</title><link href="http://tsaith.github.io/iterm2-zhong-hao-yong-de-she-ding.html" rel="alternate"></link><updated>2014-12-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-05:iterm2-zhong-hao-yong-de-she-ding.html</id><summary type="html">&lt;p&gt;&lt;a href="http://iterm2.com/"&gt;iTerm2&lt;/a&gt; 被設計用來取代 Mac 內建的 Terminal;
 這裡記錄了我個人的一些偏好設定。&lt;/p&gt;
 &lt;h3&gt;偏好設定&lt;/h3&gt;
 &lt;p&gt;以下的偏好都可以在 Preference 裡面進行設定&lt;/p&gt;
@@ -712,7 +712,7 @@ Rails 套件(語法顏色，快速切換檔案... 等)&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;alt&lt;/code&gt; + &lt;code&gt;Space&lt;/code&gt; 快速隱藏/顯示 iTerm2&lt;/p&gt;
 &lt;p&gt;Profile -&amp;gt; Keys -&amp;gt; Show/hide iTerm2 with a system-wide hotkey&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>Vim 的常用指令</title><link href="/vim-de-chang-yong-zhi-ling.html" rel="alternate"></link><updated>2014-11-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-03:vim-de-chang-yong-zhi-ling.html</id><summary type="html">&lt;p&gt;在編程領域中，
+&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>Vim 的常用指令</title><link href="http://tsaith.github.io/vim-de-chang-yong-zhi-ling.html" rel="alternate"></link><updated>2014-11-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-03:vim-de-chang-yong-zhi-ling.html</id><summary type="html">&lt;p&gt;在編程領域中，
 &lt;a href="http://zh.wikipedia.org/wiki/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B%E6%88%98"&gt;編輯器之戰&lt;/a&gt;的兩位主角 &lt;a href="http://zh.wikipedia.org/wiki/Vi"&gt;Vi&lt;/a&gt; 和
 &lt;a href="http://zh.wikipedia.org/wiki/Emacs"&gt;Emacs&lt;/a&gt; 經歷幾十年的歲月後，
 直到現在依然擁有許多信徒;
@@ -825,7 +825,7 @@ Rails 套件(語法顏色，快速切換檔案... 等)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;雖然 Vim 對初學者而言需要投入多一些的時間來熟悉，但只要上手後，
-就會大幅提升你的編程效率。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Homebrew: Mac 專屬的套件管理者</title><link href="/homebrew-mac-zhuan-shu-de-tao-jian-guan-li-zhe.html" rel="alternate"></link><updated>2014-10-28T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-28:homebrew-mac-zhuan-shu-de-tao-jian-guan-li-zhe.html</id><summary type="html">&lt;p&gt;每一位軟體開發者肯定都需要安裝許多套件來打造所需的開發環境，
+就會大幅提升你的編程效率。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Homebrew: Mac 專屬的套件管理者</title><link href="http://tsaith.github.io/homebrew-mac-zhuan-shu-de-tao-jian-guan-li-zhe.html" rel="alternate"></link><updated>2014-10-28T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-28:homebrew-mac-zhuan-shu-de-tao-jian-guan-li-zhe.html</id><summary type="html">&lt;p&gt;每一位軟體開發者肯定都需要安裝許多套件來打造所需的開發環境，
 而各種套件的版本和相依性一直以來都是件讓人頭痛的問題;
 為了讓 Mac 使用者不再總是為此煩惱， 
 於是有了 &lt;a href="http://brew.sh/"&gt;Homebrew&lt;/a&gt; 的產生。&lt;/p&gt;

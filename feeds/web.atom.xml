@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="/" rel="alternate"></link><link href="/feeds/web.atom.xml" rel="self"></link><id>/</id><updated>2015-05-11T00:00:00+08:00</updated><entry><title>Create an IAM user for ElasticBeanstalk</title><link href="/create-an-iam-user-for-elasticbeanstalk.html" rel="alternate"></link><updated>2015-05-11T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-05-11:create-an-iam-user-for-elasticbeanstalk.html</id><summary type="html">&lt;p&gt;To use AWS &lt;a href="http://docs.aws.amazon.com/elasticbeanstalk"&gt;ElasticBeanstalk&lt;/a&gt;,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/web.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2015-05-11T00:00:00+08:00</updated><entry><title>Create an IAM user for ElasticBeanstalk</title><link href="http://tsaith.github.io/create-an-iam-user-for-elasticbeanstalk.html" rel="alternate"></link><updated>2015-05-11T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-05-11:create-an-iam-user-for-elasticbeanstalk.html</id><summary type="html">&lt;p&gt;To use AWS &lt;a href="http://docs.aws.amazon.com/elasticbeanstalk"&gt;ElasticBeanstalk&lt;/a&gt;,
 we have to create a &lt;a href="http://aws.amazon.com/iam/"&gt;IAM&lt;/a&gt; user first.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -18,7 +18,7 @@ we have to create a &lt;a href="http://aws.amazon.com/iam/"&gt;IAM&lt;/a&gt; use
 &lt;p&gt;Under &lt;code&gt;Users&lt;/code&gt;, add the user to the group &lt;code&gt;ElasticBeanstalkFullAccess&lt;/code&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;From now on, you should be able to use ElasticBeanstalk with the security credentials downloaded.&lt;/p&gt;</summary><category term="aws"></category></entry><entry><title>Set up a postgres-backed rails app with ElasticBeanstalk</title><link href="/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html" rel="alternate"></link><updated>2015-05-11T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-05-11:set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html</id><summary type="html">&lt;p&gt;This article will describe the way I set up a Rails app with ElasticBeanstalk and PostgresSQL.
+&lt;p&gt;From now on, you should be able to use ElasticBeanstalk with the security credentials downloaded.&lt;/p&gt;</summary><category term="aws"></category></entry><entry><title>Set up a postgres-backed rails app with ElasticBeanstalk</title><link href="http://tsaith.github.io/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html" rel="alternate"></link><updated>2015-05-11T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-05-11:set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html</id><summary type="html">&lt;p&gt;This article will describe the way I set up a Rails app with ElasticBeanstalk and PostgresSQL.
 Here Rails 4.1 based on &lt;a href="https://github.com/puma/puma"&gt;Puma&lt;/a&gt; 2.10.2 and &lt;a href="http://nginx.org/"&gt;Nginx&lt;/a&gt; 1.6.2 is demonstrated.&lt;/p&gt;
 &lt;h3&gt;Install ElasticBeanstalk CLI&lt;/h3&gt;
 &lt;p&gt;AWS provides both &lt;a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/GettingStarted.UsingAEB.html#GettingStarted.UsingAEB.console"&gt;Management Console&lt;/a&gt; and &lt;a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-reference-get-started.html"&gt;EB CLI&lt;/a&gt; to work with ElasticBeanstalk.&lt;/p&gt;
@@ -147,7 +147,7 @@ git commit -m &amp;quot;Update database.yml&amp;quot;
 
 &lt;p&gt;To open the app URL in a browser, simply execute&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;eb open
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Wait for Ajax with Capybara Automatically</title><link href="/wait-for-ajax-with-capybara-automatically.html" rel="alternate"></link><updated>2015-05-06T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-05-06:wait-for-ajax-with-capybara-automatically.html</id><summary type="html">&lt;p&gt;While writing feature tests involved in Ajax, we have to resolve race condition from time to time. Let's see the following code as an example.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Wait for Ajax with Capybara Automatically</title><link href="http://tsaith.github.io/wait-for-ajax-with-capybara-automatically.html" rel="alternate"></link><updated>2015-05-06T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-05-06:wait-for-ajax-with-capybara-automatically.html</id><summary type="html">&lt;p&gt;While writing feature tests involved in Ajax, we have to resolve race condition from time to time. Let's see the following code as an example.&lt;/p&gt;
 &lt;p&gt;spec/features/admin_deletes_product_spec.rb:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;spec_helper.rb&amp;#39;&lt;/span&gt;
 
@@ -190,7 +190,7 @@ git commit -m &amp;quot;Update database.yml&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;More discussion about this issue can be found in Thoughtbot's &lt;a href="https://robots.thoughtbot.com/automatically-wait-for-ajax-with-capybara"&gt;post&lt;/a&gt;.&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>Install rbenv and rails on ubuntu</title><link href="/install-rbenv-and-rails-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-30:install-rbenv-and-rails-on-ubuntu.html</id><summary type="html">&lt;p&gt;This article will describe how to install &lt;a href="https://github.com/sstephenson/rbenv"&gt;rbenv&lt;/a&gt;, &lt;a href="http://rubyonrails.org/"&gt;rails&lt;/a&gt; and some useful libraries on a production server of &lt;a href="http://www.ubuntu.com/"&gt;ubuntu&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;More discussion about this issue can be found in Thoughtbot's &lt;a href="https://robots.thoughtbot.com/automatically-wait-for-ajax-with-capybara"&gt;post&lt;/a&gt;.&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>Install rbenv and rails on ubuntu</title><link href="http://tsaith.github.io/install-rbenv-and-rails-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-03-30:install-rbenv-and-rails-on-ubuntu.html</id><summary type="html">&lt;p&gt;This article will describe how to install &lt;a href="https://github.com/sstephenson/rbenv"&gt;rbenv&lt;/a&gt;, &lt;a href="http://rubyonrails.org/"&gt;rails&lt;/a&gt; and some useful libraries on a production server of &lt;a href="http://www.ubuntu.com/"&gt;ubuntu&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Assuming that, on a fresh ubuntu, we have just built and logged in with a user account named &lt;code&gt;deployer&lt;/code&gt;.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Update apt-get&lt;/li&gt;
@@ -349,7 +349,7 @@ psql
 ALTER USER deployer WITH SUPERUSER;
 \q
 exit
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Install Sidekiq and Redis on Ubuntu</title><link href="/install-sidekiq-and-redis-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-30:install-sidekiq-and-redis-on-ubuntu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://sidekiq.org/"&gt;Sidekiq&lt;/a&gt; is a efficient tool to take care backgroud jobs of rails and reuired the support of &lt;a href="http://redis.io/"&gt;Redis&lt;/a&gt;.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Install Sidekiq and Redis on Ubuntu</title><link href="http://tsaith.github.io/install-sidekiq-and-redis-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-03-30:install-sidekiq-and-redis-on-ubuntu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://sidekiq.org/"&gt;Sidekiq&lt;/a&gt; is a efficient tool to take care backgroud jobs of rails and reuired the support of &lt;a href="http://redis.io/"&gt;Redis&lt;/a&gt;.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Switch to &lt;code&gt;root&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -527,7 +527,7 @@ oldsig &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt
 &lt;div class="highlight"&gt;&lt;pre&gt;chmod 755 sidekiq
 update-rc.d sidekiq defaults 99
 service sidekiq restart
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Setting up a rails production server on Ubuntu</title><link href="/setting-up-a-rails-production-server-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-30:setting-up-a-rails-production-server-on-ubuntu.html</id><summary type="html">&lt;p&gt;In this article, the steps to set up a rails production server based on &lt;a href="https://www.digitalocean.com/"&gt;DigitalOcean&lt;/a&gt; VPS of Ubuntu 14.04 x64 are recorded as following.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Setting up a rails production server on Ubuntu</title><link href="http://tsaith.github.io/setting-up-a-rails-production-server-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-03-30:setting-up-a-rails-production-server-on-ubuntu.html</id><summary type="html">&lt;p&gt;In this article, the steps to set up a rails production server based on &lt;a href="https://www.digitalocean.com/"&gt;DigitalOcean&lt;/a&gt; VPS of Ubuntu 14.04 x64 are recorded as following.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="create-a-user-account-to-deploy-production-on-ubuntu"&gt;Create a user account to deploy production&lt;/a&gt;&lt;/p&gt;
@@ -544,7 +544,7 @@ service sidekiq restart
 &lt;li&gt;
 &lt;p&gt;&lt;a href="setting-up-logrotate-for-production-server"&gt;Setting up Logrotate&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="rails"></category></entry><entry><title>Setting up logrotate for production server</title><link href="/setting-up-logrotate-for-production-server.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-30:setting-up-logrotate-for-production-server.html</id><summary type="html">&lt;p&gt;This article will demonstrate how to use &lt;a href="http://manpages.ubuntu.com/manpages/utopic/man8/logrotate.8.html"&gt;logrotate&lt;/a&gt; to maintain log files of rails.&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="rails"></category></entry><entry><title>Setting up logrotate for production server</title><link href="http://tsaith.github.io/setting-up-logrotate-for-production-server.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-03-30:setting-up-logrotate-for-production-server.html</id><summary type="html">&lt;p&gt;This article will demonstrate how to use &lt;a href="http://manpages.ubuntu.com/manpages/utopic/man8/logrotate.8.html"&gt;logrotate&lt;/a&gt; to maintain log files of rails.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Switch to &lt;code&gt;root&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -577,7 +577,7 @@ create &lt;code&gt;/etc/logrotate.d/rails&lt;/code&gt; with following content:&l
 
 &lt;p&gt;You may execute the command below for testing&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;logrotate -vf /etc/logrotate.conf
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Setting up Nginx+Unicorn production server</title><link href="/setting-up-nginxunicorn-production-server.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-30:setting-up-nginxunicorn-production-server.html</id><summary type="html">&lt;p&gt;This article will describe how to install and configure &lt;a href="http://nginx.org/"&gt;Nginx&lt;/a&gt; with &lt;a href="http://unicorn.bogomips.org/"&gt;Unicorn&lt;/a&gt; to build a concurrent rails server based on Ubuntu.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Setting up Nginx+Unicorn production server</title><link href="http://tsaith.github.io/setting-up-nginxunicorn-production-server.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-03-30:setting-up-nginxunicorn-production-server.html</id><summary type="html">&lt;p&gt;This article will describe how to install and configure &lt;a href="http://nginx.org/"&gt;Nginx&lt;/a&gt; with &lt;a href="http://unicorn.bogomips.org/"&gt;Unicorn&lt;/a&gt; to build a concurrent rails server based on Ubuntu.&lt;/p&gt;
 &lt;p&gt;Assume that we have logged in with a user account named &lt;code&gt;deployer&lt;/code&gt;.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Install Unicorn&lt;/li&gt;
@@ -943,7 +943,7 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 rm default
 ln -s ../sites-available/myflix myflix
 service nginx restart
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Deploy production with Capistrano</title><link href="/deploy-production-with-capistrano.html" rel="alternate"></link><updated>2015-03-19T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-19:deploy-production-with-capistrano.html</id><summary type="html">&lt;p&gt;This article will describe how to deploy production with &lt;a href="https://github.com/capistrano/rails/"&gt;Capistrano&lt;/a&gt;.
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Deploy production with Capistrano</title><link href="http://tsaith.github.io/deploy-production-with-capistrano.html" rel="alternate"></link><updated>2015-03-19T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-03-19:deploy-production-with-capistrano.html</id><summary type="html">&lt;p&gt;This article will describe how to deploy production with &lt;a href="https://github.com/capistrano/rails/"&gt;Capistrano&lt;/a&gt;.
 The &lt;a href="http://capistranorb.com/"&gt;official site&lt;/a&gt; provides useful explanations on the usage and structure of capistrano.&lt;/p&gt;
 &lt;p&gt;Here we assume that you are already able to login your production server with SSH key.&lt;/p&gt;
 &lt;h3&gt;Installation&lt;/h3&gt;
@@ -1034,7 +1034,7 @@ cap install
 
 &lt;p&gt;Now, we can check if we have enough writing permissions on the production server by executing:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;cap production check_write_permissions
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Is your site accessible from China?</title><link href="/is-your-site-accessible-from-china.html" rel="alternate"></link><updated>2015-02-28T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-28:is-your-site-accessible-from-china.html</id><summary type="html">&lt;p&gt;The following sites provide conivient tools to detect if your site is blocked from the firewall of China.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Is your site accessible from China?</title><link href="http://tsaith.github.io/is-your-site-accessible-from-china.html" rel="alternate"></link><updated>2015-02-28T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-28:is-your-site-accessible-from-china.html</id><summary type="html">&lt;p&gt;The following sites provide conivient tools to detect if your site is blocked from the firewall of China.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="http://www.websitepulse.com/help/testtools.china-test.html"&gt;WebSitePulse&lt;/a&gt;&lt;/p&gt;
@@ -1042,7 +1042,7 @@ cap install
 &lt;li&gt;
 &lt;p&gt;&lt;a href="https://zh.greatfire.org/"&gt;GreatFire&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>Custom domain for your app on Heroku</title><link href="/custom-domain-for-your-app-on-heroku.html" rel="alternate"></link><updated>2015-02-18T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-18:custom-domain-for-your-app-on-heroku.html</id><summary type="html">&lt;p&gt;First of all, apply a domain from any DNS provider like &lt;a href="http://www.godaddy.com"&gt;Godaddy&lt;/a&gt;.&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>Custom domain for your app on Heroku</title><link href="http://tsaith.github.io/custom-domain-for-your-app-on-heroku.html" rel="alternate"></link><updated>2015-02-18T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-18:custom-domain-for-your-app-on-heroku.html</id><summary type="html">&lt;p&gt;First of all, apply a domain from any DNS provider like &lt;a href="http://www.godaddy.com"&gt;Godaddy&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;To add a domain to your app, please execute the following command under the project directory.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;heroku domains:add www.example.com
 &lt;/pre&gt;&lt;/div&gt;
@@ -1050,7 +1050,7 @@ cap install
 
 &lt;p&gt;To remove the domain from your app, please execute&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;heroku domains:remove www.example.com
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>Adding google analytics to octopress</title><link href="/adding-google-analytics-to-octopress.html" rel="alternate"></link><updated>2015-02-16T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-16:adding-google-analytics-to-octopress.html</id><summary type="html">&lt;p&gt;Go to Google Analytics to get the tracking id.
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>Adding google analytics to octopress</title><link href="http://tsaith.github.io/adding-google-analytics-to-octopress.html" rel="alternate"></link><updated>2015-02-16T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-16:adding-google-analytics-to-octopress.html</id><summary type="html">&lt;p&gt;Go to Google Analytics to get the tracking id.
 Then, set the valud of &lt;code&gt;google_analytics_tracking_id&lt;/code&gt; in the &lt;code&gt;_config.yml&lt;/code&gt; of Octopress.&lt;/p&gt;
 &lt;p&gt;_config.yml:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;# Google Analytics
@@ -1079,7 +1079,7 @@ please also add one line in the &lt;code&gt;source/_includes/google_analytics.ht
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;After publishing above settings, you are ready to view the traffic status in google analytics.&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>在 Rails 中安裝與設定 Bootstrap</title><link href="/zai-rails-zhong-an-zhuang-yu-she-ding-bootstrap.html" rel="alternate"></link><updated>2015-02-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-13:zai-rails-zhong-an-zhuang-yu-she-ding-bootstrap.html</id><summary type="html">&lt;p&gt;&lt;a href="http://getbootstrap.com/"&gt;Bootstrap&lt;/a&gt; 是目前相當受歡迎的前端開發框架，提供了許多現成的元件，幫助人們可以快速設計網站頁面，
+&lt;p&gt;After publishing above settings, you are ready to view the traffic status in google analytics.&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>在 Rails 中安裝與設定 Bootstrap</title><link href="http://tsaith.github.io/zai-rails-zhong-an-zhuang-yu-she-ding-bootstrap.html" rel="alternate"></link><updated>2015-02-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-13:zai-rails-zhong-an-zhuang-yu-she-ding-bootstrap.html</id><summary type="html">&lt;p&gt;&lt;a href="http://getbootstrap.com/"&gt;Bootstrap&lt;/a&gt; 是目前相當受歡迎的前端開發框架，提供了許多現成的元件，幫助人們可以快速設計網站頁面，
 此外還提供 Responsive Web Design 的功能，
 讓網頁可以自動在不同尺寸的裝置上縮放;
 以下將介紹如何在 Rails 中進行 Bootstrap 的安裝與設定。&lt;/p&gt;
@@ -1152,7 +1152,7 @@ please also add one line in the &lt;code&gt;source/_includes/google_analytics.ht
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;完成以上的設定後，我們就可以開始使用 &lt;code&gt;Bootstrap&lt;/code&gt; 的各種功能來進行網頁的設計。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中處理信用卡付款失敗</title><link href="/zai-rails-zhong-chu-li-xin-yong-qia-fu-kuan-shi-bai.html" rel="alternate"></link><updated>2015-02-10T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-10:zai-rails-zhong-chu-li-xin-yong-qia-fu-kuan-shi-bai.html</id><summary type="html">&lt;p&gt;這篇文章將以 &lt;a href="/blog/2015/01/17/use-stripe-checkout-to-charge-credit-card"&gt;Stripe&lt;/a&gt; 金流服務為例，
+&lt;p&gt;完成以上的設定後，我們就可以開始使用 &lt;code&gt;Bootstrap&lt;/code&gt; 的各種功能來進行網頁的設計。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中處理信用卡付款失敗</title><link href="http://tsaith.github.io/zai-rails-zhong-chu-li-xin-yong-qia-fu-kuan-shi-bai.html" rel="alternate"></link><updated>2015-02-10T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-10:zai-rails-zhong-chu-li-xin-yong-qia-fu-kuan-shi-bai.html</id><summary type="html">&lt;p&gt;這篇文章將以 &lt;a href="/blog/2015/01/17/use-stripe-checkout-to-charge-credit-card"&gt;Stripe&lt;/a&gt; 金流服務為例，
 示範當付款失敗時，如何暫停使用者帳號。&lt;/p&gt;
 &lt;h3&gt;安裝套件&lt;/h3&gt;
 &lt;p&gt;在 Gemfile 裡面加入&lt;/p&gt;
@@ -1247,7 +1247,7 @@ please also add one line in the &lt;code&gt;source/_includes/google_analytics.ht
 
 &lt;h3&gt;設定 Stripe webhook requests&lt;/h3&gt;
 &lt;p&gt;最後在 Stripe 的 &lt;a href="https://dashboard.stripe.com/account/webhooks"&gt;Webhook Settings&lt;/a&gt; 新增欲接收 webhook requests 的 URL;
-詳細的說明可以參考&lt;a href="/blog/2015/02/07/admin-views-payments"&gt;先前的文章&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>查看交易記錄的後台功能</title><link href="/cha-kan-jiao-yi-ji-lu-de-hou-tai-gong-neng.html" rel="alternate"></link><updated>2015-02-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-07:cha-kan-jiao-yi-ji-lu-de-hou-tai-gong-neng.html</id><summary type="html">&lt;p&gt;這裡將以 &lt;a href="/blog/2015/01/17/use-stripe-checkout-to-charge-credit-card"&gt;Stripe&lt;/a&gt; 金流服務為例，
+詳細的說明可以參考&lt;a href="/blog/2015/02/07/admin-views-payments"&gt;先前的文章&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>查看交易記錄的後台功能</title><link href="http://tsaith.github.io/cha-kan-jiao-yi-ji-lu-de-hou-tai-gong-neng.html" rel="alternate"></link><updated>2015-02-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-07:cha-kan-jiao-yi-ji-lu-de-hou-tai-gong-neng.html</id><summary type="html">&lt;p&gt;這裡將以 &lt;a href="/blog/2015/01/17/use-stripe-checkout-to-charge-credit-card"&gt;Stripe&lt;/a&gt; 金流服務為例，
 介紹如何為網站後台新增查看交易記錄的功能。&lt;/p&gt;
 &lt;h3&gt;安裝套件&lt;/h3&gt;
 &lt;p&gt;在 Gemfile 裡面加入&lt;/p&gt;
@@ -1362,7 +1362,7 @@ please also add one line in the &lt;code&gt;source/_includes/google_analytics.ht
 &lt;p&gt;&lt;img src="https://farm8.staticflickr.com/7324/15871057173_cc829aee26_b.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;在本機開發時，
 可以使用免費的 &lt;a href="https://ngrok.com/"&gt;ngrok&lt;/a&gt; 服務產生 public 位址，
-以接收 webhook requests 進行測試。&lt;/p&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>依照簽署方案進行收費</title><link href="/yi-zhao-qian-shu-fang-an-jin-xing-shou-fei.html" rel="alternate"></link><updated>2015-02-06T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-06:yi-zhao-qian-shu-fang-an-jin-xing-shou-fei.html</id><summary type="html">&lt;p&gt;假設我們現在想為網站開發收費機制，
+以接收 webhook requests 進行測試。&lt;/p&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>依照簽署方案進行收費</title><link href="http://tsaith.github.io/yi-zhao-qian-shu-fang-an-jin-xing-shou-fei.html" rel="alternate"></link><updated>2015-02-06T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-06:yi-zhao-qian-shu-fang-an-jin-xing-shou-fei.html</id><summary type="html">&lt;p&gt;假設我們現在想為網站開發收費機制，
 使用者註冊後會立刻索取第一個月的服務費用，
 之後每過一個月，
 系統都會自動向客戶的信用卡帳戶請款。
@@ -1521,7 +1521,7 @@ please also add one line in the &lt;code&gt;source/_includes/google_analytics.ht
     &lt;span class="k"&gt;end&lt;/span&gt;
   &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>使用 Service Objects 編寫註冊服務</title><link href="/shi-yong-service-objects-bian-xie-zhu-ce-fu-wu.html" rel="alternate"></link><updated>2015-02-02T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-02:shi-yong-service-objects-bian-xie-zhu-ce-fu-wu.html</id><summary type="html">&lt;p&gt;開發專案時，我們常常會遇到一種情況，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>使用 Service Objects 編寫註冊服務</title><link href="http://tsaith.github.io/shi-yong-service-objects-bian-xie-zhu-ce-fu-wu.html" rel="alternate"></link><updated>2015-02-02T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-02:shi-yong-service-objects-bian-xie-zhu-ce-fu-wu.html</id><summary type="html">&lt;p&gt;開發專案時，我們常常會遇到一種情況，
 隨著功能不斷地加入，
 Controller 也變得越來越肥胖;
 例如，在下面的 &lt;code&gt;create&lt;/code&gt; 方法中，
@@ -1639,7 +1639,7 @@ Controller 也變得越來越肥胖;
 
 
 &lt;p&gt;如此一來，除了 Controller 變得簡潔，
-也更容易對 &lt;code&gt;create&lt;/code&gt; 和 &lt;code&gt;UserSignup&lt;/code&gt; 編寫測試。&lt;/p&gt;</summary><category term="rails"></category><category term="design pattern"></category></entry><entry><title>使用 Decorator 作為物件的表達層</title><link href="/shi-yong-decorator-zuo-wei-wu-jian-de-biao-da-ceng.html" rel="alternate"></link><updated>2015-02-01T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-01:shi-yong-decorator-zuo-wei-wu-jian-de-biao-da-ceng.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何使用 &lt;a href="http://en.wikipedia.org/wiki/Decorator_pattern"&gt;Decorator Pattern&lt;/a&gt; 的技巧來封裝物件的表達邏輯。&lt;/p&gt;
+也更容易對 &lt;code&gt;create&lt;/code&gt; 和 &lt;code&gt;UserSignup&lt;/code&gt; 編寫測試。&lt;/p&gt;</summary><category term="rails"></category><category term="design pattern"></category></entry><entry><title>使用 Decorator 作為物件的表達層</title><link href="http://tsaith.github.io/shi-yong-decorator-zuo-wei-wu-jian-de-biao-da-ceng.html" rel="alternate"></link><updated>2015-02-01T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-02-01:shi-yong-decorator-zuo-wei-wu-jian-de-biao-da-ceng.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何使用 &lt;a href="http://en.wikipedia.org/wiki/Decorator_pattern"&gt;Decorator Pattern&lt;/a&gt; 的技巧來封裝物件的表達邏輯。&lt;/p&gt;
 &lt;p&gt;假設有個頁面的部分程式碼如下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;header&lt;/span&gt;
   &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;h3&lt;/span&gt; &lt;span class="c1"&gt;#{@video.title}&lt;/span&gt;
@@ -1707,7 +1707,7 @@ Controller 也變得越來越肥胖;
   &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;span&lt;/span&gt; &lt;span class="ss"&gt;Rating&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="vi"&gt;@video&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rating&lt;/span&gt;
 &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nb"&gt;p&lt;/span&gt; &lt;span class="c1"&gt;#{@video.description}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="design pattern"></category></entry><entry><title>在整合測試中執行 Javascript</title><link href="/zai-zheng-he-ce-shi-zhong-zhi-xing-javascript.html" rel="alternate"></link><updated>2015-01-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-30:zai-zheng-he-ce-shi-zhong-zhi-xing-javascript.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何使用 &lt;a href="https://github.com/jnicklas/capybara"&gt;Capybara&lt;/a&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="design pattern"></category></entry><entry><title>在整合測試中執行 Javascript</title><link href="http://tsaith.github.io/zai-zheng-he-ce-shi-zhong-zhi-xing-javascript.html" rel="alternate"></link><updated>2015-01-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-30:zai-zheng-he-ce-shi-zhong-zhi-xing-javascript.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何使用 &lt;a href="https://github.com/jnicklas/capybara"&gt;Capybara&lt;/a&gt;
 來測試內含 &lt;code&gt;javascript&lt;/code&gt; 的頁面。&lt;/p&gt;
 &lt;h3&gt;安裝套件&lt;/h3&gt;
 &lt;p&gt;在 Gemfile 加入&lt;/p&gt;
@@ -1802,7 +1802,7 @@ Capybara 就會自動使用預設的 Selenium 開啓 &lt;a href="https://www.moz
   &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;will use the default js driver&amp;#39;&lt;/span&gt;
   &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;will switch to one specific driver&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:driver&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:selenium&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>在測試中模擬物件行為</title><link href="/zai-ce-shi-zhong-mo-ni-wu-jian-xing-wei.html" rel="alternate"></link><updated>2015-01-27T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-27:zai-ce-shi-zhong-mo-ni-wu-jian-xing-wei.html</id><summary type="html">&lt;p&gt;當我們希望對某個開發中的功能進行測試，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>在測試中模擬物件行為</title><link href="http://tsaith.github.io/zai-ce-shi-zhong-mo-ni-wu-jian-xing-wei.html" rel="alternate"></link><updated>2015-01-27T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-27:zai-ce-shi-zhong-mo-ni-wu-jian-xing-wei.html</id><summary type="html">&lt;p&gt;當我們希望對某個開發中的功能進行測試，
 而那個功能需要其他物件的支援才能工作的話，
 此時可以使用 &lt;code&gt;double&lt;/code&gt; 來&lt;a href="https://relishapp.com/rspec/rspec-mocks/v/2-99/docs/"&gt;模擬&lt;/a&gt;
 週邊物件並定義行為;
@@ -1957,7 +1957,7 @@ Capybara 就會自動使用預設的 Selenium 開啓 &lt;a href="https://www.moz
 &lt;p&gt;在測試中模擬物件的技巧，
 一方面讓我們可以專心地測試正在開發的功能，
 另一方面，也可以縮短呼叫物件時等候回應的時間，
-以提升測試效率。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>獨立的 API 測試</title><link href="/du-li-de-api-ce-shi.html" rel="alternate"></link><updated>2015-01-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-26:du-li-de-api-ce-shi.html</id><summary type="html">&lt;p&gt;撰寫測試時，
+以提升測試效率。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>獨立的 API 測試</title><link href="http://tsaith.github.io/du-li-de-api-ce-shi.html" rel="alternate"></link><updated>2015-01-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-26:du-li-de-api-ce-shi.html</id><summary type="html">&lt;p&gt;撰寫測試時，
 如果需要透過網路來呼叫外部服務的 API (例如信用卡的交易服務)，
 因為 API 的回應通常需要一陣子，
 這將大幅延長測試所需的等候時間;
@@ -2055,7 +2055,7 @@ spec/cassettes
         └── charges_the_card_successfully.yml
 
 &lt;span class="m"&gt;3&lt;/span&gt; directories, &lt;span class="m"&gt;3&lt;/span&gt; files
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>在測試中使用 Database Cleaner</title><link href="/zai-ce-shi-zhong-shi-yong-database-cleaner.html" rel="alternate"></link><updated>2015-01-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-22:zai-ce-shi-zhong-shi-yong-database-cleaner.html</id><summary type="html">&lt;p&gt;通常，我們在執行自動測試時，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>在測試中使用 Database Cleaner</title><link href="http://tsaith.github.io/zai-ce-shi-zhong-shi-yong-database-cleaner.html" rel="alternate"></link><updated>2015-01-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-22:zai-ce-shi-zhong-shi-yong-database-cleaner.html</id><summary type="html">&lt;p&gt;通常，我們在執行自動測試時，
 會希望資料庫裡面沒有之前剩餘的記錄，
 不然很容易導致難以發現的錯誤。
 這裡將介紹如何使用 &lt;a href="https://github.com/DatabaseCleaner/database_cleaner/"&gt;Database Cleaner&lt;/a&gt;，
@@ -2110,7 +2110,7 @@ spec/cassettes
 
 
 &lt;p&gt;若不清楚上述設定的意義，
-可以參考 Avdi Grimm 的&lt;a href="http://devblog.avdi.org/2012/08/31/configuring-database_cleaner-with-rails-rspec-capybara-and-selenium/"&gt;原文&lt;/a&gt;，其中有詳細的說明。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>信用卡交易服務: Stripe</title><link href="/xin-yong-qia-jiao-yi-fu-wu-stripe.html" rel="alternate"></link><updated>2015-01-17T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-17:xin-yong-qia-jiao-yi-fu-wu-stripe.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何在 Rails 中使用 &lt;a href="https://stripe.com/"&gt;Stripe&lt;/a&gt; 來處理信用卡交易;
+可以參考 Avdi Grimm 的&lt;a href="http://devblog.avdi.org/2012/08/31/configuring-database_cleaner-with-rails-rspec-capybara-and-selenium/"&gt;原文&lt;/a&gt;，其中有詳細的說明。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>信用卡交易服務: Stripe</title><link href="http://tsaith.github.io/xin-yong-qia-jiao-yi-fu-wu-stripe.html" rel="alternate"></link><updated>2015-01-17T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-17:xin-yong-qia-jiao-yi-fu-wu-stripe.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何在 Rails 中使用 &lt;a href="https://stripe.com/"&gt;Stripe&lt;/a&gt; 來處理信用卡交易;
 Stripe 相較於 &lt;a href="https://developer.paypal.com/"&gt;Paypal&lt;/a&gt; 的優點除了設定簡單、安全性高、費用較低，同時還為您處理了繁雜的 merchant account 交易問題。
 基於上述理由，Stripe 在國外已經成為相當受到矚目的金流明星，
 並且支援大陸的&lt;a href="http://overseas.alipay.com/home/"&gt;支付寶&lt;/a&gt;，
@@ -2305,7 +2305,7 @@ Stripe.setPublishableKey(&amp;quot;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;spa
   &lt;span class="p"&gt;};&lt;/span&gt;
 
 &lt;span class="p"&gt;});&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>使用 Figaro 設定環境變數</title><link href="/shi-yong-figaro-she-ding-huan-jing-bian-shu.html" rel="alternate"></link><updated>2015-01-16T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-16:shi-yong-figaro-she-ding-huan-jing-bian-shu.html</id><summary type="html">&lt;p&gt;開發專案時，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="stripe"></category></entry><entry><title>使用 Figaro 設定環境變數</title><link href="http://tsaith.github.io/shi-yong-figaro-she-ding-huan-jing-bian-shu.html" rel="alternate"></link><updated>2015-01-16T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-16:shi-yong-figaro-she-ding-huan-jing-bian-shu.html</id><summary type="html">&lt;p&gt;開發專案時，
 我們常常需要在不同的環境下(例如 development、test 或 production)為環境變數設定不同的值，
 倘若每次都要手動設定，
 不僅浪費時間而且很容易發生錯誤;
@@ -2350,7 +2350,7 @@ Stripe.setPublishableKey(&amp;quot;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;spa
 &lt;h3&gt;設定 Heroku 環境變數&lt;/h3&gt;
 &lt;p&gt;Figaro 還提供了方便的指令可以一次將設定檔的環境變數輸出到 Heroku 上，如下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;figaro heroku:set -e production
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>管理者登入機制</title><link href="/guan-li-zhe-deng-ru-ji-zhi.html" rel="alternate"></link><updated>2015-01-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-14:guan-li-zhe-deng-ru-ji-zhi.html</id><summary type="html">&lt;p&gt;後台管理系統是網站的一項重要功能，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>管理者登入機制</title><link href="http://tsaith.github.io/guan-li-zhe-deng-ru-ji-zhi.html" rel="alternate"></link><updated>2015-01-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-14:guan-li-zhe-deng-ru-ji-zhi.html</id><summary type="html">&lt;p&gt;後台管理系統是網站的一項重要功能，
 使用者必須擁有管理者權限才可以在後台進行一些特定操作
 (例如，新增商品、下架、查看交易記錄 ... 等);
 這篇文章將敘述如何在使用者&lt;a href="/blog/2014/11/09/how-to-implement-user-authentication-in-rails"&gt;驗證機制&lt;/a&gt;
@@ -2464,7 +2464,7 @@ app/views/shared/_header.html.haml:&lt;/p&gt;
           &lt;span class="nt"&gt;%fieldset&lt;/span&gt;&lt;span class="nc"&gt;.actions.form-group&lt;/span&gt;
             &lt;span class="nc"&gt;.col-sm-6.col-md-offset-3&lt;/span&gt;
               &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;submit&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Add Video&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;class&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;btn btn-default&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>使用 CarrierWave 上傳檔案到 AWS S3</title><link href="/shi-yong-carrierwave-shang-chuan-dang-an-dao-aws-s3.html" rel="alternate"></link><updated>2015-01-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-14:shi-yong-carrierwave-shang-chuan-dang-an-dao-aws-s3.html</id><summary type="html">&lt;p&gt;在網路應用中，將檔案上傳到雲端儲存服務是個常見並且重要的功能，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>使用 CarrierWave 上傳檔案到 AWS S3</title><link href="http://tsaith.github.io/shi-yong-carrierwave-shang-chuan-dang-an-dao-aws-s3.html" rel="alternate"></link><updated>2015-01-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-14:shi-yong-carrierwave-shang-chuan-dang-an-dao-aws-s3.html</id><summary type="html">&lt;p&gt;在網路應用中，將檔案上傳到雲端儲存服務是個常見並且重要的功能，
 這篇文章將示範如何在 Rails 專案中使用 &lt;a href="https://github.com/carrierwaveuploader/carrierwave"&gt;CarrierWave&lt;/a&gt; 將檔案上傳到
 &lt;a href="http://aws.amazon.com/s3/"&gt;AWS S3&lt;/a&gt;的實作流程。&lt;/p&gt;
 &lt;h3&gt;申請 AWS S3&lt;/h3&gt;
@@ -2664,7 +2664,7 @@ rails generate uploader small_cover
   &lt;span class="k"&gt;end&lt;/span&gt;
 
 &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="aws"></category></entry><entry><title>監視產品錯誤: Sentry</title><link href="/jian-shi-chan-pin-cuo-wu-sentry.html" rel="alternate"></link><updated>2015-01-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-13:jian-shi-chan-pin-cuo-wu-sentry.html</id><summary type="html">&lt;p&gt;當產品在線上工作時，如果發生意外的錯誤，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="aws"></category></entry><entry><title>監視產品錯誤: Sentry</title><link href="http://tsaith.github.io/jian-shi-chan-pin-cuo-wu-sentry.html" rel="alternate"></link><updated>2015-01-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-13:jian-shi-chan-pin-cuo-wu-sentry.html</id><summary type="html">&lt;p&gt;當產品在線上工作時，如果發生意外的錯誤，
 為了保持好的使用者體驗，
 我們必須盡可能地在第一時間發現問題並迅速解決;
 這裡要介紹一項好用的服務 &lt;a href="https://getsentry.com"&gt;Sentry&lt;/a&gt;，
@@ -2693,7 +2693,7 @@ export SENTRY_DSN=http://public:secret@example.com/project-id
 
 &lt;p&gt;設定完成並且部署到遠端後，
 以後只要產品的運作出現錯誤，
-Sentry 就會自動將錯誤訊息寄送到我們的信箱。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>使用 paratropper 自動化部署流程</title><link href="/shi-yong-paratropper-zi-dong-hua-bu-shu-liu-cheng.html" rel="alternate"></link><updated>2015-01-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-13:shi-yong-paratropper-zi-dong-hua-bu-shu-liu-cheng.html</id><summary type="html">&lt;p&gt;假設我們已經在 Heroku 上面架設了 staging 和 production servers，
+Sentry 就會自動將錯誤訊息寄送到我們的信箱。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>使用 paratropper 自動化部署流程</title><link href="http://tsaith.github.io/shi-yong-paratropper-zi-dong-hua-bu-shu-liu-cheng.html" rel="alternate"></link><updated>2015-01-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-13:shi-yong-paratropper-zi-dong-hua-bu-shu-liu-cheng.html</id><summary type="html">&lt;p&gt;假設我們已經在 Heroku 上面架設了 staging 和 production servers，
 倘若每次修改完程式都要手動地處理部署的工作，
 這不僅沒有效率，而且很容易發生錯誤;
 所以這裡將介紹如何使用 &lt;a href="https://github.com/mattpolito/paratrooper"&gt;paratrooper&lt;/a&gt;，將部署的流程自動化。&lt;/p&gt;
@@ -2731,7 +2731,7 @@ Sentry 就會自動將錯誤訊息寄送到我們的信箱。&lt;/p&gt;</summary
 
 &lt;p&gt;注意，上面程式中的 &lt;code&gt;amazing-staging-app&lt;/code&gt; 和 &lt;code&gt;amazing-production-app&lt;/code&gt;，需要修改成你的 staging 和 production 名稱。&lt;/p&gt;
 &lt;p&gt;現在，若要 deploy 到 staging 請執行 &lt;code&gt;rake deploy:staging&lt;/code&gt;;
-倘若想 deploy 到 production 則執行 &lt;code&gt;rake deploy:production&lt;/code&gt;。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Heroku 上架設 staging server</title><link href="/zai-heroku-shang-jia-she-staging-server.html" rel="alternate"></link><updated>2015-01-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-13:zai-heroku-shang-jia-she-staging-server.html</id><summary type="html">&lt;p&gt;開發專案時，
+倘若想 deploy 到 production 則執行 &lt;code&gt;rake deploy:production&lt;/code&gt;。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Heroku 上架設 staging server</title><link href="http://tsaith.github.io/zai-heroku-shang-jia-she-staging-server.html" rel="alternate"></link><updated>2015-01-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-13:zai-heroku-shang-jia-she-staging-server.html</id><summary type="html">&lt;p&gt;開發專案時，
 有時候我們會遇到在本地端測試過的功能無法在上線時正常運作，
 這往往是因為開發環境(通常是我們的個人電腦)，
 與上線的環境並不相同;
@@ -2751,7 +2751,7 @@ Sentry 就會自動將錯誤訊息寄送到我們的信箱。&lt;/p&gt;</summary
 &lt;p&gt;Heroku 就會 fork 出 &lt;code&gt;myflix-staging&lt;/code&gt;，並且自動複製 &lt;code&gt;myflix&lt;/code&gt; 的資料庫與 add-ons，讓 staging 與 production 有相同的運作環境。&lt;/p&gt;
 &lt;p&gt;此外，我們還需要在 git 中設定 &lt;code&gt;myflix-staging&lt;/code&gt; 的 repository，之後才能將程式也 push 到 staging 中。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git remote add myflix-staging git@heroku.com:myflix-staging.git
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>使用 Procfile 和 Foreman</title><link href="/shi-yong-procfile-he-foreman.html" rel="alternate"></link><updated>2015-01-12T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-12:shi-yong-procfile-he-foreman.html</id><summary type="html">&lt;p&gt;架設在 Heroku 上面的 app，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>使用 Procfile 和 Foreman</title><link href="http://tsaith.github.io/shi-yong-procfile-he-foreman.html" rel="alternate"></link><updated>2015-01-12T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-12:shi-yong-procfile-he-foreman.html</id><summary type="html">&lt;p&gt;架設在 Heroku 上面的 app，
 會使用一個檔案 &lt;code&gt;Procfile&lt;/code&gt; 來宣告有哪些命令將被 &lt;a href="https://devcenter.heroku.com/articles/dynos"&gt;dynos&lt;/a&gt; 所執行。
 &lt;code&gt;Procfile&lt;/code&gt; 是位於專案下的一個文字檔，
 在檔案的內容中，
@@ -2778,7 +2778,7 @@ web: bundle exec rails server -p $PORT
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;這時候連到 &lt;code&gt;http://localhost:5000/&lt;/code&gt; 就可以看到已啟動的服務。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Heroku 上架設 concurrent server</title><link href="/zai-heroku-shang-jia-she-concurrent-server.html" rel="alternate"></link><updated>2015-01-12T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-12:zai-heroku-shang-jia-she-concurrent-server.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何使用
+&lt;p&gt;這時候連到 &lt;code&gt;http://localhost:5000/&lt;/code&gt; 就可以看到已啟動的服務。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Heroku 上架設 concurrent server</title><link href="http://tsaith.github.io/zai-heroku-shang-jia-she-concurrent-server.html" rel="alternate"></link><updated>2015-01-12T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-12:zai-heroku-shang-jia-she-concurrent-server.html</id><summary type="html">&lt;p&gt;這篇文章將介紹如何使用
 &lt;a href="http://unicorn.bogomips.org/"&gt;Unicorn&lt;/a&gt; 和
 &lt;a href="http://sidekiq.org/"&gt;Sidekiq&lt;/a&gt;
 在 Heroku 上架設能夠處理 concurrent requests 的伺服器。&lt;/p&gt;
@@ -2872,7 +2872,7 @@ gem &amp;#39;sidekiq&amp;#39;
 
 &lt;p&gt;然後再修改 &lt;code&gt;Procfile&lt;/code&gt;，保留 web dyno 即可。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;bundle&lt;/span&gt; &lt;span class="n"&gt;exec&lt;/span&gt; &lt;span class="n"&gt;unicorn&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="n"&gt;$PORT&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;./&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;unicorn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;rb&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>使用 Sidekiq 處理背景工作</title><link href="/shi-yong-sidekiq-chu-li-bei-jing-gong-zuo.html" rel="alternate"></link><updated>2015-01-11T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-11:shi-yong-sidekiq-chu-li-bei-jing-gong-zuo.html</id><summary type="html">&lt;p&gt;這裡將介紹如何使用 &lt;a href="https://github.com/mperham/sidekiq"&gt;Sidekiq&lt;/a&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>使用 Sidekiq 處理背景工作</title><link href="http://tsaith.github.io/shi-yong-sidekiq-chu-li-bei-jing-gong-zuo.html" rel="alternate"></link><updated>2015-01-11T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-11:shi-yong-sidekiq-chu-li-bei-jing-gong-zuo.html</id><summary type="html">&lt;p&gt;這裡將介紹如何使用 &lt;a href="https://github.com/mperham/sidekiq"&gt;Sidekiq&lt;/a&gt;
 透過 threads 同時處理多項工作;
 例如我們將比較花費時間的動作放到背景處理，
 以提升使用者的操作體驗。&lt;/p&gt;
@@ -2925,7 +2925,7 @@ RACK_ENV:                   production
 RAILS_ENV:                  production
 REDISTOGO_URL:              redis://redistogo:42528ab79e9e15ef9693733239b2d2c6@ray.redistogo.com:9795/
 REDIS_PROVIDER:             REDISTOGO_URL
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Heroku 上的郵件服務: Mailgun</title><link href="/heroku-shang-de-you-jian-fu-wu-mailgun.html" rel="alternate"></link><updated>2015-01-10T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-10:heroku-shang-de-you-jian-fu-wu-mailgun.html</id><summary type="html">&lt;p&gt;信件服務對許多網路應用都是相當重要的一環，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>Heroku 上的郵件服務: Mailgun</title><link href="http://tsaith.github.io/heroku-shang-de-you-jian-fu-wu-mailgun.html" rel="alternate"></link><updated>2015-01-10T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-10:heroku-shang-de-you-jian-fu-wu-mailgun.html</id><summary type="html">&lt;p&gt;信件服務對許多網路應用都是相當重要的一環，
 雖然我們可以使用免費的 gmail 帳號來寄送郵件，
 但因為 gmail 每天可寄送的郵件數量有一定的上限(目前是每天 2,000 封)以及其他&lt;a href="https://support.google.com/a/answer/166852"&gt;限制&lt;/a&gt;，
 所以在正式上線的環境，
@@ -2950,7 +2950,7 @@ REDIS_PROVIDER:             REDISTOGO_URL
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;設定完後，將專案部署到 Heroku 上面即可開始工作。&lt;/p&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>使用 Concerns 幫 Model 瘦身</title><link href="/shi-yong-concerns-bang-model-shou-shen.html" rel="alternate"></link><updated>2015-01-09T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-09:shi-yong-concerns-bang-model-shou-shen.html</id><summary type="html">&lt;h3&gt;設定模組路徑&lt;/h3&gt;
+&lt;p&gt;設定完後，將專案部署到 Heroku 上面即可開始工作。&lt;/p&gt;</summary><category term="rails"></category><category term="heroku"></category></entry><entry><title>使用 Concerns 幫 Model 瘦身</title><link href="http://tsaith.github.io/shi-yong-concerns-bang-model-shou-shen.html" rel="alternate"></link><updated>2015-01-09T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-09:shi-yong-concerns-bang-model-shou-shen.html</id><summary type="html">&lt;h3&gt;設定模組路徑&lt;/h3&gt;
 &lt;p&gt;在 config/application.rb 加入&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;autoload_paths&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="sx"&gt;%W(&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="no"&gt;Rails&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sx"&gt;/lib)&lt;/span&gt; &lt;span class="c1"&gt;# module paths&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -3017,7 +3017,7 @@ REDIS_PROVIDER:             REDISTOGO_URL
 
 &lt;p&gt;正如所見，改寫後的 model 變得更加簡潔;
 此外，倘若其他 model 需要同樣功能時，也可以很方便地調用已封裝好的模組。
-對於此議題，在 DHH 的&lt;a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns"&gt;文章&lt;/a&gt;中有更詳細的討論。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在網站中加入 Invite 功能</title><link href="/zai-wang-zhan-zhong-jia-ru-invite-gong-neng.html" rel="alternate"></link><updated>2015-01-08T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-08:zai-wang-zhan-zhong-jia-ru-invite-gong-neng.html</id><summary type="html">&lt;p&gt;這裡將介紹如何實作邀請朋友來網站註冊的功能。&lt;/p&gt;
+對於此議題，在 DHH 的&lt;a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns"&gt;文章&lt;/a&gt;中有更詳細的討論。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在網站中加入 Invite 功能</title><link href="http://tsaith.github.io/zai-wang-zhan-zhong-jia-ru-invite-gong-neng.html" rel="alternate"></link><updated>2015-01-08T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-08:zai-wang-zhan-zhong-jia-ru-invite-gong-neng.html</id><summary type="html">&lt;p&gt;這裡將介紹如何實作邀請朋友來網站註冊的功能。&lt;/p&gt;
 &lt;h3&gt;操作流程&lt;/h3&gt;
 &lt;p&gt;使用者可在邀請頁面填寫朋友的名字、郵件地址以及邀請訊息，
 然後送出
@@ -3273,7 +3273,7 @@ REDIS_PROVIDER:             REDISTOGO_URL
     &lt;span class="nt"&gt;%p&lt;/span&gt; You are invited by &lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="vi"&gt;@invitation&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inviter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;full_name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; to join MyFlix!
     &lt;span class="nt"&gt;%p&lt;/span&gt; &lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="vi"&gt;@invitation&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
     &lt;span class="nt"&gt;%p&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;link_to&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Accept this invitation&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sign_up_with_invitation_token_url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vi"&gt;@invitation&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>整合測試的郵件工具: capybara-email</title><link href="/zheng-he-ce-shi-de-you-jian-gong-ju-capybara-email.html" rel="alternate"></link><updated>2015-01-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-05:zheng-he-ce-shi-de-you-jian-gong-ju-capybara-email.html</id><summary type="html">&lt;p&gt;撰寫整合測試時，倘若需要模擬點選郵件內容的連結，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>整合測試的郵件工具: capybara-email</title><link href="http://tsaith.github.io/zheng-he-ce-shi-de-you-jian-gong-ju-capybara-email.html" rel="alternate"></link><updated>2015-01-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-05:zheng-he-ce-shi-de-you-jian-gong-ju-capybara-email.html</id><summary type="html">&lt;p&gt;撰寫整合測試時，倘若需要模擬點選郵件內容的連結，
 進而訪問某個網頁時，
 可以使用 &lt;a href="https://github.com/dockyard/capybara-email"&gt;capybara-email&lt;/a&gt; 這個 gem。&lt;/p&gt;
 &lt;h3&gt;安裝套件&lt;/h3&gt;
@@ -3342,7 +3342,7 @@ REDIS_PROVIDER:             REDISTOGO_URL
 
 &lt;span class="sx"&gt;{% blockquote Bill Gates %}&lt;/span&gt;
 &lt;span class="no"&gt;Measuring&lt;/span&gt; &lt;span class="n"&gt;programming&lt;/span&gt; &lt;span class="n"&gt;progress&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;like&lt;/span&gt; &lt;span class="n"&gt;measuring&lt;/span&gt; &lt;span class="n"&gt;aircraft&lt;/span&gt; &lt;span class="n"&gt;building&lt;/span&gt; &lt;span class="n"&gt;progress&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>從 rvm 遷移到 rbenv</title><link href="/cong-rvm-qian-yi-dao-rbenv.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-03:cong-rvm-qian-yi-dao-rbenv.html</id><summary type="html">&lt;p&gt;之前一直使用 rvm 來管理 ruby 的版本切換，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>從 rvm 遷移到 rbenv</title><link href="http://tsaith.github.io/cong-rvm-qian-yi-dao-rbenv.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-01-03:cong-rvm-qian-yi-dao-rbenv.html</id><summary type="html">&lt;p&gt;之前一直使用 rvm 來管理 ruby 的版本切換，
 但因為 rvm 還提供了 gem 的安裝，
 而這部分與 bundler 的職務重疊，
 於是我決定採用功能更單純的 &lt;a href="https://github.com/sstephenson/rbenv"&gt;rbev&lt;/a&gt; 專職 ruby 版本的管理。&lt;/p&gt;
@@ -3409,7 +3409,7 @@ make: *** No targets specified and no makefile found.  Stop.
 
 &lt;p&gt;執行 &lt;code&gt;xcode-select --install&lt;/code&gt; 更新 Xcode;
 若在 Maverick 10.9.x 上遇到 &lt;code&gt;Can't install the software because it is not currently available from the Software Update server.&lt;/code&gt;
-這樣的錯誤訊息，可以直接到 &lt;a href="https://developer.apple.com/downloads/index.action?name=Command%20Line%20Tools"&gt;Apple Developer&lt;/a&gt; 下載。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>使用 letter_opener 檢視郵件</title><link href="/shi-yong-letter_opener-jian-shi-you-jian.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-31:shi-yong-letter_opener-jian-shi-you-jian.html</id><summary type="html">&lt;p&gt;在建構 Rails 應用時，
+這樣的錯誤訊息，可以直接到 &lt;a href="https://developer.apple.com/downloads/index.action?name=Command%20Line%20Tools"&gt;Apple Developer&lt;/a&gt; 下載。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>使用 letter_opener 檢視郵件</title><link href="http://tsaith.github.io/shi-yong-letter_opener-jian-shi-you-jian.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-31:shi-yong-letter_opener-jian-shi-you-jian.html</id><summary type="html">&lt;p&gt;在建構 Rails 應用時，
 開發者常常需要反覆修改以及檢查欲寄送的 Email 內容是否正確，
 &lt;a href="https://github.com/ryanb/letter_opener"&gt;letter_opener&lt;/a&gt; 可以讓這工作變得更有效率。&lt;/p&gt;
 &lt;h3&gt;安裝套件&lt;/h3&gt;
@@ -3437,7 +3437,7 @@ Loading development environment &lt;span class="o"&gt;(&lt;/span&gt;Rails 4.1.1&
 
 
 &lt;p&gt;這時候 letter_opener 就會自動將信件內容傳送到瀏覽器的新分頁，如下
-&lt;img src="https://farm9.staticflickr.com/8563/15996168469_b9f26d2f26_b.jpg"&gt;&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>使用 RSpec 在 Functional Tests 裡面測試郵件</title><link href="/shi-yong-rspec-zai-functional-tests-li-mian-ce-shi-you-jian.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-31:shi-yong-rspec-zai-functional-tests-li-mian-ce-shi-you-jian.html</id><summary type="html">&lt;p&gt;這篇文章將舉一些簡單的範例來說明如何使用
+&lt;img src="https://farm9.staticflickr.com/8563/15996168469_b9f26d2f26_b.jpg"&gt;&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>使用 RSpec 在 Functional Tests 裡面測試郵件</title><link href="http://tsaith.github.io/shi-yong-rspec-zai-functional-tests-li-mian-ce-shi-you-jian.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-31:shi-yong-rspec-zai-functional-tests-li-mian-ce-shi-you-jian.html</id><summary type="html">&lt;p&gt;這篇文章將舉一些簡單的範例來說明如何使用
 &lt;a href="http://rspec.info/"&gt;RSpec&lt;/a&gt; 對郵件的寄送進行測試。&lt;/p&gt;
 &lt;p&gt;假設有一個 UsersController，
 它的 create action 會寄送歡迎信給註冊的新使用者&lt;/p&gt;
@@ -3512,7 +3512,7 @@ Loading development environment &lt;span class="o"&gt;(&lt;/span&gt;Rails 4.1.1&
 
 
 &lt;p&gt;倘若不熟悉如何撰寫 functional tests 的話，
-可以參考&lt;a href="/blog/2014/12/07/functional-testing-with-rspec"&gt;這裡&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>實作 Follow 社交功能</title><link href="/shi-zuo-follow-she-jiao-gong-neng.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-31:shi-zuo-follow-she-jiao-gong-neng.html</id><summary type="html">&lt;p&gt;有使用過 Facebook 或 Twitter 的使用者們一定都不會對 Follow
+可以參考&lt;a href="/blog/2014/12/07/functional-testing-with-rspec"&gt;這裡&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>實作 Follow 社交功能</title><link href="http://tsaith.github.io/shi-zuo-follow-she-jiao-gong-neng.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-31:shi-zuo-follow-she-jiao-gong-neng.html</id><summary type="html">&lt;p&gt;有使用過 Facebook 或 Twitter 的使用者們一定都不會對 Follow
 這項功能感到陌生，
 這裡將介紹如何實作這個機制。&lt;/p&gt;
 &lt;h3&gt;Routes&lt;/h3&gt;
@@ -3643,7 +3643,7 @@ Loading development environment &lt;span class="o"&gt;(&lt;/span&gt;Rails 4.1.1&
           &lt;span class="nt"&gt;%td&lt;/span&gt;&lt;span class="nc"&gt;.extra-padding&lt;/span&gt;
             &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;link_to&lt;/span&gt; &lt;span class="n"&gt;relationship&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;method&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="ss"&gt;:delete&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="c1"&gt;# 移除 following 關係&lt;/span&gt;
               &lt;span class="nt"&gt;%i&lt;/span&gt;&lt;span class="nc"&gt;.glyphicon.glyphicon-remove&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>透過郵件允許使用者重設密碼</title><link href="/tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-31:tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html</id><summary type="html">&lt;p&gt;在許多網站的使用者登入頁面中，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>透過郵件允許使用者重設密碼</title><link href="http://tsaith.github.io/tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html" rel="alternate"></link><updated>2014-12-31T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-31:tou-guo-you-jian-yun-xu-shi-yong-zhe-zhong-she-mi-ma.html</id><summary type="html">&lt;p&gt;在許多網站的使用者登入頁面中，
 通常會伴隨一個處理忘記密碼的連結，
 點選後，將會寄出一封電子郵件讓使用者可以藉此重設個人密碼;
 而這篇文章將介紹如何實做這項功能。&lt;/p&gt;
@@ -3882,7 +3882,7 @@ config/routes.rb:&lt;/p&gt;
   &lt;span class="nt"&gt;%body&lt;/span&gt;
     &lt;span class="nt"&gt;%p&lt;/span&gt; Please click on the link below to reset your password:
     &lt;span class="nt"&gt;%p&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;link_to&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Reset My Password&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;password_reset_url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vi"&gt;@user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>使用單一抽象層撰寫測試</title><link href="/shi-yong-dan-yi-chou-xiang-ceng-zhuan-xie-ce-shi.html" rel="alternate"></link><updated>2014-12-23T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-23:shi-yong-dan-yi-chou-xiang-ceng-zhuan-xie-ce-shi.html</id><summary type="html">&lt;p&gt;當撰寫測試時，使用單一抽象層的技巧可以讓程式更容易閱讀，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>使用單一抽象層撰寫測試</title><link href="http://tsaith.github.io/shi-yong-dan-yi-chou-xiang-ceng-zhuan-xie-ce-shi.html" rel="alternate"></link><updated>2014-12-23T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-23:shi-yong-dan-yi-chou-xiang-ceng-zhuan-xie-ce-shi.html</id><summary type="html">&lt;p&gt;當撰寫測試時，使用單一抽象層的技巧可以讓程式更容易閱讀，
 也避免開發者必須將思維在不同抽象層級中切換。&lt;/p&gt;
 &lt;p&gt;假設我們使用 &lt;a href="https://github.com/jnicklas/capybara"&gt;Capybara&lt;/a&gt;
 來測試網站的登入流程&lt;/p&gt;
@@ -3936,7 +3936,7 @@ Capybara 該如何處理欄位的填寫和按鈕，
 
 &lt;p&gt;如此一來，開發者在閱讀程式時，就更能專注於思考整體的邏輯，
 程式碼所顯示的內聚性也大幅提升;
-更多的相關討論可參考&lt;a href="http://robots.thoughtbot.com/acceptance-tests-at-a-single-level-of-abstraction"&gt;這裡&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>在 RSpec 中使用 Macros</title><link href="/zai-rspec-zhong-shi-yong-macros.html" rel="alternate"></link><updated>2014-12-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-22:zai-rspec-zhong-shi-yong-macros.html</id><summary type="html">&lt;p&gt;撰寫測試時，常常會遇到不同地方需要做相同或類似的事，
+更多的相關討論可參考&lt;a href="http://robots.thoughtbot.com/acceptance-tests-at-a-single-level-of-abstraction"&gt;這裡&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>在 RSpec 中使用 Macros</title><link href="http://tsaith.github.io/zai-rspec-zhong-shi-yong-macros.html" rel="alternate"></link><updated>2014-12-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-22:zai-rspec-zhong-shi-yong-macros.html</id><summary type="html">&lt;p&gt;撰寫測試時，常常會遇到不同地方需要做相同或類似的事，
 這時候可以考慮將共用的邏輯抽出並寫成 macros，
 避免讓相同的程式區塊散佈於各處，
 以方便閱讀和日後的維護。&lt;/p&gt;
@@ -3990,7 +3990,7 @@ Capybara 該如何處理欄位的填寫和按鈕，
 
 &lt;p&gt;除了程式碼的可讀性明顯提升之外，
 日後編寫其他測試時若牽涉到使用者登入，
-也只要簡單地引用 sign_in 這個 macro 即可。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 RSpec 中使用 shared examples</title><link href="/zai-rspec-zhong-shi-yong-shared-examples.html" rel="alternate"></link><updated>2014-12-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-22:zai-rspec-zhong-shi-yong-shared-examples.html</id><summary type="html">&lt;p&gt;使用 RSpec 撰寫測試時，
+也只要簡單地引用 sign_in 這個 macro 即可。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 RSpec 中使用 shared examples</title><link href="http://tsaith.github.io/zai-rspec-zhong-shi-yong-shared-examples.html" rel="alternate"></link><updated>2014-12-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-22:zai-rspec-zhong-shi-yong-shared-examples.html</id><summary type="html">&lt;p&gt;使用 RSpec 撰寫測試時，
 我們可以使用 &lt;a href="http://www.relishapp.com/rspec/rspec-core/v/3-1/docs/example-groups/shared-examples"&gt;shared examples&lt;/a&gt; 將
 常用的測試範例封裝起來，方便隨時調用。&lt;/p&gt;
 &lt;p&gt;假設我們撰寫了一些測試，如下&lt;/p&gt;
@@ -4102,7 +4102,7 @@ Capybara 該如何處理欄位的填寫和按鈕，
 
 
 &lt;p&gt;除了程式碼變得簡潔之外，
-日後我們也更容易對封裝的部分進行功能的擴充或修改。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>好用的 Debug 工具: Pry</title><link href="/hao-yong-de-debug-gong-ju-pry.html" rel="alternate"></link><updated>2014-12-15T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-15:hao-yong-de-debug-gong-ju-pry.html</id><summary type="html">&lt;p&gt;開發 Rails 或 Ruby 應用時，我們可以使用 &lt;a href="https://github.com/pry/pry"&gt;pry&lt;/a&gt; 和 &lt;a href="https://github.com/nixme/pry-nav"&gt;pry-nav&lt;/a&gt; 來大幅提高 debug 效率。&lt;/p&gt;
+日後我們也更容易對封裝的部分進行功能的擴充或修改。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>好用的 Debug 工具: Pry</title><link href="http://tsaith.github.io/hao-yong-de-debug-gong-ju-pry.html" rel="alternate"></link><updated>2014-12-15T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-15:hao-yong-de-debug-gong-ju-pry.html</id><summary type="html">&lt;p&gt;開發 Rails 或 Ruby 應用時，我們可以使用 &lt;a href="https://github.com/pry/pry"&gt;pry&lt;/a&gt; 和 &lt;a href="https://github.com/nixme/pry-nav"&gt;pry-nav&lt;/a&gt; 來大幅提高 debug 效率。&lt;/p&gt;
 &lt;h3&gt;安裝套件&lt;/h3&gt;
 &lt;p&gt;在 Gemfile 中加入&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;group&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;development&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
@@ -4197,7 +4197,7 @@ Capybara 該如何處理欄位的填寫和按鈕，
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="no"&gt;Pry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;commands&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alias_command&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;continue&amp;#39;&lt;/span&gt;
 &lt;span class="no"&gt;Pry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;commands&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alias_command&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;step&amp;#39;&lt;/span&gt;
 &lt;span class="no"&gt;Pry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;commands&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alias_command&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;next&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>快速啟動 rails: pow</title><link href="/kuai-su-qi-dong-rails-pow.html" rel="alternate"></link><updated>2014-12-15T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-15:kuai-su-qi-dong-rails-pow.html</id><summary type="html">&lt;p&gt;許多 Rails 開發者應該都有這樣的經驗，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>快速啟動 rails: pow</title><link href="http://tsaith.github.io/kuai-su-qi-dong-rails-pow.html" rel="alternate"></link><updated>2014-12-15T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-15:kuai-su-qi-dong-rails-pow.html</id><summary type="html">&lt;p&gt;許多 Rails 開發者應該都有這樣的經驗，
 每次開發專案前總是得先在終端機執行 &lt;code&gt;rails server&lt;/code&gt; 才能啟動網站，
 這樣實在有點麻煩;
 &lt;a href="https://basecamp.com/"&gt;Basecamp&lt;/a&gt; 因此而開發了一個免費工具 &lt;a href="https://github.com/basecamp/pow"&gt;Pow&lt;/a&gt; 可以簡單地為我們解決這個困擾。&lt;/p&gt;
@@ -4274,7 +4274,7 @@ Capybara 該如何處理欄位的填寫和按鈕，
 
 &lt;p&gt;重開 app&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;powder restart
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>使用 RSpec 寫 Feature Tests</title><link href="/shi-yong-rspec-xie-feature-tests.html" rel="alternate"></link><updated>2014-12-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-07:shi-yong-rspec-xie-feature-tests.html</id><summary type="html">&lt;p&gt;在開發 Rails 專案時，我們可使用 Feature Tests
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>使用 RSpec 寫 Feature Tests</title><link href="http://tsaith.github.io/shi-yong-rspec-xie-feature-tests.html" rel="alternate"></link><updated>2014-12-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-07:shi-yong-rspec-xie-feature-tests.html</id><summary type="html">&lt;p&gt;在開發 Rails 專案時，我們可使用 Feature Tests
 來模擬使用者在應用程式中的操作流程;
 這裡將介紹如何使用 &lt;a href="https://github.com/rspec/rspec-rails"&gt;RSpec&lt;/a&gt;
 搭配 &lt;a href="https://github.com/jnicklas/capybara"&gt;Capybara&lt;/a&gt;
@@ -4410,7 +4410,7 @@ Make sure that `gem install nokogiri -v &amp;#39;1.6.5&amp;#39;` succeeds before
 &lt;p&gt;上面的 &lt;code&gt;feature&lt;/code&gt; 和 &lt;code&gt;scenario&lt;/code&gt; 其意義等同於
 RSpec 中的 &lt;code&gt;describe ..., :type =&amp;gt; :feature&lt;/code&gt; 和 &lt;code&gt;it&lt;/code&gt;;
 &lt;a href="https://www.relishapp.com/rspec/rspec-rails/docs/feature-specs/feature-spec"&gt;Relish&lt;/a&gt; 提供了豐富的語法介紹。&lt;/p&gt;
-&lt;p&gt;最後，執行 &lt;code&gt;rspec&lt;/code&gt; 即可看到測試結果。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>使用 RSpec 撰寫 Functional Tests</title><link href="/shi-yong-rspec-zhuan-xie-functional-tests.html" rel="alternate"></link><updated>2014-12-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-07:shi-yong-rspec-zhuan-xie-functional-tests.html</id><summary type="html">&lt;p&gt;在開發 Rails 專案時，我們可以撰寫 Functional Tests 來測試
+&lt;p&gt;最後，執行 &lt;code&gt;rspec&lt;/code&gt; 即可看到測試結果。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>使用 RSpec 撰寫 Functional Tests</title><link href="http://tsaith.github.io/shi-yong-rspec-zhuan-xie-functional-tests.html" rel="alternate"></link><updated>2014-12-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-07:shi-yong-rspec-zhuan-xie-functional-tests.html</id><summary type="html">&lt;p&gt;在開發 Rails 專案時，我們可以撰寫 Functional Tests 來測試
 controller 的功能是否正常工作;
 例如，如果想測試使用者的登入與登出，
 就可以在 spec/controllers/ 下面新增一個檔案
@@ -4499,7 +4499,7 @@ sessions_controller_spec.rb，內容如下&lt;/p&gt;
 &lt;p&gt;在 user fabricator 裡面，進一步使用了
 &lt;a href="https://github.com/stympy/faker"&gt;Faker&lt;/a&gt;
 來自動產生 email 或 password 欄位的值。&lt;/p&gt;
-&lt;p&gt;編寫好程式後，執行 &lt;code&gt;rspec&lt;/code&gt; 就能看到測試結果。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>使用 RSpec 撰寫 Unit Tests</title><link href="/shi-yong-rspec-zhuan-xie-unit-tests.html" rel="alternate"></link><updated>2014-12-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-07:shi-yong-rspec-zhuan-xie-unit-tests.html</id><summary type="html">&lt;p&gt;我們可以使用單元測試來檢查模型的屬性和自定方法是否正常運作;
+&lt;p&gt;編寫好程式後，執行 &lt;code&gt;rspec&lt;/code&gt; 就能看到測試結果。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>使用 RSpec 撰寫 Unit Tests</title><link href="http://tsaith.github.io/shi-yong-rspec-zhuan-xie-unit-tests.html" rel="alternate"></link><updated>2014-12-07T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-07:shi-yong-rspec-zhuan-xie-unit-tests.html</id><summary type="html">&lt;p&gt;我們可以使用單元測試來檢查模型的屬性和自定方法是否正常運作;
 假設有個 Category model，內容如下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Category&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;ActiveRecord&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Base&lt;/span&gt;
   &lt;span class="n"&gt;has_many&lt;/span&gt; &lt;span class="ss"&gt;:videos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;created_at DESC&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
@@ -4555,7 +4555,7 @@ sessions_controller_spec.rb，內容如下&lt;/p&gt;
   &lt;span class="k"&gt;end&lt;/span&gt;
 
 &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>使用 RSpec 做自動測試</title><link href="/shi-yong-rspec-zuo-zi-dong-ce-shi.html" rel="alternate"></link><updated>2014-12-06T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-06:shi-yong-rspec-zuo-zi-dong-ce-shi.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/rspec/rspec"&gt;RSpec&lt;/a&gt; 是一套專為 Ruby
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>使用 RSpec 做自動測試</title><link href="http://tsaith.github.io/shi-yong-rspec-zuo-zi-dong-ce-shi.html" rel="alternate"></link><updated>2014-12-06T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-06:shi-yong-rspec-zuo-zi-dong-ce-shi.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/rspec/rspec"&gt;RSpec&lt;/a&gt; 是一套專為 Ruby
 設計的 BDD (Behavior Deriven Development) 測試框架，
 基於它所撰寫出的測試程式有著相當高的可讀性，
 感覺就像是在閱讀產品的規格書。&lt;/p&gt;
@@ -4623,7 +4623,7 @@ sessions_controller_spec.rb，內容如下&lt;/p&gt;
 
 &lt;p&gt;就能看到測試結果。&lt;/p&gt;
 &lt;p&gt;倘若要一次跑多個測試，請直接執行 &lt;code&gt;rspec&lt;/code&gt; ，
-就會跑放在 spec/ 下面的所有測試程式。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>實作簡易的搜尋功能</title><link href="/shi-zuo-jian-yi-de-sou-xun-gong-neng.html" rel="alternate"></link><updated>2014-12-02T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-02:shi-zuo-jian-yi-de-sou-xun-gong-neng.html</id><summary type="html">&lt;p&gt;在電子商務中，商品的搜尋是很重要的一環，
+就會跑放在 spec/ 下面的所有測試程式。&lt;/p&gt;</summary><category term="rails"></category><category term="testing"></category></entry><entry><title>實作簡易的搜尋功能</title><link href="http://tsaith.github.io/shi-zuo-jian-yi-de-sou-xun-gong-neng.html" rel="alternate"></link><updated>2014-12-02T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-12-02:shi-zuo-jian-yi-de-sou-xun-gong-neng.html</id><summary type="html">&lt;p&gt;在電子商務中，商品的搜尋是很重要的一環，
 這裡將介紹如何實作簡易的搜尋功能。&lt;/p&gt;
 &lt;p&gt;倘若我們現在希望開發一個搜尋影片的功能;
 假設影片的類別名稱是 Video，
@@ -4668,7 +4668,7 @@ search action&lt;/p&gt;
       &lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;video&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
     &lt;span class="nc"&gt;.li&lt;/span&gt;
       &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;image_tag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;video&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cover_image_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;cover_image_size&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>安全地設定 Rails 郵件密碼</title><link href="/an-quan-di-she-ding-rails-you-jian-mi-ma.html" rel="alternate"></link><updated>2014-11-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-26:an-quan-di-she-ding-rails-you-jian-mi-ma.html</id><summary type="html">&lt;p&gt;將密碼寫進程式通常不是個好主意，因為當我們使用版本控制系統(例如 git)
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>安全地設定 Rails 郵件密碼</title><link href="http://tsaith.github.io/an-quan-di-she-ding-rails-you-jian-mi-ma.html" rel="alternate"></link><updated>2014-11-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-26:an-quan-di-she-ding-rails-you-jian-mi-ma.html</id><summary type="html">&lt;p&gt;將密碼寫進程式通常不是個好主意，因為當我們使用版本控制系統(例如 git)
 儲存程式時，密碼也將會被一併存入，如果是開源的專案，
 那麼任意人都可以取得這資訊;為避免此問題，
 我們可以使用環境變數讓 Rails 較安全地存取密碼資訊。&lt;/p&gt;
@@ -4703,7 +4703,7 @@ search action&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;這樣一來，Rails 就能通過環境變數來取得密碼資訊。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中使用 PostgresSQL</title><link href="/zai-rails-zhong-shi-yong-postgressql.html" rel="alternate"></link><updated>2014-11-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-26:zai-rails-zhong-shi-yong-postgressql.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.postgresql.org/"&gt;PostgreSQL&lt;/a&gt; 是目前相當受歡迎的一套開源資料庫，
+&lt;p&gt;這樣一來，Rails 就能通過環境變數來取得密碼資訊。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中使用 PostgresSQL</title><link href="http://tsaith.github.io/zai-rails-zhong-shi-yong-postgressql.html" rel="alternate"></link><updated>2014-11-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-26:zai-rails-zhong-shi-yong-postgressql.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.postgresql.org/"&gt;PostgreSQL&lt;/a&gt; 是目前相當受歡迎的一套開源資料庫，
 下面將說明如何在 Rails 中使用它。&lt;/p&gt;
 &lt;h3&gt;安裝套件&lt;/h3&gt;
 &lt;p&gt;如若開發環境是 Mac 的話，請執行下列步驟&lt;/p&gt;
@@ -4799,7 +4799,7 @@ search action&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;刪除一筆記錄: &lt;code&gt;DELETE FROM test WHERE id = 1;&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 使用 gmail 發送郵件</title><link href="/zai-rails-shi-yong-gmail-fa-song-you-jian.html" rel="alternate"></link><updated>2014-11-23T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-23:zai-rails-shi-yong-gmail-fa-song-you-jian.html</id><summary type="html">&lt;p&gt;建構網站時，發送信件往往是重要的一項功能，
+&lt;/ul&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 使用 gmail 發送郵件</title><link href="http://tsaith.github.io/zai-rails-shi-yong-gmail-fa-song-you-jian.html" rel="alternate"></link><updated>2014-11-23T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-23:zai-rails-shi-yong-gmail-fa-song-you-jian.html</id><summary type="html">&lt;p&gt;建構網站時，發送信件往往是重要的一項功能，
 例如，當使用者註冊或變更個人設定時，
 這時候網站可以發送確認信函以提高安全性;
 這裡將介紹如何在 Rails 中使用 gmail 發送郵件。&lt;/p&gt;
@@ -4876,7 +4876,7 @@ Loading development environment &lt;span class="o"&gt;(&lt;/span&gt;Rails 4.0.0&
 &lt;p&gt;如果 welcome_email 工作正常，
 當使用者註冊成功後，就可以用它來自動發送歡迎信件。&lt;/p&gt;
 &lt;p&gt;備註: 每次修改 config/environments/development.rb 後，
-記得重新啓動 rails server 讓新設定生效。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中使用 module</title><link href="/zai-rails-zhong-shi-yong-module.html" rel="alternate"></link><updated>2014-11-21T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-21:zai-rails-zhong-shi-yong-module.html</id><summary type="html">&lt;p&gt;在開發 Rails 時，我們常常遇到一種情況，
+記得重新啓動 rails server 讓新設定生效。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中使用 module</title><link href="http://tsaith.github.io/zai-rails-zhong-shi-yong-module.html" rel="alternate"></link><updated>2014-11-21T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-21:zai-rails-zhong-shi-yong-module.html</id><summary type="html">&lt;p&gt;在開發 Rails 時，我們常常遇到一種情況，
 不同的物件模型需要用到相同的功能，
 這時候可以考慮將這功能包裝成一個模組，
 以方便調用。&lt;/p&gt;
@@ -4955,7 +4955,7 @@ Loading development environment &lt;span class="o"&gt;(&lt;/span&gt;Rails 4.0.0&
   &lt;span class="n"&gt;validates&lt;/span&gt; &lt;span class="ss"&gt;:description&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;presence&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kp"&gt;true&lt;/span&gt;
 
 &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>製作和發佈 gem</title><link href="/zhi-zuo-he-fa-bu-gem.html" rel="alternate"></link><updated>2014-11-21T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-21:zhi-zuo-he-fa-bu-gem.html</id><summary type="html">&lt;p&gt;當我們在某個專案中完成了某個功能並且模組化後，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>製作和發佈 gem</title><link href="http://tsaith.github.io/zhi-zuo-he-fa-bu-gem.html" rel="alternate"></link><updated>2014-11-21T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-21:zhi-zuo-he-fa-bu-gem.html</id><summary type="html">&lt;p&gt;當我們在某個專案中完成了某個功能並且模組化後，
 倘若其他專案也需要同樣功能，
 或是希望分享給開源社群時，
 這時候就可以將它製作成 gem 方便大家使用。&lt;/p&gt;
@@ -5062,7 +5062,7 @@ Successfully unyanked gem: voteable_th &lt;span class="o"&gt;(&lt;/span&gt;0.0.0
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;其他進階的操作說明可參考&lt;a href="http://guides.rubygems.org/"&gt;RubyGems Guides&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中使用 Ajax</title><link href="/zai-rails-zhong-shi-yong-ajax.html" rel="alternate"></link><updated>2014-11-20T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-20:zai-rails-zhong-shi-yong-ajax.html</id><summary type="html">&lt;p&gt;假設有一個投票功能，每次按文章左側的上下箭頭可以表示贊成或反對，
+&lt;p&gt;其他進階的操作說明可參考&lt;a href="http://guides.rubygems.org/"&gt;RubyGems Guides&lt;/a&gt;。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中使用 Ajax</title><link href="http://tsaith.github.io/zai-rails-zhong-shi-yong-ajax.html" rel="alternate"></link><updated>2014-11-20T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-20:zai-rails-zhong-shi-yong-ajax.html</id><summary type="html">&lt;p&gt;假設有一個投票功能，每次按文章左側的上下箭頭可以表示贊成或反對，
 但我們不希望使用者每次投票時，瀏覽器都必須重新載入頁面，
 這時候可以使用 &lt;a href="http://zh.wikipedia.org/wiki/AJAX"&gt;Ajax&lt;/a&gt; 技術來實現。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://farm8.staticflickr.com/7518/15646273670_3d1f14d6e4_b.jpg"&gt;&lt;/p&gt;
@@ -5143,7 +5143,7 @@ javascript 將會搜尋 html 中 id 為&lt;code&gt;post_vote_error_&amp;lt;%= @p
       &lt;span class="nb"&gt;format&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;js&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
   &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>設定 polymorphic association</title><link href="/she-ding-polymorphic-association.html" rel="alternate"></link><updated>2014-11-15T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-15:she-ding-polymorphic-association.html</id><summary type="html">&lt;p&gt;假設我們有個布告版，上面可以張貼文章和留言，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="rails"></category></entry><entry><title>設定 polymorphic association</title><link href="http://tsaith.github.io/she-ding-polymorphic-association.html" rel="alternate"></link><updated>2014-11-15T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-15:she-ding-polymorphic-association.html</id><summary type="html">&lt;p&gt;假設我們有個布告版，上面可以張貼文章和留言，
 如果我們希望新增一個功能讓使用者可以對文章或留言進行投票，
 這時候可以透過 polymorphic association 來描述
 Vote 和 Post 以及 Comment 三個物件模型之間的關係。&lt;/p&gt;
@@ -5224,7 +5224,7 @@ Vote 和 Post 以及 Comment 三個物件模型之間的關係。&lt;/p&gt;
 
 
 &lt;p&gt;設定好模型之間的關係後，
-我們就可以開始在 Controllers 和 Views 中使用這些物件進行開發。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>部署專案到 Heroku</title><link href="/bu-shu-zhuan-an-dao-heroku.html" rel="alternate"></link><updated>2014-11-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-13:bu-shu-zhuan-an-dao-heroku.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.heroku.com"&gt;Heroku&lt;/a&gt; 是個相當受歡迎的雲端平台，
+我們就可以開始在 Controllers 和 Views 中使用這些物件進行開發。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>部署專案到 Heroku</title><link href="http://tsaith.github.io/bu-shu-zhuan-an-dao-heroku.html" rel="alternate"></link><updated>2014-11-13T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-13:bu-shu-zhuan-an-dao-heroku.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.heroku.com"&gt;Heroku&lt;/a&gt; 是個相當受歡迎的雲端平台，
 為開發者建構了網站運行所需要的環境，
 原則上，使用者只要將自己的應用程式部署上去便可直接運行;
 目前，它還提供了免費試用的方案，相當適合學生練習實作。
@@ -5278,7 +5278,7 @@ Scaling dynos... &lt;span class="k"&gt;done&lt;/span&gt;, now running web at 1:1
 &lt;p&gt;如果一切順利，我們現在就可以執行 &lt;code&gt;heroku open&lt;/code&gt; 讓瀏覽器訪問網站的首頁&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Good Luck!&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 實作驗證機制</title><link href="/zai-rails-shi-zuo-yan-zheng-ji-zhi.html" rel="alternate"></link><updated>2014-11-09T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-09:zai-rails-shi-zuo-yan-zheng-ji-zhi.html</id><summary type="html">&lt;p&gt;在網路應用中，使用者驗證是一項常見的重要功能，
+&lt;p&gt;Good Luck!&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 實作驗證機制</title><link href="http://tsaith.github.io/zai-rails-shi-zuo-yan-zheng-ji-zhi.html" rel="alternate"></link><updated>2014-11-09T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-09:zai-rails-shi-zuo-yan-zheng-ji-zhi.html</id><summary type="html">&lt;p&gt;在網路應用中，使用者驗證是一項常見的重要功能，
 雖然使用現成的 gem
 (例如 &lt;a href="https://github.com/plataformatec/devise"&gt;Devise&lt;/a&gt;)，
 可以快速實現出功能原型，但是卻會因為對套件內部架構的不熟悉，
@@ -5415,7 +5415,7 @@ Scaling dynos... &lt;span class="k"&gt;done&lt;/span&gt;, now running web at 1:1
 &lt;li&gt;&lt;code&gt;require_user&lt;/code&gt;: 檢查是否已登入，如果沒有登入，則導向根路徑&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;倘若一切順利，我們已經從無到有實作了使用者驗證機制，
-並可以此為基礎加入更多進階的功能。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Google Chrome 中自定快捷鍵</title><link href="/zai-google-chrome-zhong-zi-ding-kuai-jie-jian.html" rel="alternate"></link><updated>2014-11-01T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-01:zai-google-chrome-zhong-zi-ding-kuai-jie-jian.html</id><summary type="html">&lt;p&gt;在開發網站時，
+並可以此為基礎加入更多進階的功能。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Google Chrome 中自定快捷鍵</title><link href="http://tsaith.github.io/zai-google-chrome-zhong-zi-ding-kuai-jie-jian.html" rel="alternate"></link><updated>2014-11-01T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-11-01:zai-google-chrome-zhong-zi-ding-kuai-jie-jian.html</id><summary type="html">&lt;p&gt;在開發網站時，
 我們常常需要使用 &lt;a href="http://www.google.com/chrome/"&gt;Google Chrome&lt;/a&gt; 來協助測試，這裡將介紹如何透過安裝 plugin 來自定快捷鍵，以提高工作效率。&lt;/p&gt;
 &lt;p&gt;先開啓 Google Chrome ，然後安裝 &lt;a href="https://chrome.google.com/webstore/detail/shortkeys/logpjaacgmcbpdkdchjiaagddngobkck"&gt;Shortkeys&lt;/a&gt;;
 安裝完成後，即可開始在 Shortkeys 中自定所需的快捷鍵。
@@ -5423,7 +5423,7 @@ Scaling dynos... &lt;span class="k"&gt;done&lt;/span&gt;, now running web at 1:1
 &lt;p&gt;設定畫面如下
 &lt;img src="https://farm4.staticflickr.com/3948/15678482785_10249cd29b_b.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;在這個範例中，分別自定了 &lt;code&gt;command+shift+right&lt;/code&gt; 和 &lt;code&gt;command+shift+left&lt;/code&gt;
-來選擇下一個和上一個瀏覽分頁。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>在部落格中加入 Flickr 圖片</title><link href="/zai-bu-luo-ge-zhong-jia-ru-flickr-tu-pian.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-29:zai-bu-luo-ge-zhong-jia-ru-flickr-tu-pian.html</id><summary type="html">&lt;p&gt;編寫部落格時，適當地加入圖片可以吸引更多讀者，同時也提高了文章的可讀性。
+來選擇下一個和上一個瀏覽分頁。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>在部落格中加入 Flickr 圖片</title><link href="http://tsaith.github.io/zai-bu-luo-ge-zhong-jia-ru-flickr-tu-pian.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-29:zai-bu-luo-ge-zhong-jia-ru-flickr-tu-pian.html</id><summary type="html">&lt;p&gt;編寫部落格時，適當地加入圖片可以吸引更多讀者，同時也提高了文章的可讀性。
 隨著雲端相簿的流行，有許多人會傾向將圖片貯存位置和部落格平台獨立開來;
 這樣的話，一方面可以集中圖片的管理，另一方面，如果日後想更換寫作平台，
 就不需要去煩惱圖片的轉移工作。&lt;/p&gt;
@@ -5458,7 +5458,7 @@ Scaling dynos... &lt;span class="k"&gt;done&lt;/span&gt;, now running web at 1:1
 
 
 &lt;p&gt;然後就能看到被加入的圖片，如下&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://farm8.staticflickr.com/7563/15655510442_e9803f8335_b.jpg"&gt;&lt;/p&gt;</summary><category term="octopress"></category></entry><entry><title>在 Rails 中設定多對多關聯性</title><link href="/zai-rails-zhong-she-ding-duo-dui-duo-guan-lian-xing.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-29:zai-rails-zhong-she-ding-duo-dui-duo-guan-lian-xing.html</id><summary type="html">&lt;p&gt;這裡將介紹如何在 Rails 中透過 &lt;code&gt;has_many through:&lt;/code&gt; 來設定多對多關聯性。
+&lt;p&gt;&lt;img src="https://farm8.staticflickr.com/7563/15655510442_e9803f8335_b.jpg"&gt;&lt;/p&gt;</summary><category term="octopress"></category></entry><entry><title>在 Rails 中設定多對多關聯性</title><link href="http://tsaith.github.io/zai-rails-zhong-she-ding-duo-dui-duo-guan-lian-xing.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-29:zai-rails-zhong-she-ding-duo-dui-duo-guan-lian-xing.html</id><summary type="html">&lt;p&gt;這裡將介紹如何在 Rails 中透過 &lt;code&gt;has_many through:&lt;/code&gt; 來設定多對多關聯性。
 而一對多關聯性的介紹可參考先前的&lt;a href="/blog/2014/10/29/1-m-association-in-rails/"&gt;文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;假設我們有兩種模型 Post 和 Category，
 倘若每個 post 可擁有多個 categories，
@@ -5527,7 +5527,7 @@ Scaling dynos... &lt;span class="k"&gt;done&lt;/span&gt;, now running web at 1:1
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;以上，就是在 Rails 中多對多關聯性的實作步驟。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中設定 routes</title><link href="/zai-rails-zhong-she-ding-routes.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-29:zai-rails-zhong-she-ding-routes.html</id><summary type="html">&lt;p&gt;在 Rails 中，當伺服器接受到 http request 時將會根據路由中的設定，
+&lt;p&gt;以上，就是在 Rails 中多對多關聯性的實作步驟。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中設定 routes</title><link href="http://tsaith.github.io/zai-rails-zhong-she-ding-routes.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-29:zai-rails-zhong-she-ding-routes.html</id><summary type="html">&lt;p&gt;在 Rails 中，當伺服器接受到 http request 時將會根據路由中的設定，
 來決定這個 request 將會送往 controller 的哪個 action 進行處理;
 這裡將介紹如何設定路由的路徑表。&lt;/p&gt;
 &lt;p&gt;在 config/routes.rb 可使用 &lt;code&gt;root to:&lt;/code&gt; 來設定當使用者存取網站根目錄時的伺服器將會將 request 導向哪裡;假設我們設定如下&lt;/p&gt;
@@ -5627,7 +5627,7 @@ post_comments POST   /posts/:post_id/comments&lt;span class="o"&gt;(&lt;/span&gt
 
 
 &lt;p _="%" endblockquote="endblockquote"&gt;{% blockquote Rick Cook %}
-Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to build bigger and better idiots. So far, the universe is winning.&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中設定一對多關聯性</title><link href="/zai-rails-zhong-she-ding-yi-dui-duo-guan-lian-xing.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-29:zai-rails-zhong-she-ding-yi-dui-duo-guan-lian-xing.html</id><summary type="html">&lt;p&gt;物件與物件之間的關係,可以是一對一、一對多或多對多;
+Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to build bigger and better idiots. So far, the universe is winning.&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>在 Rails 中設定一對多關聯性</title><link href="http://tsaith.github.io/zai-rails-zhong-she-ding-yi-dui-duo-guan-lian-xing.html" rel="alternate"></link><updated>2014-10-29T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-29:zai-rails-zhong-she-ding-yi-dui-duo-guan-lian-xing.html</id><summary type="html">&lt;p&gt;物件與物件之間的關係,可以是一對一、一對多或多對多;
 這裡將介紹如何在 Rails 中設定一對多關聯性。&lt;/p&gt;
 &lt;p&gt;假設我們現在想設計一個網站讓使用者可以在上面發表文章，
 由於每位使用者可以發表多篇文章，
@@ -5729,7 +5729,7 @@ Programming today is a race between software engineers striving to build bigger 
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;倘若一切順利，現在你已經完成 User 和 Post 一對多的關聯性實作。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>一套免費的 SQLite 資料庫瀏覽器</title><link href="/yi-tao-mian-fei-de-sqlite-zi-liao-ku-liu-lan-qi.html" rel="alternate"></link><updated>2014-10-28T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-28:yi-tao-mian-fei-de-sqlite-zi-liao-ku-liu-lan-qi.html</id><summary type="html">&lt;p&gt;在軟體開發時，我們有時會使用輕量的 &lt;a href="http://www.sqlite.org"&gt;SQLite&lt;/a&gt;
+&lt;p&gt;倘若一切順利，現在你已經完成 User 和 Post 一對多的關聯性實作。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>一套免費的 SQLite 資料庫瀏覽器</title><link href="http://tsaith.github.io/yi-tao-mian-fei-de-sqlite-zi-liao-ku-liu-lan-qi.html" rel="alternate"></link><updated>2014-10-28T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-28:yi-tao-mian-fei-de-sqlite-zi-liao-ku-liu-lan-qi.html</id><summary type="html">&lt;p&gt;在軟體開發時，我們有時會使用輕量的 &lt;a href="http://www.sqlite.org"&gt;SQLite&lt;/a&gt;
 資料庫來做測試; 這裡要介紹一套好用又免費的工具
 &lt;a href="http://sqlitebrowser.org/"&gt;DB Browser for SQLite&lt;/a&gt;，
 它可以用來幫助使用者方便地建立資料庫和搜尋或編輯其中的資訊。&lt;/p&gt;
@@ -5747,7 +5747,7 @@ Programming today is a race between software engineers striving to build bigger 
 
 &lt;p&gt;在界面的工具列點選 Open Database ，然後選擇 SQLite 資料庫所在的位置，
 就能開始存取裡面的資訊
-&lt;img src="https://farm8.staticflickr.com/7473/15028743933_1453a944b0_b.jpg"&gt;&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>使用 Guard::LiveReload 自動刷新瀏覽器</title><link href="/shi-yong-guardlivereload-zi-dong-shua-xin-liu-lan-qi.html" rel="alternate"></link><updated>2014-10-27T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-27:shi-yong-guardlivereload-zi-dong-shua-xin-liu-lan-qi.html</id><summary type="html">&lt;p&gt;在編寫網頁的過程中，如果每次修改程式後總是需要手動刷新網頁來檢查結果，
+&lt;img src="https://farm8.staticflickr.com/7473/15028743933_1453a944b0_b.jpg"&gt;&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>使用 Guard::LiveReload 自動刷新瀏覽器</title><link href="http://tsaith.github.io/shi-yong-guardlivereload-zi-dong-shua-xin-liu-lan-qi.html" rel="alternate"></link><updated>2014-10-27T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-27:shi-yong-guardlivereload-zi-dong-shua-xin-liu-lan-qi.html</id><summary type="html">&lt;p&gt;在編寫網頁的過程中，如果每次修改程式後總是需要手動刷新網頁來檢查結果，
 實在是件很麻煩又浪費時間的事; 為了解決這問題，於是有人開發了 LiveReload
 這工具，每當程式存檔後，網頁就會自動刷新，於是工程師們可以早點收工回家打電動了(誤)。&lt;/p&gt;
 &lt;h3&gt;套件安裝&lt;/h3&gt;
@@ -5803,7 +5803,7 @@ Programming today is a race between software engineers striving to build bigger 
 
 &lt;p&gt;最後，點選 Google Chrome 瀏覽器的工具列上的 LiveReload 的圖示，
 然後 Chrome 將會與 Guard::LiveReload 作連結。
-如果一切順利，現在你每次將程式存檔後，就會看到瀏覽器的頁面自動刷新。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>安裝和使用 Git</title><link href="/an-zhuang-he-shi-yong-git.html" rel="alternate"></link><updated>2014-10-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-26:an-zhuang-he-shi-yong-git.html</id><summary type="html">&lt;p&gt;在軟體開發中過程中，版本控制無疑是相當重要的一環; 
+如果一切順利，現在你每次將程式存檔後，就會看到瀏覽器的頁面自動刷新。&lt;/p&gt;</summary><category term="rails"></category></entry><entry><title>安裝和使用 Git</title><link href="http://tsaith.github.io/an-zhuang-he-shi-yong-git.html" rel="alternate"></link><updated>2014-10-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-26:an-zhuang-he-shi-yong-git.html</id><summary type="html">&lt;p&gt;在軟體開發中過程中，版本控制無疑是相當重要的一環; 
 而 &lt;a href="http://git-scm.com/"&gt;Git&lt;/a&gt; 由於它的優良設計和開源已被廣泛地使用，
 這裡將介紹如何在 Mac 上安裝 Git 和基本的使用方法。&lt;/p&gt;
 &lt;h3&gt;套件安裝&lt;/h3&gt;
@@ -5912,7 +5912,7 @@ git config --global user.email &amp;quot;user@gmail.com&amp;quot;
 
 
 &lt;p&gt;以上是一些 Git 的基本用法，如果需要更多進階的操作，
-請參考&lt;a href="http://git-scm.com/doc"&gt;官方文件&lt;/a&gt;。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>產生 SSH Key</title><link href="/chan-sheng-ssh-key.html" rel="alternate"></link><updated>2014-10-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-26:chan-sheng-ssh-key.html</id><summary type="html">&lt;p&gt;在 web 開發中，許多平台 (例如 GitHup, Heroku, AWS ...等) 
+請參考&lt;a href="http://git-scm.com/doc"&gt;官方文件&lt;/a&gt;。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>產生 SSH Key</title><link href="http://tsaith.github.io/chan-sheng-ssh-key.html" rel="alternate"></link><updated>2014-10-26T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-26:chan-sheng-ssh-key.html</id><summary type="html">&lt;p&gt;在 web 開發中，許多平台 (例如 GitHup, Heroku, AWS ...等) 
 都使用 SSH Key 來提供安全認證機制; 這裡將說明如何產生 SSH Key。&lt;/p&gt;
 &lt;h3&gt;產生 SSH key&lt;/h3&gt;
 &lt;p&gt;在終端機的命令列，我們可以利用 &lt;code&gt;ssh-keygen&lt;/code&gt; 來產生 private key 和
@@ -5932,7 +5932,7 @@ git config --global user.email &amp;quot;user@gmail.com&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;然後程式會詢問你的密碼，並儲存下來，之後每次登入就不再需要另外輸入密碼了。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>對 Octopress 進行客製化</title><link href="/dui-octopress-jin-xing-ke-zhi-hua.html" rel="alternate"></link><updated>2014-10-25T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-25:dui-octopress-jin-xing-ke-zhi-hua.html</id><summary type="html">&lt;p&gt;會選擇使用 Octopress 的使用者，
+&lt;p&gt;然後程式會詢問你的密碼，並儲存下來，之後每次登入就不再需要另外輸入密碼了。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>對 Octopress 進行客製化</title><link href="http://tsaith.github.io/dui-octopress-jin-xing-ke-zhi-hua.html" rel="alternate"></link><updated>2014-10-25T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-25:dui-octopress-jin-xing-ke-zhi-hua.html</id><summary type="html">&lt;p&gt;會選擇使用 Octopress 的使用者，
 應該都是希望之後能夠修改自己的部落格，
 可以增加需要的功能以及讓版面顯得與眾不同;
 這篇文章將會介紹如何進行。&lt;/p&gt;
@@ -6010,12 +6010,12 @@ git config --global user.email &amp;quot;user@gmail.com&amp;quot;
 
 &lt;p&gt;倘若上面的語法出現語法解析錯誤，則可以嘗試使用&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;](&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2014&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rails&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mac&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="octopress"></category></entry><entry><title>在 Octopress 使用 Whitespace theme</title><link href="/zai-octopress-shi-yong-whitespace-theme.html" rel="alternate"></link><updated>2014-10-25T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-25:zai-octopress-shi-yong-whitespace-theme.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/lucaslew/whitespace"&gt;Whitespace&lt;/a&gt; 為你的部落格提供簡約的外觀並將文章置中，此外，它同樣支援響應式設計。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="octopress"></category></entry><entry><title>在 Octopress 使用 Whitespace theme</title><link href="http://tsaith.github.io/zai-octopress-shi-yong-whitespace-theme.html" rel="alternate"></link><updated>2014-10-25T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-25:zai-octopress-shi-yong-whitespace-theme.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/lucaslew/whitespace"&gt;Whitespace&lt;/a&gt; 為你的部落格提供簡約的外觀並將文章置中，此外，它同樣支援響應式設計。&lt;/p&gt;
 &lt;h3&gt;Install&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;octopress
 &lt;span class="nv"&gt;$ &lt;/span&gt;git clone git://github.com/lucaslew/whitespace.git .themes/whitespace
 &lt;span class="nv"&gt;$ &lt;/span&gt;rake install&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;whitespace&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="c"&gt;# for zsh, use: rake install\[&amp;#39;whitespace&amp;#39;\]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="octopress"></category></entry><entry><title>使用 Octopress 建構部落格</title><link href="/shi-yong-octopress-jian-gou-bu-luo-ge.html" rel="alternate"></link><updated>2014-10-23T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-23:shi-yong-octopress-jian-gou-bu-luo-ge.html</id><summary type="html">&lt;p&gt;&lt;a href="http://octopress.org/"&gt;Octopress&lt;/a&gt; 是一套優良的部落格框架，
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="octopress"></category></entry><entry><title>使用 Octopress 建構部落格</title><link href="http://tsaith.github.io/shi-yong-octopress-jian-gou-bu-luo-ge.html" rel="alternate"></link><updated>2014-10-23T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-23:shi-yong-octopress-jian-gou-bu-luo-ge.html</id><summary type="html">&lt;p&gt;&lt;a href="http://octopress.org/"&gt;Octopress&lt;/a&gt; 是一套優良的部落格框架，
 使用者可依照個人需求，設計專屬版面和擴充新功能，關於使用它的種種好處，
 可參考神人xdite的&lt;a href="http://blog.xdite.net/posts/2011/10/07/what-is-octopress/"&gt;文章&lt;/a&gt;。&lt;/p&gt;
 &lt;h3&gt;安裝 Octopress&lt;/h3&gt;
@@ -6101,7 +6101,7 @@ rake deploy
 
 &lt;p&gt;倘若上面的語法出現語法解析錯誤，則可以嘗試使用&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;[名稱]( /blog/2014/10/22/install-rails-on-mac )
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="octopress"></category></entry><entry><title>在 Mac 上安裝 Rails</title><link href="/zai-mac-shang-an-zhuang-rails.html" rel="alternate"></link><updated>2014-10-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-22:zai-mac-shang-an-zhuang-rails.html</id><summary type="html">&lt;p&gt;系統環境: OSX 10.9.x&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="octopress"></category></entry><entry><title>在 Mac 上安裝 Rails</title><link href="http://tsaith.github.io/zai-mac-shang-an-zhuang-rails.html" rel="alternate"></link><updated>2014-10-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2014-10-22:zai-mac-shang-an-zhuang-rails.html</id><summary type="html">&lt;p&gt;系統環境: OSX 10.9.x&lt;/p&gt;
 &lt;p&gt;這篇筆記僅記錄了本人安裝 Rails 的步驟，若需要更詳細的說明，請參考 &lt;a href="http://installrails.com"&gt;Install Rails&lt;/a&gt;。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
