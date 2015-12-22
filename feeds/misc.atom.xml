@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="/" rel="alternate"></link><link href="/feeds/misc.atom.xml" rel="self"></link><id>/</id><updated>2015-09-01T00:00:00+08:00</updated><entry><title>Manage project packages with virtualenv</title><link href="/manage-project-packages-with-virtualenv.html" rel="alternate"></link><updated>2015-09-01T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-09-01:manage-project-packages-with-virtualenv.html</id><summary type="html">&lt;p&gt;While developing two or more projects at the same time,
+it is unavoidable to switch among projects which may use the same python package of different version.
+In order to resolve the headache of package management,
+&lt;a href="https://virtualenv.pypa.io/en/latest/"&gt;virtualenv&lt;/a&gt; is designed to create isolated python environments.&lt;/p&gt;
+&lt;h3&gt;Install virtualenv&lt;/h3&gt;
+&lt;p&gt;Open your terminal and execute&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip3 install virtualenv virtualenvwrapper
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;where &lt;a href="https://virtualenvwrapper.readthedocs.org/en/latest/"&gt;virtualenvwrapper&lt;/a&gt; is a set of extension of &lt;code&gt;virtualenv&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;Set environment variables&lt;/h3&gt;
+&lt;p&gt;In &lt;code&gt;~/.profile&lt;/code&gt;, add the lines below :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3&lt;/span&gt;
+&lt;span class="x"&gt;export WORKON_HOME=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.virtualenvs&lt;/span&gt;
+&lt;span class="x"&gt;source /usr/local/bin/virtualenvwrapper.sh&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Followed by reloading &lt;code&gt;~/.profile&lt;/code&gt; :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;source ~/.profile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Some examples of usage&lt;/h3&gt;
+&lt;p&gt;To create a new project environment named &lt;code&gt;vision&lt;/code&gt; with python 3.4 support :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkvirtualenv -p /usr/local/bin/python3.4 vision
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In case we want to install &lt;a href="http://ipython.org/"&gt;ipython&lt;/a&gt; under &lt;code&gt;vision&lt;/code&gt; environment :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install ipython[notebook]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To leave the environment of current project :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;deactivate
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To work on a existed project :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;workon project_name
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category></entry><entry><title>Create a user account to deploy production on ubuntu</title><link href="/create-a-user-account-to-deploy-production-on-ubuntu.html" rel="alternate"></link><updated>2015-03-30T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-03-30:create-a-user-account-to-deploy-production-on-ubuntu.html</id><summary type="html">&lt;p&gt;On production server, it is a good practice to create a user account (named &lt;code&gt;deployer&lt;/code&gt;) which is supposed to take care jobs of deployment. The steps are described as following.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Log in the server as &lt;code&gt;root&lt;/code&gt; via &lt;code&gt;ssh&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh SERVER_IP
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Add new user named &lt;code&gt;deployer&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;adduser deployer
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Add &lt;code&gt;deployer&lt;/code&gt; to group &lt;code&gt;sudo&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;gpasswd -a deployer sudo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Switch from &lt;code&gt;root&lt;/code&gt; to &lt;code&gt;deployer&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;su -l deployer
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Create &lt;code&gt;.ssh&lt;/code&gt; directory and set proper access permission&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir ~/.ssh
+chmod 700 ~/.ssh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Copy the content of &lt;code&gt;id_rsa.pub&lt;/code&gt; and paste it to &lt;code&gt;authorized_keys&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On local computer:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cat ~/.ssh/id_rsa.pub | pbcopy
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;On remote server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;vi ~/.ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and paste the content of public key.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set proper access permission on &lt;code&gt;authorized_keys&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;chmod 600 .ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Return to &lt;code&gt;root&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;exit
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Disable &lt;code&gt;root&lt;/code&gt; login through SSH&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/ssh/sshd_config
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and modify the line of &lt;code&gt;PermitRootLogin&lt;/code&gt; as&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;PermitRootLogin no
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Restart SSH&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;service ssh restart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Open a new terminal on local computer and log in the server as &lt;code&gt;deployer&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh deployer@SERVER_IP
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Let &lt;code&gt;deployer&lt;/code&gt; can use &lt;code&gt;sudo&lt;/code&gt; without password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo visudo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Add following line at the end of file&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;deployer ALL=(ALL) NOPASSWD: ALL
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Execute &lt;code&gt;Ctrl-x&lt;/code&gt; -&amp;gt; &lt;code&gt;Y&lt;/code&gt; -&amp;gt; &lt;code&gt;Enter&lt;/code&gt; to save and exit file.&lt;/p&gt;</summary><category term="linux"></category></entry><entry><title>Vi-mode in command-line and Rails Console</title><link href="/vi-mode-in-command-line-and-rails-console.html" rel="alternate"></link><updated>2015-02-19T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-02-19:vi-mode-in-command-line-and-rails-console.html</id><summary type="html">&lt;p&gt;Since both command-line and rails console treat characters with &lt;code&gt;readline&lt;/code&gt;,
+we can add the line below in &lt;code&gt;~/.inputrc&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;set editing-mode vi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;to switch from the default &lt;code&gt;emacs-mode&lt;/code&gt; to &lt;code&gt;vi-mode&lt;/code&gt;.&lt;/p&gt;</summary><category term="rails"></category><category term="vim"></category><category term="emacs"></category></entry><entry><title>使用 Percol 進行模糊搜尋</title><link href="/shi-yong-percol-jin-xing-mo-hu-sou-xun.html" rel="alternate"></link><updated>2015-01-12T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-12:shi-yong-percol-jin-xing-mo-hu-sou-xun.html</id><summary type="html">&lt;p&gt;在開發專案時，我們常常需要在眾多資料夾下搜尋某個檔案，
+可是往往卻無法記得完整的檔案名稱，或是找到檔案後，
+希望能快速地將檔案路徑貼到其他應用程式上面。
+針對以上的問題，
+網路上有篇&lt;a href="http://blog.binchen.org/posts/how-to-do-the-file-navigation-efficiently.html"&gt;文章&lt;/a&gt;提出了使用
+&lt;a href="https://github.com/mooz/percol"&gt;percol&lt;/a&gt;
+結合 shell 命令的解決方案。
+我稍微修改了一些流程，並記錄如下。&lt;/p&gt;
+&lt;h3&gt;安裝 percol&lt;/h3&gt;
+&lt;p&gt;因為 percol 是用 python 開發的工具，
+所以我們需要先安裝 python 環境&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew install python
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;接著安裝 percol&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install percol
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;設定 percol 快捷鍵&lt;/h3&gt;
+&lt;p&gt;在 ~/.percol.d/rc.py 裡面定義常用的快捷鍵&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# X / _ / X&lt;/span&gt;
+&lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PROMPT&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;lt;bold&amp;gt;&amp;lt;yellow&amp;gt;X / _ / X&amp;lt;/yellow&amp;gt;&amp;lt;/bold&amp;gt; %q&amp;quot;&lt;/span&gt;
+
+&lt;span class="c"&gt;# Emacs like&lt;/span&gt;
+&lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;import_keymap&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-h&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delete_backward_char&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-d&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delete_forward_char&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-k&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;kill_end_of_line&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-y&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;yank&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-t&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transpose_chars&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-a&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;beginning_of_line&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-e&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;end_of_line&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-b&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;backward_char&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-f&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;forward_char&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;M-f&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;forward_word&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;M-b&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;backward_word&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;M-d&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delete_forward_word&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;M-h&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delete_backward_word&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-n&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_next&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-p&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_previous&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-v&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_next_page&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;M-v&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_previous_page&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;M-&amp;lt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_top&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;M-&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_bottom&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-m&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;finish&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-j&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;finish&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C-g&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;percol&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cancel&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;定義 shell 命令&lt;/h3&gt;
+&lt;p&gt;在 ~/.bash_profile 裡面自定常用的命令，如下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# file navigation with percol
+[ $(uname -s | grep -c CYGWIN) -eq 1 ] &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; OS_NAME=&amp;quot;CYGWIN&amp;quot; || OS_NAME=`uname -s`
+function pclip() {
+    if [ &lt;span class="nv"&gt;$OS_NAME&lt;/span&gt; == CYGWIN ]; then
+        putclip $@;
+    elif [ &lt;span class="nv"&gt;$OS_NAME&lt;/span&gt; == Darwin ]; then
+        pbcopy $@;
+    else
+        if [ -x /usr/bin/xsel ]; then
+            xsel -ib $@;
+        else
+            if [ -x /usr/bin/xclip ]; then
+                xclip -selection c $@;
+            else
+                echo &amp;quot;Neither xsel or xclip is installed!&amp;quot;
+            fi
+        fi
+    fi
+}
+
+function ff()
+{
+    local fullpath=$*
+    local filename=&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;fullpath&lt;/span&gt;&lt;span class="c"&gt;##*/&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt; # remove &amp;quot;/&amp;quot; from the beginning
+    filename=&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="c"&gt;##*./&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt; # remove  &amp;quot;.../&amp;quot; from the beginning
+    echo file=&lt;span class="nv"&gt;$filename&lt;/span&gt;
+    #  only the filename without path is needed
+    # filename should be reasonable
+    local cli=`find &lt;span class="nv"&gt;$PWD&lt;/span&gt; -not -iwholename &amp;#39;*/target/*&amp;#39; -not -iwholename &amp;#39;*.svn*&amp;#39; -not -iwholename &amp;#39;*.git*&amp;#39; -not -iwholename &amp;#39;*.sass-cache*&amp;#39; -not -iwholename &amp;#39;*.hg*&amp;#39; -type f -iwholename &amp;#39;*&amp;#39;&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;&amp;#39;*&amp;#39; -print | percol`
+    echo &lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;cli&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;
+    echo -n &lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;cli&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt; |pclip;
+}
+
+function h () {
+    # reverse history, pick up one line, remove new line characters and put it into clipboard
+    if [ -z &amp;quot;$1&amp;quot; ]; then
+        history | sed &amp;#39;1!G;h;$!d&amp;#39; | percol | sed -n &amp;#39;s/^ *[0-9][0-9]* *\(.*\)$/\1/p&amp;#39;| tr -d &amp;#39;\n&amp;#39; | pclip
+    else
+        history | grep &amp;quot;$1&amp;quot; | sed &amp;#39;1!G;h;$!d&amp;#39; | percol | sed -n &amp;#39;s/^ *[0-9][0-9]* *\(.*\)$/\1/p&amp;#39;| tr -d &amp;#39;\n&amp;#39; | pclip
+    fi
+}
+
+function glsf () {
+    local str=`git --no-pager log --oneline --stat $* |  percol`
+    if [[ &lt;span class="nv"&gt;$str&lt;/span&gt; =~ ^[[:space:]]*([a-z0-9A-Z_.\/-]*).*$ ]]; then
+        echo -n &lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;BASH_REMATCH&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt; | pclip;
+        echo &lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;BASH_REMATCH&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;
+    fi
+}
+
+function ppgrep() {
+    if [[ $1 == &amp;quot;&amp;quot; ]]; then
+        PERCOL=percol
+    else
+        PERCOL=&amp;quot;percol --query $1&amp;quot;
+    fi
+    ps aux | eval &lt;span class="nv"&gt;$PERCOL&lt;/span&gt; | awk &amp;#39;{ print $2 }&amp;#39;
+}
+
+function ppkill() {
+    if [[ $1 =~ &amp;quot;^-&amp;quot; ]]; then
+        QUERY=&amp;quot;&amp;quot;            # options only
+    else
+        QUERY=$1            # with a query
+        [[ $# &amp;gt; 0 ]] &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; shift
+    fi
+    ppgrep &lt;span class="nv"&gt;$QUERY&lt;/span&gt; | xargs kill $*
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;存檔後，若不想重開 terminal 可直接執行
+&lt;code&gt;source ~/.bash_profile&lt;/code&gt;
+就可以立刻使用上面定義的命令。&lt;/p&gt;
+&lt;h3&gt;使用範例&lt;/h3&gt;
+&lt;p&gt;在專案下執行 &lt;code&gt;ff&lt;/code&gt;，可以使用片段的檔名進行搜尋，
+選擇檔案後按 &lt;code&gt;Return&lt;/code&gt; 就會自動將檔名拷貝到系統的剪貼簿上。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://farm9.staticflickr.com/8659/16260930815_87c4d30484_b.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;直接執行 &lt;code&gt;h&lt;/code&gt;，可搜尋並拷貝歷史命令。
+&lt;img src="https://farm9.staticflickr.com/8644/15641025303_2ca6346fb7_b.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;如果想強制離開搜尋畫面，請按 &lt;code&gt;Ctrl&lt;/code&gt;+ &lt;code&gt;c&lt;/code&gt;。&lt;/p&gt;</summary><category term="utils"></category></entry><entry><title>在 Emacs 中使用 Vim: Evil</title><link href="/zai-emacs-zhong-shi-yong-vim-evil.html" rel="alternate"></link><updated>2015-01-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-05:zai-emacs-zhong-shi-yong-vim-evil.html</id><summary type="html">&lt;p&gt;過去十多年來，
+Vim 一直都是筆者最喜愛的文字編輯器，
+然而就像其他許多資深的 Vim 使用者，
+我也總是對另一套神器 Emacs 感到好奇;
+於是前陣子，
+終於下定決心花些時間去了解 Emacs 的使用方式。
+而在體驗之後只能說，果然盛名之下無虛士，
+難怪有人會講，
+Emacs 根本就是偽裝成編輯器的作業系統!&lt;/p&gt;
+&lt;p&gt;就我個人主觀的看法，
+Vim 因為支援許多單鍵的編輯功能，
+所以在文本編輯上比較快速，
+而 Emacs 因為使用 Lisp 語言，
+所以在擴展性上相對強大。&lt;/p&gt;
+&lt;p&gt;那我們最後應該使用哪一套工具呢?
+因為 &lt;a href="https://gitorious.org/evil/pages/Home"&gt;Evil&lt;/a&gt; 的出現，
+我們現在可以直接在 Emacs 中使用 Vim，魚與熊掌兼得！&lt;/p&gt;
+&lt;h3&gt;安裝 Evil&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; package-install &lt;code&gt;Ret&lt;/code&gt; evil &lt;code&gt;Ret&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;設定配置&lt;/h3&gt;
+&lt;p&gt;在 ~/.emacs/init.el 裡面加入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;(require &amp;#39;evil)
+(evil-mode 1)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用方法&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;z&lt;/code&gt;: 在 Emacs 和 Vim 之間切接&lt;/p&gt;</summary><category term="emacs"></category></entry><entry><title>編輯器: Emacs</title><link href="/bian-ji-qi-emacs.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-03:bian-ji-qi-emacs.html</id><summary type="html">&lt;p&gt;GNU 計劃創始人 &lt;a href="http://zh.wikipedia.org/wiki/%E7%90%86%E6%9F%A5%E5%BE%B7%C2%B7%E6%96%AF%E6%89%98%E6%9B%BC"&gt;Richard Stallman&lt;/a&gt; 和 &lt;a href="http://zh.wikipedia.org/wiki/%E8%93%8B%E4%BC%8A%C2%B7%E5%8F%B2%E6%8F%90%E7%88%BE%E4%BA%8C%E4%B8%96"&gt;Guy Lewis Steele Jr.&lt;/a&gt; 在1975 年共同打造了 &lt;a href="http://zh.wikipedia.org/wiki/Emacs"&gt;Emacs&lt;/a&gt; (Editor MACroS)，
+Emacs 使用 &lt;a href="http://zh.wikipedia.org/wiki/LISP"&gt;Lisp&lt;/a&gt; 作為功能擴充語言，
+具有強大的擴展性，與可客製性，
+還有各式各樣好用的套件，
+所以也有人稱它是神的編輯器，或是偽裝成編輯器的作業系統 @_@;
+如果想知道更多對於 Emcas 特性的敘述，
+可以參考另一篇&lt;a href="http://blog.csdn.net/redguardtoo/article/details/7222501#sec-13"&gt;文章&lt;/a&gt;。&lt;/p&gt;
+&lt;h3&gt;安裝 Emacs&lt;/h3&gt;
+&lt;p&gt;在 Mac 下可透過 Homebrew 進行安裝&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew install emacs
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;建議配置&lt;/h3&gt;
+&lt;p&gt;Emacs 的目錄位於 ~/.emacs.d，
+若希望自定個人的專屬配置，可在 ~/.emacs.d/init.el 裡面設定。&lt;/p&gt;
+&lt;p&gt;建議一開始可直接使用高手們的配置，
+因為他們的配置都經過了多年的磨練，
+在深思熟慮後才決定出最佳的按鍵定義並也解決了許多套件相容性問題;
+我個人偏好 &lt;a href="http://www.sanityinc.com/"&gt;Steve Purcell&lt;/a&gt; 的&lt;a href="https://github.com/purcell/emacs.d"&gt;配置&lt;/a&gt;，
+因為他是一位頂尖的 Rails 開發者，
+所以使用他的配置可以大量減少自己打造 Rails 開發環境的時間。&lt;/p&gt;
+&lt;h3&gt;符號與按鍵&lt;/h3&gt;
+&lt;p&gt;為方便之後的說明，在這邊先定義一些符號和按鍵的對應關係&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;: 代表 Ctrl&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;: 代表 Alt&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ret&lt;/code&gt;: 代表 Return&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;安裝 Packages&lt;/h3&gt;
+&lt;p&gt;在 Emacs 最簡單安裝套件的兩個方式分別為&lt;/p&gt;
+&lt;p&gt;使用 package-install 命令&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; package-install &lt;code&gt;Ret&lt;/code&gt; Package Name &lt;code&gt;Ret&lt;/code&gt; : 安裝套件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;透過 &lt;a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Package-Menu.html#Package-Menu"&gt;Package Menu&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; list-packages : 進入套件安裝目錄&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;s&lt;/code&gt;: 尋找套件名稱&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i&lt;/code&gt;: 標記為即將安裝的套件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;u&lt;/code&gt;: 解除標記&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt;: 標記為刪除的套件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt;: 開始安裝/反安裝 以標記的套件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r&lt;/code&gt;: 刷新列表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;基本操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt;: 離開 Emacs&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;z&lt;/code&gt;: 暫停 Emcas，並將它放到背景&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;h&lt;/code&gt; &lt;code&gt;C&lt;/code&gt;-&lt;code&gt;h&lt;/code&gt;: Help for Help&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;存取檔案&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;C&lt;/code&gt;-&lt;code&gt;f&lt;/code&gt;: 尋找檔案並開啟&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;C&lt;/code&gt;-&lt;code&gt;s&lt;/code&gt;: 存檔&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;字元操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;d&lt;/code&gt;: 向前刪除字元&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Del&lt;/code&gt;: 向後刪除字元&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;拷貝和貼上&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;w&lt;/code&gt;: 拷貝游標所在行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;u&lt;/code&gt; &lt;code&gt;3&lt;/code&gt; &lt;code&gt;M&lt;/code&gt;-&lt;code&gt;w&lt;/code&gt;: 拷貝連續三行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;w&lt;/code&gt;: 剪下游標所在行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;u&lt;/code&gt; &lt;code&gt;3&lt;/code&gt; &lt;code&gt;C&lt;/code&gt;-&lt;code&gt;w&lt;/code&gt;: 剪下連續三行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;y&lt;/code&gt;: 貼上暫存區資料&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;暫存區操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;r&lt;/code&gt; &lt;code&gt;s&lt;/code&gt; (#): 拷貝標記區域到數字暫存區&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;r&lt;/code&gt; &lt;code&gt;i&lt;/code&gt; (#): 從數字暫存區將資料插入游標所在處&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Buffer 操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;b&lt;/code&gt;: 切換 buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;Left&lt;/code&gt;: 切換到上一個 buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;Right&lt;/code&gt;: 切換到下一個 buffer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;區段操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;Space&lt;/code&gt;: 開始標記區域&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;k&lt;/code&gt;: 從游標所在刪除到本行結尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;0&lt;/code&gt; &lt;code&gt;C&lt;/code&gt;-&lt;code&gt;k&lt;/code&gt;: 從游標所在刪除到本行開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;h&lt;/code&gt;: 標記整個檔案內容&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;視窗操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; 1: 單一視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; 2: 水平分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; 3: 垂直分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; 0: 關閉選擇的視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; windmove-up: 向上切換視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; windmove-down: 向下切換視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; windmove-left: 向左切換視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; windmove-right: 向右切換視窗&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;移動游標&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;a&lt;/code&gt;: 移到游標所在行的開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;e&lt;/code&gt;: 移到游標所在行的結尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;a&lt;/code&gt;: 移到段落開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;e&lt;/code&gt;: 移到段落結尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;g&lt;/code&gt; &lt;code&gt;g&lt;/code&gt;: 移到指定行數&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Esc&lt;/code&gt; &lt;code&gt;&amp;lt;&lt;/code&gt;: 移到檔案開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Esc&lt;/code&gt; &lt;code&gt;&amp;gt;&lt;/code&gt;: 移到檔案結尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;v&lt;/code&gt;: 移到下一頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;v&lt;/code&gt;: 移到上一頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;r&lt;/code&gt; &lt;code&gt;Space&lt;/code&gt; &lt;code&gt;a&lt;/code&gt;: 記錄目前游標位置到 register a&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;r&lt;/code&gt; &lt;code&gt;j&lt;/code&gt; &lt;code&gt;a&lt;/code&gt;: 跳到 register a 所儲存的位置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;字串取代&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;%&lt;/code&gt; old_string &lt;code&gt;Ret&lt;/code&gt; new_string &lt;code&gt;Ret&lt;/code&gt;: 取代字串&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; replace-regexp &lt;code&gt;Ret&lt;/code&gt; regexp &lt;code&gt;Ret&lt;/code&gt; newstring &lt;code&gt;Ret&lt;/code&gt;: 以正規表示法取代字串&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;程式碼操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;;&lt;/code&gt;: 將程式碼加上註解符號&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;u&lt;/code&gt; &lt;code&gt;M&lt;/code&gt;-&lt;code&gt;;&lt;/code&gt;: 移除程式碼前的註解符號&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Tab&lt;/code&gt;: 縮行對齊&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; linum-mode: 開啟/關閉 行號顯示&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;其他操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;_&lt;/code&gt;: 回到上一步&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;_&lt;/code&gt;: 回到下一步&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;g&lt;/code&gt;: 取消目前操作&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;z&lt;/code&gt;: 重複上一次的操作&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;!&lt;/code&gt;: 執行外部命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;好用的 Packages&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html"&gt;Dired&lt;/a&gt;: 檔案管理&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; &lt;code&gt;d&lt;/code&gt; 開啟目錄&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c&lt;/code&gt; 拷貝檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r&lt;/code&gt; 將檔案重新命名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt; 刪除檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;+&lt;/code&gt; 新增目錄&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z&lt;/code&gt; 使用 gzip 進行壓縮/解壓縮&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;m&lt;/code&gt; 標記檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;u&lt;/code&gt; 反標記檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;U&lt;/code&gt; 取消所有標記&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;g&lt;/code&gt; 刷新列表&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;^&lt;/code&gt; 到上一層目錄&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://github.com/joddie/osx-clipboard-mode"&gt;osx-cliboard&lt;/a&gt;: 使用 OSX 的剪貼板&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; osx-clipboard-mode: 進入 osx-clipboard-mode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://www.gnu.org/software/emacs/manual/html_mono/eshell.html"&gt;Eshell&lt;/a&gt;: Emacs Shell&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;-&lt;code&gt;x&lt;/code&gt; eshell: 啟動 eshell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://github.com/eschulte/rinari/tree/master"&gt;Rinari&lt;/a&gt;: Rails 的開發環境&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;m&lt;/code&gt; 尋找 model&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;v&lt;/code&gt; 尋找 view&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;c&lt;/code&gt; 尋找 controller&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;r&lt;/code&gt; 尋找 rspec&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;M&lt;/code&gt; 尋找 mailer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;i&lt;/code&gt; 尋找 migration&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;l&lt;/code&gt; 尋找 lib&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;j&lt;/code&gt; 尋找 javascript&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;f&lt;/code&gt; &lt;code&gt;o&lt;/code&gt; 尋找 log&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;c&lt;/code&gt; 啟動 console&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;-&lt;code&gt;c&lt;/code&gt; &lt;code&gt;;&lt;/code&gt; &lt;code&gt;w&lt;/code&gt; 啟動 web-server&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="emacs"></category></entry><entry><title>編輯器: Vim</title><link href="/bian-ji-qi-vim.html" rel="alternate"></link><updated>2015-01-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2015-01-03:bian-ji-qi-vim.html</id><summary type="html">&lt;p&gt;在編程領域中，
+&lt;a href="http://zh.wikipedia.org/wiki/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B%E6%88%98"&gt;編輯器之戰&lt;/a&gt;的兩位主角
+&lt;a href="http://zh.wikipedia.org/wiki/Vi"&gt;Vi&lt;/a&gt; 和
+&lt;a href="http://zh.wikipedia.org/wiki/Emacs"&gt;Emacs&lt;/a&gt; 經歷幾十年的歲月後，
+直到現在依然擁有許多信徒;
+而隨著時間的過去，
+Vi (Visual，&lt;a href="http://zh.wikipedia.org/wiki/%E6%AF%94%E5%B0%94%C2%B7%E4%B9%94%E4%BC%8A"&gt;Bill Joy&lt;/a&gt; 於 1976 年發表 ) 的功能不斷地被增強，
+最後演化出目前受歡迎的 &lt;a href="http://zh.wikipedia.org/wiki/Vim"&gt;Vim&lt;/a&gt;;
+Vim 不管是可擴展性或高效的編輯速度，
+都讓一般的編輯器難以望其項背，
+也因此有了&lt;a href="http://os.51cto.com/art/201101/242518.htm"&gt;編輯器之神&lt;/a&gt;的封號!
+不過 GNU 計劃的創始人
+&lt;a href="http://zh.wikipedia.org/wiki/%E7%90%86%E6%9F%A5%E5%BE%B7%C2%B7%E6%96%AF%E6%89%98%E6%9B%BC"&gt;RMS&lt;/a&gt;
+說它比較像魔鬼的編輯器
+(因為 vi-vi-vi 是&lt;a href="http://zh.wikipedia.org/wiki/%E7%8D%B8%E5%90%8D%E6%95%B8%E7%9B%AE"&gt;獸名數目&lt;/a&gt; XD )&lt;/p&gt;
+&lt;p&gt;關於 Vim 的詳細使用方法請查詢&lt;a href="http://vimdoc.sourceforge.net/htmldoc/usr_toc.html"&gt;官方文件&lt;/a&gt;，
+這裡只介紹我自己常用的一些操作。&lt;/p&gt;
+&lt;h3&gt;環境設定&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;~/.vimrc 環境設定檔&lt;/li&gt;
+&lt;li&gt;~/.vim  Vim 專屬的資料夾&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;符號定義&lt;/h3&gt;
+&lt;p&gt;為方便之後的說明，先在此定義兩個按鍵符號&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt; 表示 Ctrl&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt; 表示 Alt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;常用模式&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;command mode 按 &lt;code&gt;Esc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;insert mode 在 command mode 中，按 &lt;code&gt;i&lt;/code&gt; 或 &lt;code&gt;a&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;plain visual mode 在 command mode 中，按 &lt;code&gt;v&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;block visual mode 在 command mode 中，按 &lt;code&gt;C&lt;/code&gt;+ &lt;code&gt;v&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;command line 在 command mode 中，按 &lt;code&gt;:&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;存取檔案&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;vi file_name&lt;/code&gt; 開啟檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:w&lt;/code&gt; 存檔&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:q&lt;/code&gt; 離開&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:q!&lt;/code&gt; 強制離開(不須先存檔)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:e file_name&lt;/code&gt; 編輯其它檔案&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;字元操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;i&lt;/code&gt; 在游標所在處開始輸入&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a&lt;/code&gt; 從下個字元開始輸入&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; 刪除一個字元&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;o&lt;/code&gt; 插入空白行並開始輸入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;字元操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt; &lt;code&gt;w&lt;/code&gt; 刪除一個單字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt; &lt;code&gt;W&lt;/code&gt; 刪除一個單字(忽略特殊字元)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;拷貝和貼上&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;yy&lt;/code&gt; 拷貝游標所在的那一行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3&lt;/code&gt; &lt;code&gt;yy&lt;/code&gt; 拷貝連續三行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dd&lt;/code&gt; 剪下游標所在的那一行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3&lt;/code&gt; &lt;code&gt;dd&lt;/code&gt; 剪下連續三行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;y&lt;/code&gt; 將標記區域 yank 到剪貼簿&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;p&lt;/code&gt; 將剪貼簿的資料貼上&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;段落操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;J&lt;/code&gt; 連接下一行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt; &lt;code&gt;$&lt;/code&gt; 從游標所在刪除到本行結尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt; &lt;code&gt;^&lt;/code&gt; 從游標所在刪除到本行開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;D&lt;/code&gt; 從游標所在刪除到本行結尾&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;暫存區操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ma&lt;/code&gt; &lt;code&gt;"c&lt;/code&gt; &lt;code&gt;y&lt;/code&gt; &lt;code&gt;'a&lt;/code&gt; 將選擇區段拷貝到 register c&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;"c&lt;/code&gt; &lt;code&gt;p&lt;/code&gt; 將 register c 的資料貼上&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ma&lt;/code&gt; &lt;code&gt;"+&lt;/code&gt; &lt;code&gt;y&lt;/code&gt; &lt;code&gt;'a&lt;/code&gt; 選擇區塊並拷貝到系統的剪貼板&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3&lt;/code&gt; &lt;code&gt;"+&lt;/code&gt; &lt;code&gt;yy&lt;/code&gt; 將連續三行 yank 到系統的剪貼板&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:%y+&lt;/code&gt; 將檔案內容 yank 到剪貼板&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;移動游標&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gg&lt;/code&gt; 第一行開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;G&lt;/code&gt; 最後一行的開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;^&lt;/code&gt; 移到游標所在行的開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$&lt;/code&gt; 移到游標所在行的結尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;f&lt;/code&gt; 下一頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt; 上一頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;+&lt;code&gt;f&lt;/code&gt; 往後移到一個單字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt; 往前移到一個單字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;+&lt;code&gt;F&lt;/code&gt; 往後移到一個單字並且標記&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt; 往前移到一個單字並且標記&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;切換目錄&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:cd %:h&lt;/code&gt; 將工作目錄改變到編輯的檔案下&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:lcd %:h&lt;/code&gt; 僅將目前視窗的工作目錄改變到編輯的檔案下&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;autocmd BufEnter * silent! lcd %:p:h&lt;/code&gt; 自動改變工作目錄到編輯的檔案下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;切換檔案&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gf&lt;/code&gt; 跳到關聯檔 ( goto file )&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;^&lt;/code&gt; 回到上一個檔案&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;分頁操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:tab_new&lt;/code&gt; 新分頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:tabprevious&lt;/code&gt; 上一個分頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:tabnext&lt;/code&gt; 下一個分頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:ab tn tab_new&lt;/code&gt; 將 tab_new 縮寫為 tn&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;視窗操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:vs&lt;/code&gt;       垂直分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:sp&lt;/code&gt;       水平分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;v&lt;/code&gt; 垂直分割&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;s&lt;/code&gt; 水平分割&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;left[right] arrow&lt;/code&gt; 左[右]切換視窗&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;up[down] arrow&lt;/code&gt;    上[下]切換視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;h[l]&lt;/code&gt; 左[右]切換視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;k[j]&lt;/code&gt; 上[下]切換視窗&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;其他操作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;u&lt;/code&gt;: 回到上一步&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;r&lt;/code&gt;: 回到下一步&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:set nu&lt;/code&gt; 顯示行數&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:set nonu&lt;/code&gt; 不顯示行數&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:syntax enable&lt;/code&gt; 語法顏色&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:set ai&lt;/code&gt; 自動縮行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:!外部命令&lt;/code&gt; 執行外部命令，例如 &lt;code&gt;:!ls&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;r&lt;/code&gt; &lt;code&gt;%&lt;/code&gt; 在 insert mode 下貼上檔案路徑&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;自定按鍵&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;map &amp;lt;C-k&amp;gt; :tabprevious &amp;lt;CR&amp;gt;&lt;/code&gt; 用 &lt;code&gt;C&lt;/code&gt;+&lt;code&gt;k&lt;/code&gt; 映射 &lt;code&gt;:tabpreview&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;map &amp;lt;C-j&amp;gt; :tabnext &amp;lt;CR&amp;gt;&lt;/code&gt; 用 &lt;code&gt;C&lt;/code&gt;+&lt;code&gt;j&lt;/code&gt; 映射 &lt;code&gt;:tabnext&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;好用的 plugins&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1567"&gt;rails.vim&lt;/a&gt;:
+Rails 套件(語法顏色，快速切換檔案... 等)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:Rcd 目錄&lt;/code&gt; 切換目錄(從專案目錄出發)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:Rmodel 檔案&lt;/code&gt;      編輯 model 檔案&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:Rview 檔案&lt;/code&gt;       編輯 view 檔案&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:Rcontroller 檔案&lt;/code&gt; 編輯 controller 檔案&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=2540"&gt;snipMate&lt;/a&gt;: 加入程式片段&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Tab&lt;/code&gt; 加入程式片段&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://github.com/kien/ctrlp.vim"&gt;ctrp&lt;/a&gt;: 模糊搜尋&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt; 啟動模糊搜尋&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1708"&gt;fencview.vim&lt;/a&gt;: 自動偵測多國編碼&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:FencAutoDetect&lt;/code&gt; 啟動偵測&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1658"&gt;nerdtree.vim&lt;/a&gt;: 檔案瀏覽器&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:e .&lt;/code&gt; 瀏覽工作目錄&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1643"&gt;supertab.vmb&lt;/a&gt;: 補全程式碼&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Tab&lt;/code&gt; 補全程式碼&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;雖然 Vim 對初學者而言需要投入多一些的時間來熟悉，
+但只要上手後， 就會大幅提升你的編程效率。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Bash 中常用的快捷鍵</title><link href="/bash-zhong-chang-yong-de-kuai-jie-jian.html" rel="alternate"></link><updated>2014-12-16T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-16:bash-zhong-chang-yong-de-kuai-jie-jian.html</id><summary type="html">&lt;p&gt;目前 Mac 預設的 shell 是 Bash，這裡列出一些常用的快捷鍵。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;a&lt;/code&gt;: 將游標移到開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;e&lt;/code&gt;: 將游標移到結尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;alt&lt;/code&gt; + &lt;code&gt;f&lt;/code&gt;: 將游標向前移動一個單字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;alt&lt;/code&gt; + &lt;code&gt;b&lt;/code&gt;: 將游標向後移動一個單字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;k&lt;/code&gt;: 刪除游標後面的所有字元&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;u&lt;/code&gt;: 刪除游標前面的所有字元&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;w&lt;/code&gt;: 刪除游標前面的一個單字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;t&lt;/code&gt;: 將游標前的兩個字母對調&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;esc&lt;/code&gt; + &lt;code&gt;t&lt;/code&gt;: 將游標前的兩個單字對調&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tab&lt;/code&gt;: 自動完成檔案或目錄名稱&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;d&lt;/code&gt;: 刪除游標後的一個字元&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;c&lt;/code&gt;: 中斷執行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;z&lt;/code&gt;: 暫停程序並將它丟到背景&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>iTerm2 中好用的設定</title><link href="/iterm2-zhong-hao-yong-de-she-ding.html" rel="alternate"></link><updated>2014-12-05T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-12-05:iterm2-zhong-hao-yong-de-she-ding.html</id><summary type="html">&lt;p&gt;&lt;a href="http://iterm2.com/"&gt;iTerm2&lt;/a&gt; 被設計用來取代 Mac 內建的 Terminal;
+這裡記錄了我個人的一些偏好設定。&lt;/p&gt;
+&lt;h3&gt;偏好設定&lt;/h3&gt;
+&lt;p&gt;以下的偏好都可以在 Preference 裡面進行設定&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;開啟新分頁時，自動進入前一個 session 的所在目錄&lt;/p&gt;
+&lt;p&gt;Profile -&amp;gt; General -&amp;gt; Login shell&lt;/p&gt;
+&lt;p&gt;Profile -&amp;gt; General -&amp;gt; Reuse previous session's directory&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;設定主題風格(例如背景顏色...等)&lt;/p&gt;
+&lt;p&gt;Profile -&amp;gt; Colors -&amp;gt; Load Presets... -&amp;gt; Tango Dark&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;改變字型和大小&lt;/p&gt;
+&lt;p&gt;Profile -&amp;gt; Text -&amp;gt; Change Font&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;讓 alt/option key 可以在 Emacs 中正常工作&lt;/p&gt;
+&lt;p&gt;Profile -&amp;gt; Keys -&amp;gt; Left option key acts as: +Esc&lt;/p&gt;
+&lt;p&gt;Profile -&amp;gt; Keys -&amp;gt; Right option key acts as: +Esc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 &lt;code&gt;alt&lt;/code&gt; + &lt;code&gt;Space&lt;/code&gt; 快速隱藏/顯示 iTerm2&lt;/p&gt;
+&lt;p&gt;Profile -&amp;gt; Keys -&amp;gt; Show/hide iTerm2 with a system-wide hotkey&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="utils"></category></entry><entry><title>Vim 的常用指令</title><link href="/vim-de-chang-yong-zhi-ling.html" rel="alternate"></link><updated>2014-11-03T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-11-03:vim-de-chang-yong-zhi-ling.html</id><summary type="html">&lt;p&gt;在編程領域中，
+&lt;a href="http://zh.wikipedia.org/wiki/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B%E6%88%98"&gt;編輯器之戰&lt;/a&gt;的兩位主角 &lt;a href="http://zh.wikipedia.org/wiki/Vi"&gt;Vi&lt;/a&gt; 和
+&lt;a href="http://zh.wikipedia.org/wiki/Emacs"&gt;Emacs&lt;/a&gt; 經歷幾十年的歲月後，
+直到現在依然擁有許多信徒;
+而隨著時間的過去，Vi 的功能不斷地被增強，最後演化出目前受歡迎的 &lt;a href="http://zh.wikipedia.org/wiki/Vim"&gt;Vim&lt;/a&gt; ，
+關於 Vim 的詳細手冊可查詢&lt;a href="http://vimdoc.sourceforge.net/htmldoc/usr_toc.html"&gt;官方文件&lt;/a&gt;，這裡僅列出常用的一些指令。&lt;/p&gt;
+&lt;h3&gt;環境設定&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;~/.vimrc: 環境設定檔&lt;/li&gt;
+&lt;li&gt;~/.vim: Vim 專屬的資料夾&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;內建指令&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;vi file_name&lt;/code&gt; 開啟檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ecs&lt;/code&gt; 進入命令模式&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:w&lt;/code&gt; 存檔&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:q&lt;/code&gt; 離開&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:q!&lt;/code&gt; 強制離開(不須先存檔)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:e file_name&lt;/code&gt; 編輯其它檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; 刪除一個字元&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i&lt;/code&gt; 在游標所在處開始輸入文字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a&lt;/code&gt; 從下個字元開始輸入文字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;p&lt;/code&gt; 將暫存區資料貼上&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yy&lt;/code&gt; 拷貝游標所在的那一行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3&lt;/code&gt; &lt;code&gt;yy&lt;/code&gt; 拷貝連續三行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dd&lt;/code&gt; 剪下游標所在的那一行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3&lt;/code&gt; &lt;code&gt;dd&lt;/code&gt; 剪下連續三行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;D&lt;/code&gt; 刪除游標之後的部分&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;J&lt;/code&gt; 連接下一行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:set nu&lt;/code&gt; 顯示行數&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:set nonu&lt;/code&gt; 不顯示行數&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ma&lt;/code&gt; &lt;code&gt;"c&lt;/code&gt; &lt;code&gt;y&lt;/code&gt; &lt;code&gt;'a&lt;/code&gt; 將選擇區段拷貝到 register c&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;"c&lt;/code&gt; &lt;code&gt;p&lt;/code&gt; 將 register c 的資料貼上&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ma&lt;/code&gt; &lt;code&gt;"+&lt;/code&gt; &lt;code&gt;y&lt;/code&gt; &lt;code&gt;'a&lt;/code&gt; 選擇區塊並拷貝到系統的剪貼板&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3&lt;/code&gt; &lt;code&gt;"+&lt;/code&gt; &lt;code&gt;yy&lt;/code&gt; 將連續三行到系統的剪貼板&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:set ai&lt;/code&gt; 自動縮行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:tab_new&lt;/code&gt; 新分頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:ab tn tab_new&lt;/code&gt; 將 tab_new 縮寫為 tn&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:tabprevious&lt;/code&gt; 上一個分頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:tabnext&lt;/code&gt; 下一個分頁&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;map &amp;lt;C-k&amp;gt; :tabprevious &amp;lt;CR&amp;gt;&lt;/code&gt; 用 &lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;k&lt;/code&gt; 映射 &lt;code&gt;:tabpreview&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;map &amp;lt;C-j&amp;gt; :tabnext &amp;lt;CR&amp;gt;&lt;/code&gt; 用 &lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;j&lt;/code&gt; 映射 &lt;code&gt;:tabnext&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gg&lt;/code&gt; 第一行開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;G&lt;/code&gt; 最後一行的開頭&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:cd %:h&lt;/code&gt; 將工作目錄改變到編輯的檔案下&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:lcd %:h&lt;/code&gt; 僅將目前視窗的工作目錄改變到編輯的檔案下&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;autocmd BufEnter * silent! lcd %:p:h&lt;/code&gt; 自動改變工作目錄到編輯的檔案下&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gf&lt;/code&gt; 跳到關聯檔 ( goto file )&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;^&lt;/code&gt; 回到上一個檔案&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:!外部命令&lt;/code&gt; 執行外部命令，例如 &lt;code&gt;:!ls&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:syntax enable&lt;/code&gt; 語法顏色&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;視窗分割&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:vs&lt;/code&gt;       垂直分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;v&lt;/code&gt; 垂直分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:sp&lt;/code&gt;       水平分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;s&lt;/code&gt; 水平分割&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;left[right] arrow&lt;/code&gt; 左右切換視窗&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; &lt;code&gt;up[down] arrow&lt;/code&gt;    上下切換視窗&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;好用的 plugin&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1567"&gt;rails.vim&lt;/a&gt;: Rails 套件(語法顏色，快速切換檔案... 等)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Rcd 目錄&lt;/code&gt; 切換目錄(從專案目錄出發)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Rmodel 檔案&lt;/code&gt;      編輯 model 檔案&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Rview 檔案&lt;/code&gt;       編輯 view 檔案&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Rcontroller 檔案&lt;/code&gt; 編輯 controller 檔案&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=2540"&gt;snipMate&lt;/a&gt;: 加入程式片段&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Tab&lt;/code&gt; 加入程式片段&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://github.com/kien/ctrlp.vim"&gt;ctrp&lt;/a&gt;: 模糊搜尋&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt; 啟動模糊搜尋&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt; 垂直分頁開啟檔案&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1708"&gt;fencview.vim&lt;/a&gt;: 自動偵測多國編碼&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:FencAutoDetect&lt;/code&gt; 啟動偵測&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1658"&gt;nerdtree.vim&lt;/a&gt;: 檔案瀏覽器&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:e .&lt;/code&gt; 瀏覽工作目錄&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=1643"&gt;supertab.vmb&lt;/a&gt;: 使用 Tab 來補全程式碼&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Tab&lt;/code&gt; 補全程式碼&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;雖然 Vim 對初學者而言需要投入多一些的時間來熟悉，但只要上手後，
+就會大幅提升你的編程效率。&lt;/p&gt;</summary><category term="vim"></category></entry><entry><title>Homebrew: Mac 專屬的套件管理者</title><link href="/homebrew-mac-zhuan-shu-de-tao-jian-guan-li-zhe.html" rel="alternate"></link><updated>2014-10-28T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:,2014-10-28:homebrew-mac-zhuan-shu-de-tao-jian-guan-li-zhe.html</id><summary type="html">&lt;p&gt;每一位軟體開發者肯定都需要安裝許多套件來打造所需的開發環境，
+而各種套件的版本和相依性一直以來都是件讓人頭痛的問題;
+為了讓 Mac 使用者不再總是為此煩惱， 
+於是有了 &lt;a href="http://brew.sh/"&gt;Homebrew&lt;/a&gt; 的產生。&lt;/p&gt;
+&lt;h3&gt;安裝方式&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code&gt;ruby&lt;/code&gt; and &lt;code&gt;curl&lt;/code&gt; 進行安裝&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ruby -e &amp;quot;$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然後接著執行 &lt;code&gt;brew doctor&lt;/code&gt; 來檢查系統是否一切正常&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew doctor
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果一切順利，我們就可以開始使用 Homebrew 來進行之後的套件管理。&lt;/p&gt;
+&lt;h3&gt;基本使用方法&lt;/h3&gt;
+&lt;p&gt;如果要搜尋套件，請執行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew search 套件的部分名稱
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;若想查詢套件資訊，則執行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew info 套件名稱
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用 &lt;code&gt;install&lt;/code&gt; 來安裝套件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew install 套件名稱
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用 &lt;code&gt;uninstall&lt;/code&gt; 來移除套件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew uninstall 套件名稱
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;倘若想更新 Homebrew，請執行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew update
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果需要更多相關資訊，可以參考&lt;a href="https://github.com/Homebrew/homebrew/tree/master/share/doc/homebrew"&gt;這裡&lt;/a&gt;。&lt;/p&gt;</summary><category term="utils"></category></entry></feed>
