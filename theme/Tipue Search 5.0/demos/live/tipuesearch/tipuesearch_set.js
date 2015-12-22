@@ -7,6 +7,11 @@ http://www.tipue.com/search
 */
 
 
+// List of pages for Live mode
+
+var tipuesearch_pages = ["http://foo.com", "http://foo.com/about", "http://foo.com/blog"];
+
+
 /*
 Stop words
 Stop words list from http://www.ranks.nl/stopwords
@@ -27,9 +32,9 @@ var tipuesearch_replace = {'words': [
 // Weighting
 
 var tipuesearch_weight = {'weight': [
-     {'url': 'http://www.tipue.com', 'score': 200},
-     {'url': 'http://www.tipue.com/search', 'score': 100},
-     {'url': 'http://www.tipue.com/about', 'score': 100}
+     {'url': 'http://tipue.dev/search', 'score': 200},
+     {'url': 'http://tipue.dev/about', 'score': 100},
+     {'url': 'http://tipue.dev/tos', 'score': -1200}
 ]};
 
 
