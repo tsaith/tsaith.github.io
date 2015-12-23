@@ -1706,7 +1706,7 @@ RU5ErkJggg==
 
 &lt;/div&gt;&lt;/p&gt;
 &lt;h3&gt;NeuralNet classifier&lt;/h3&gt;
-&lt;p&gt;[ gist:id=f52c9be62504f52cc9e ]&lt;/p&gt;
+&lt;p&gt;[ gist:id=f52c9be62504f52cc9ec ]&lt;/p&gt;
 &lt;p&gt;In case you are interested in all codes related in this demonstration, please check the &lt;a href="https://github.com/tsaith/dnn_play"&gt;repository&lt;/a&gt;.&lt;/p&gt;</summary><category term="cv"></category></entry><entry><title>Install Theano and CUDA Toolkit 7.5 on OSX</title><link href="http://tsaith.github.io/install-theano-and-cuda-toolkit-75-on-osx.html" rel="alternate"></link><updated>2015-11-18T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-11-18:install-theano-and-cuda-toolkit-75-on-osx.html</id><summary type="html">&lt;p&gt;This post describes the steps I used to install &lt;a href="http://deeplearning.net/software/theano/tutorial/"&gt;Theano&lt;/a&gt; on my Mac (OSX 10.9.5) with NVIDIA GeForce GTX 660M graphics card.&lt;/p&gt;
 &lt;h3&gt;Install Theano&lt;/h3&gt;
 &lt;p&gt;Please use &lt;code&gt;pip&lt;/code&gt; to install Theano as below&lt;/p&gt;
