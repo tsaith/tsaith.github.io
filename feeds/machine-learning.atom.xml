@@ -3328,7 +3328,7 @@ RU5ErkJggg==
 &lt;/div&gt;
 
 &lt;/div&gt;&lt;/p&gt;
-&lt;h3&gt;NeuralNet classifier&lt;/h3&gt;
+&lt;h3&gt;Softmax classifier&lt;/h3&gt;
 &lt;div class="gist"&gt;
     &lt;script src='https://gist.github.com/f52c9be62504f52cc9ec.js'&gt;&lt;/script&gt;
     &lt;noscript&gt;
