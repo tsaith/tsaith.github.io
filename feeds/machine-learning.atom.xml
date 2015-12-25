@@ -11270,7 +11270,7 @@ def rel_err_gradients():
 &lt;/div&gt;
 &lt;p&gt;In case you are interested in all codes related in this demonstration, please check the &lt;a href="https://github.com/tsaith/dnn_play"&gt;repository&lt;/a&gt;.&lt;/p&gt;</summary><category term="cv"></category></entry><entry><title>Implement sparse autoencoder for digit recognition</title><link href="http://tsaith.github.io/implement-sparse-autoencoder-for-digit-recognition.html" rel="alternate"></link><updated>2015-12-23T14:34:56+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-12-23:implement-sparse-autoencoder-for-digit-recognition.html</id><summary type="html">&lt;p&gt;Here, we will see how to implement &lt;a href="http://deeplearning.stanford.edu/wiki/index.php/Autoencoders_and_Sparsity"&gt;sparse autoencoder&lt;/a&gt; for digit recognition.
 Such autoencoder can be employed to extract useful features to represent the raw data.&lt;/p&gt;
-&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqVXJSTDFCb0doS3M/view?usp=sharing"&gt;my script&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqVXJSTDFCb0doS3M/view?usp=sharing"&gt;this script&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;Main workflow&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Preparing training/validation/testing datasets.&lt;/li&gt;
@@ -15169,7 +15169,7 @@ def rel_err_gradients():
     &lt;/noscript&gt;
 &lt;/div&gt;
 &lt;p&gt;In case you are interested in all codes related in this demonstration, please check the &lt;a href="https://github.com/tsaith/dnn_play"&gt;repository&lt;/a&gt;.&lt;/p&gt;</summary><category term="cv"></category></entry><entry><title>Implement multilayer perceptron for digit recognition</title><link href="http://tsaith.github.io/implement-multilayer-perceptron-for-digit-recognition.html" rel="alternate"></link><updated>2015-12-23T14:02:41+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-12-23:implement-multilayer-perceptron-for-digit-recognition.html</id><summary type="html">&lt;p&gt;This post will demonstrate how to implement multilayer perceptron for digit recognition.&lt;/p&gt;
-&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqQlFHODB0b2tMY0U/view?usp=sharing"&gt;my script&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqQlFHODB0b2tMY0U/view?usp=sharing"&gt;this script&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;Main workflow&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Preparing training/validation/testing datasets.&lt;/li&gt;
@@ -20983,7 +20983,7 @@ def rel_err_gradients():
     &lt;/noscript&gt;
 &lt;/div&gt;
 &lt;p&gt;In case you are interested in all codes related in this demonstration, please check the &lt;a href="https://github.com/tsaith/dnn_play"&gt;repository&lt;/a&gt;.&lt;/p&gt;</summary><category term="cv"></category></entry><entry><title>Implement softmax regression for digit recognition</title><link href="http://tsaith.github.io/implement-softmax-regression-for-digit-recognition.html" rel="alternate"></link><updated>2015-12-23T13:15:05+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-12-23:implement-softmax-regression-for-digit-recognition.html</id><summary type="html">&lt;p&gt;This post will demonstrate how to implement &lt;a href="http://deeplearning.stanford.edu/wiki/index.php/Softmax_Regression"&gt;softmax regression&lt;/a&gt; for digit recognition.&lt;/p&gt;
-&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqWHEzMUNFSllWWWM/view?usp=sharing"&gt;my script&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqWHEzMUNFSllWWWM/view?usp=sharing"&gt;this script&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;Main workflow&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Preparing training/validation/testing datasets.&lt;/li&gt;
@@ -22606,7 +22606,7 @@ def rel_err_gradients():
     &lt;/noscript&gt;
 &lt;/div&gt;
 &lt;p&gt;In case you are interested in all codes related in this demonstration, please check the &lt;a href="https://github.com/tsaith/dnn_play"&gt;repository&lt;/a&gt;.&lt;/p&gt;</summary><category term="cv"></category></entry><entry><title>Implement a neural network for digit recognition</title><link href="http://tsaith.github.io/implement-a-neural-network-for-digit-recognition.html" rel="alternate"></link><updated>2015-12-23T09:51:04+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-12-23:implement-a-neural-network-for-digit-recognition.html</id><summary type="html">&lt;p&gt;This post will demonstrate how to implement a three-layers &lt;a href="http://deeplearning.stanford.edu/wiki/index.php/Neural_Networks"&gt;neural network&lt;/a&gt; for digit recognition.&lt;/p&gt;
-&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqVjVBOHM3RG1sajA/view?usp=sharing"&gt;my script&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The detailed derivations of algorithm can be found from &lt;a href="https://drive.google.com/file/d/0B6IJ6j3ytMuqVjVBOHM3RG1sajA/view?usp=sharing"&gt;this script&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;Main workflow&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Preparing training/validation/testing datasets.&lt;/li&gt;
