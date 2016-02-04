@@ -1799,6 +1799,7 @@ class NeuralNet(object):
     def init_weights(self, eps=1e-4):
         """
         Initialize weights.
+
         layer_units: tuple stores the size of each layer.
         weights: structured weights.
         """
@@ -1809,7 +1810,7 @@ class NeuralNet(object):
 
         weights = [{} for i in range(n_layers - 1)]
         for i in range(n_layers - 1):
-            weights[i]['W'] = eps * np.random.randn(layer_units[i+1], layer_units[i])
+            weights[i]['W'] = eps * np.random.randn(layer_units[i], layer_units[i+1])
             weights[i]['b'] = np.zeros(layer_units[i+1])
 
         self.weights = weights
@@ -1827,9 +1828,6 @@ class NeuralNet(object):
         epoch = 0
         best_val_acc = 0.0
         best_weights = {}
-
-        input_size, n_train = X.shape
-        n_classes = np.max(y) + 1 # assume y takes values 0...K-1 where K is number of classes
 
         if self.weights is None:
             # lazily initialize weights
@@ -1897,6 +1895,7 @@ class NeuralNet(object):
         """
         X: the N x M input matrix, where each column data[:, i] corresponds to
               a single test set
+
         pred: the predicted results.
         """
         pred = neural_net_predict(self.weights, X)
@@ -1920,7 +1919,7 @@ def neural_net_loss(weights, X, y, reg):
     a = []
 
     # Number of samples
-    m = X.shape[1]
+    m = X.shape[0]
 
     # Forward pass
     z.append(0)                 # Dummy element
@@ -1929,37 +1928,38 @@ def neural_net_loss(weights, X, y, reg):
     for i in range(0, L):
         W = weights[i]['W']
         b = weights[i]['b']
-        z.append(W.dot(a[-1]) + b.reshape((-1, 1)))
+        z.append(np.dot(a[-1], W) + b)
         a.append(ac_func(z[-1]))
 
-    # Cost function
+    # loss function
     sum_weight_square = 0.0 # Sum of weight square
     for i in range(L):
         W = weights[i]['W']
         sum_weight_square += np.sum(W*W)
 
-    cost = 1.0/(2.0*m) * np.sum((a[-1] - Y)**2) + 0.5*reg*sum_weight_square
+    loss = 1.0/(2.0*m) * np.sum((a[-1] - Y)**2) + 0.5*reg*sum_weight_square
 
     # Backpropagation
     delta = [(a[-1] - Y) * ac_func_deriv(z[-1])]
     for i in reversed(range(L)): # Note that delta[0] will not be used
         W = weights[i]['W']
-        d = W.T.dot(delta[0]) * ac_func_deriv(z[i])
+        d = np.dot(delta[0], W.T) * ac_func_deriv(z[i])
         delta.insert(0, d) # Insert element at beginning
 
     # Gradients
     grad = [{} for i in range(L)]
     for i in range(L):
         W = weights[i]['W']
-        grad[i]['W'] = delta[i+1].dot(a[i].T) / m + reg*W
-        grad[i]['b'] = np.mean(delta[i+1], axis=1)
+        grad[i]['W'] = np.dot(a[i].T, delta[i+1]) / m + reg*W
+        grad[i]['b'] = np.mean(delta[i+1], axis=0)
 
-    return cost, grad
+    return loss, grad
 
 def neural_net_predict(weights, X):
     """
     X: the N x M input matrix, where each column data[:, i] corresponds to
           a single test set
+
     pred: the predicted results.
     """
 
@@ -1968,7 +1968,7 @@ def neural_net_predict(weights, X):
     a = []
 
     # Number of samples
-    m = X.shape[1]
+    m = X.shape[0]
 
     # Forward pass
     z.append(0)                 # Dummy element
@@ -1977,11 +1977,11 @@ def neural_net_predict(weights, X):
     for i in range(0, L):
         W = weights[i]['W']
         b = weights[i]['b']
-        z.append(W.dot(a[-1]) + b.reshape((-1, 1)))
+        z.append(np.dot(a[-1], W) + b)
         a.append(ac_func(z[-1]))
 
     # Predictions
-    pred = np.argmax(a[-1], axis=0)
+    pred = np.argmax(a[-1], axis=1)
 
     return pred
 
@@ -1991,13 +1991,14 @@ def rel_err_gradients():
     """
 
     # Number of layer units
+    n_samples = 100
     input_size  = 4 * 4
     hidden_size = 4
     n_classes = 10
     layer_units = (input_size, hidden_size, n_classes)
 
-    X_train = np.random.randn(input_size, 100)
-    y_train = np.random.randint(n_classes, size=100)
+    X_train = np.random.randn(n_samples, input_size)
+    y_train = np.random.randint(n_classes, size=n_samples)
     reg = 1e-4
 
     # Define the classifier
@@ -2021,7 +2022,8 @@ def rel_err_gradients():
     # Compare numerically computed gradients with those computed analytically
     rel_err = rel_norm_diff(numerical_grad, grad)
 
-    return rel_err</code></pre>
+    return rel_err
+</code></pre>
     </noscript>
 </div>
 <p>In case you are interested in all codes related in this demonstration, please check the <a href="https://github.com/tsaith/dnn_play">repository</a>.</p>

@@ -3723,12 +3723,14 @@ class SparseAutoencoder(object):
     def init_weights(self):
         """
         Initialize weights.
+
         layer_units: tuple stores the size of each layer.
         weights: structured weights.
         """
 
         """
         Initialize weights.
+
         layer_units: tuple stores the size of each layer.
         weights: structured weights.
         """
@@ -3743,8 +3745,8 @@ class SparseAutoencoder(object):
 
         # We'll choose weights uniformly from the interval [-r, r)
         weights = [{} for i in range(n_layers - 1)]
-        weights[0]['W'] = np.random.random((layer_units[1], layer_units[0])) * 2.0 * r - r
-        weights[1]['W'] = np.random.random((layer_units[2], layer_units[1])) * 2.0 * r - r
+        weights[0]['W'] = np.random.random((layer_units[0], layer_units[1])) * 2.0 * r - r
+        weights[1]['W'] = np.random.random((layer_units[1], layer_units[2])) * 2.0 * r - r
         weights[0]['b'] = np.zeros(layer_units[1])
         weights[1]['b'] = np.zeros(layer_units[2])
 
@@ -3761,8 +3763,6 @@ class SparseAutoencoder(object):
 
         best_loss = 1e12
         best_weights = {}
-
-        input_size, n_train = X.shape
 
         if self.weights is None:
             # lazily initialize weights
@@ -3826,15 +3826,14 @@ class SparseAutoencoder(object):
         b1 = weights[1]['b']
 
         # Number of samples
-        m = X.shape[1]
+        m = X.shape[0]
 
         # Forward pass
-        a0 = X                 # Input activation
-        z1 = W0.dot(a0) + b0.reshape((-1, 1))
+        a0 = X
+        z1 = np.dot(a0, W0) + b0
         a1 = ac_func(z1)
-        z2 = W1.dot(a1) + b1.reshape((-1, 1))
-        #a2 = z2                # Linear decoder
-        a2 = ac_func(z2)       # Output activation
+        z2 = np.dot(a1, W1) + b1
+        a2 = ac_func(z2)
 
         return a2
 
@@ -3849,11 +3848,11 @@ class SparseAutoencoder(object):
         b0 = weights[0]['b']
 
         # Number of samples
-        m = X.shape[1]
+        m = X.shape[0]
 
         # Forward pass
         a0 = X                 # Input activation
-        z1 = W0.dot(a0) + b0.reshape((-1, 1))
+        z1 = np.dot(a0, W0) + b0
         a1 = ac_func(z1)
 
         return a1
@@ -3880,41 +3879,39 @@ def sparse_autoencoder_loss(weights, X, reg, beta=3, sparsity_param=0.1):
     b1 = weights[1]['b']
 
     # Number of samples
-    m = X.shape[1]
+    m = X.shape[0]
 
     # Forward pass
     a0 = X
-    z1 = W0.dot(a0) + b0.reshape((-1, 1))
+    z1 = np.dot(a0, W0) + b0
     a1 = ac_func(z1)
-    z2 = W1.dot(a1) + b1.reshape((-1, 1))
-    #a2 = z2             # Linear decoder
+    z2 = np.dot(a1, W1) + b1
     a2 = ac_func(z2)
 
     # Compute rho_hat used in sparsity penalty
     rho = sparsity_param
-    rho_hat = np.mean(a1, axis=1)
-    sparsity_delta = (-rho/rho_hat + (1.0-rho)/(1-rho_hat)).reshape((-1, 1))
+    rho_hat = np.mean(a1, axis=0)
+    sparsity_delta = -rho/rho_hat + (1.0-rho)/(1-rho_hat)
 
-    # Cost function
+    # Loss function
     mean_squared_error = 1.0/(2.0*m) * np.sum((a2 - Y)**2)
     weight_decay = 0.5*reg*(np.sum(W0*W0) + np.sum(W1*W1))
     sparsity_term = beta*np.sum(KL_divergence(rho, rho_hat))
 
-    cost = mean_squared_error + weight_decay + sparsity_term
+    loss = mean_squared_error + weight_decay + sparsity_term
 
     # Backpropagation
-    #delta2 = a2 - Y                        # Linear decoder
     delta2 = (a2 - Y) * ac_func_deriv(z2)
-    delta1 = (W1.T.dot(delta2) + beta*sparsity_delta) * ac_func_deriv(z1)
+    delta1 = (np.dot(delta2, W1.T) + beta*sparsity_delta) * ac_func_deriv(z1)
 
     # Gradients
     grad = [{} for i in range(len(weights))]
-    grad[0]['W'] = delta1.dot(a0.T) / m + reg*W0
-    grad[0]['b'] = np.mean(delta1, axis=1)
-    grad[1]['W'] = delta2.dot(a1.T) / m + reg*W1
-    grad[1]['b'] = np.mean(delta2, axis=1)
+    grad[0]['W'] = np.dot(a0.T, delta1) / m + reg*W0
+    grad[0]['b'] = np.mean(delta1, axis=0)
+    grad[1]['W'] = np.dot(a1.T, delta2) / m + reg*W1
+    grad[1]['b'] = np.mean(delta2, axis=0)
 
-    return cost, grad
+    return loss, grad
 
 def KL_divergence(p, q):
     """
@@ -3928,12 +3925,13 @@ def rel_err_gradients():
     Return the relative error between analytic and nemerical gradients.
     """
     # Number of layer units
+    n_samples = 100
     input_size  = 4 * 4
     hidden_size = 4
     output_size = input_size
     layer_units = (input_size, hidden_size, output_size)
 
-    X_train = np.random.randn(input_size, 100)
+    X_train = np.random.randn(n_samples, input_size)
     reg = 1e-4
     beta = 3               # weight of sparsity penalty term
     sparsity_param = 1e-1  # desired average activation of the hidden units
@@ -3959,7 +3957,8 @@ def rel_err_gradients():
     # Compare numerically computed gradients with those computed analytically
     rel_err = rel_norm_diff(numerical_grad, grad)
 
-    return rel_err</code></pre>
+    return rel_err
+</code></pre>
     </noscript>
 </div>
 <p>In case you are interested in all codes related in this demonstration, please check the <a href="https://github.com/tsaith/dnn_play">repository</a>.</p>

@@ -14,12 +14,12 @@
 
 <meta property="og:title" content="Implement stacked multilayer perceptron for digit recognition "/>
 <meta property="og:url" content="http://tsaith.github.io/implement-stacked-multilayer-perceptron-for-digit-recognition.html" />
-<meta property="og:description" content="This post will demonstrate how to implement stacked multilayer perceptron] for digit recognition. Here, we consider a multilayer perceptron with four layers and employ the technology of sparse autoencoder to determine the initial values of weighting parameters for the first three layers. Main workflow Preparing training/validation/testing datasets. Set ..." />
+<meta property="og:description" content="This post will demonstrate how to implement stacked multilayer perceptron for digit recognition. Here, we consider a multilayer perceptron with four layers and employ the technology of sparse autoencoder to determine the initial values of weighting parameters for the first three layers. Main workflow Preparing training/validation/testing datasets. Set ..." />
 <meta property="og:site_name" content="TH&#39;s Notes" />
 <meta property="og:article:author" content="Andrew Tsai" />
 <meta property="og:article:published_time" content="2015-12-23T17:44:51+08:00" />
 <meta name="twitter:title" content="Implement stacked multilayer perceptron for digit recognition ">
-<meta name="twitter:description" content="This post will demonstrate how to implement stacked multilayer perceptron] for digit recognition. Here, we consider a multilayer perceptron with four layers and employ the technology of sparse autoencoder to determine the initial values of weighting parameters for the first three layers. Main workflow Preparing training/validation/testing datasets. Set ...">
+<meta name="twitter:description" content="This post will demonstrate how to implement stacked multilayer perceptron for digit recognition. Here, we consider a multilayer perceptron with four layers and employ the technology of sparse autoencoder to determine the initial values of weighting parameters for the first three layers. Main workflow Preparing training/validation/testing datasets. Set ...">
 
         <title>Implement stacked multilayer perceptron for digit recognition  · TH&#39;s Notes
 </title>
@@ -77,7 +77,7 @@
         <div class="span8 offset2 article-content">
 
             
-            <p>This post will demonstrate how to implement stacked multilayer perceptron] for digit recognition.</p>
+            <p>This post will demonstrate how to implement stacked multilayer perceptron for digit recognition.</p>
 <p>Here, we consider a <a href="implement-multilayer-perceptron-for-digit-recognition">multilayer perceptron</a> with four layers and employ the technology of <a href="implement-sparse-autoencoder-for-digit-recognition">sparse autoencoder</a> to determine the initial values of weighting parameters for the first three layers.</p>
 <h3>Main workflow</h3>
 <ul>
@@ -10958,12 +10958,14 @@ class SparseAutoencoder(object):
     def init_weights(self):
         """
         Initialize weights.
+
         layer_units: tuple stores the size of each layer.
         weights: structured weights.
         """
 
         """
         Initialize weights.
+
         layer_units: tuple stores the size of each layer.
         weights: structured weights.
         """
@@ -10978,8 +10980,8 @@ class SparseAutoencoder(object):
 
         # We'll choose weights uniformly from the interval [-r, r)
         weights = [{} for i in range(n_layers - 1)]
-        weights[0]['W'] = np.random.random((layer_units[1], layer_units[0])) * 2.0 * r - r
-        weights[1]['W'] = np.random.random((layer_units[2], layer_units[1])) * 2.0 * r - r
+        weights[0]['W'] = np.random.random((layer_units[0], layer_units[1])) * 2.0 * r - r
+        weights[1]['W'] = np.random.random((layer_units[1], layer_units[2])) * 2.0 * r - r
         weights[0]['b'] = np.zeros(layer_units[1])
         weights[1]['b'] = np.zeros(layer_units[2])
 
@@ -10996,8 +10998,6 @@ class SparseAutoencoder(object):
 
         best_loss = 1e12
         best_weights = {}
-
-        input_size, n_train = X.shape
 
         if self.weights is None:
             # lazily initialize weights
@@ -11061,15 +11061,14 @@ class SparseAutoencoder(object):
         b1 = weights[1]['b']
 
         # Number of samples
-        m = X.shape[1]
+        m = X.shape[0]
 
         # Forward pass
-        a0 = X                 # Input activation
-        z1 = W0.dot(a0) + b0.reshape((-1, 1))
+        a0 = X
+        z1 = np.dot(a0, W0) + b0
         a1 = ac_func(z1)
-        z2 = W1.dot(a1) + b1.reshape((-1, 1))
-        #a2 = z2                # Linear decoder
-        a2 = ac_func(z2)       # Output activation
+        z2 = np.dot(a1, W1) + b1
+        a2 = ac_func(z2)
 
         return a2
 
@@ -11084,11 +11083,11 @@ class SparseAutoencoder(object):
         b0 = weights[0]['b']
 
         # Number of samples
-        m = X.shape[1]
+        m = X.shape[0]
 
         # Forward pass
         a0 = X                 # Input activation
-        z1 = W0.dot(a0) + b0.reshape((-1, 1))
+        z1 = np.dot(a0, W0) + b0
         a1 = ac_func(z1)
 
         return a1
@@ -11115,41 +11114,39 @@ def sparse_autoencoder_loss(weights, X, reg, beta=3, sparsity_param=0.1):
     b1 = weights[1]['b']
 
     # Number of samples
-    m = X.shape[1]
+    m = X.shape[0]
 
     # Forward pass
     a0 = X
-    z1 = W0.dot(a0) + b0.reshape((-1, 1))
+    z1 = np.dot(a0, W0) + b0
     a1 = ac_func(z1)
-    z2 = W1.dot(a1) + b1.reshape((-1, 1))
-    #a2 = z2             # Linear decoder
+    z2 = np.dot(a1, W1) + b1
     a2 = ac_func(z2)
 
     # Compute rho_hat used in sparsity penalty
     rho = sparsity_param
-    rho_hat = np.mean(a1, axis=1)
-    sparsity_delta = (-rho/rho_hat + (1.0-rho)/(1-rho_hat)).reshape((-1, 1))
+    rho_hat = np.mean(a1, axis=0)
+    sparsity_delta = -rho/rho_hat + (1.0-rho)/(1-rho_hat)
 
-    # Cost function
+    # Loss function
     mean_squared_error = 1.0/(2.0*m) * np.sum((a2 - Y)**2)
     weight_decay = 0.5*reg*(np.sum(W0*W0) + np.sum(W1*W1))
     sparsity_term = beta*np.sum(KL_divergence(rho, rho_hat))
 
-    cost = mean_squared_error + weight_decay + sparsity_term
+    loss = mean_squared_error + weight_decay + sparsity_term
 
     # Backpropagation
-    #delta2 = a2 - Y                        # Linear decoder
     delta2 = (a2 - Y) * ac_func_deriv(z2)
-    delta1 = (W1.T.dot(delta2) + beta*sparsity_delta) * ac_func_deriv(z1)
+    delta1 = (np.dot(delta2, W1.T) + beta*sparsity_delta) * ac_func_deriv(z1)
 
     # Gradients
     grad = [{} for i in range(len(weights))]
-    grad[0]['W'] = delta1.dot(a0.T) / m + reg*W0
-    grad[0]['b'] = np.mean(delta1, axis=1)
-    grad[1]['W'] = delta2.dot(a1.T) / m + reg*W1
-    grad[1]['b'] = np.mean(delta2, axis=1)
+    grad[0]['W'] = np.dot(a0.T, delta1) / m + reg*W0
+    grad[0]['b'] = np.mean(delta1, axis=0)
+    grad[1]['W'] = np.dot(a1.T, delta2) / m + reg*W1
+    grad[1]['b'] = np.mean(delta2, axis=0)
 
-    return cost, grad
+    return loss, grad
 
 def KL_divergence(p, q):
     """
@@ -11163,12 +11160,13 @@ def rel_err_gradients():
     Return the relative error between analytic and nemerical gradients.
     """
     # Number of layer units
+    n_samples = 100
     input_size  = 4 * 4
     hidden_size = 4
     output_size = input_size
     layer_units = (input_size, hidden_size, output_size)
 
-    X_train = np.random.randn(input_size, 100)
+    X_train = np.random.randn(n_samples, input_size)
     reg = 1e-4
     beta = 3               # weight of sparsity penalty term
     sparsity_param = 1e-1  # desired average activation of the hidden units
@@ -11194,7 +11192,8 @@ def rel_err_gradients():
     # Compare numerically computed gradients with those computed analytically
     rel_err = rel_norm_diff(numerical_grad, grad)
 
-    return rel_err</code></pre>
+    return rel_err
+</code></pre>
     </noscript>
 </div>
 <h3>Multilayer perceptron</h3>
@@ -11207,13 +11206,11 @@ from dnn_play.activations import tanh, tanh_deriv, sigmoid, sigmoid_deriv
 from dnn_play.utils.np_utils import to_binary_class_matrix, flatten_struct, pack_struct
 from dnn_play.utils.gradient_utils import eval_numerical_gradient, rel_norm_diff
 
-def f_ac(x):
+def ac_func(x):
     return sigmoid(x)
-    #return tanh(x)
 
-def df_ac(x):
+def ac_func_deriv(x):
     return sigmoid_deriv(x)
-    #return tanh_deriv(x)
 
 class MLP(object):
     """
@@ -11238,7 +11235,7 @@ class MLP(object):
 
         weights = [{} for i in range(n_layers - 1)]
         for i in range(n_layers - 1):
-            weights[i]['W'] = eps * np.random.randn(layer_units[i+1], layer_units[i])
+            weights[i]['W'] = eps * np.random.randn(layer_units[i], layer_units[i+1])
             weights[i]['b'] = np.zeros(layer_units[i+1])
 
         self.weights = weights
@@ -11249,16 +11246,11 @@ class MLP(object):
             reg=0.0,
             learning_rate=1e-2,
             optimizer='L-BFGS-B', max_iters=100,
-            sample_batches=True,
-            n_epochs=30, batch_size=128,
             verbose=False):
 
         epoch = 0
         best_val_acc = 0.0
         best_weights = {}
-
-        input_size, n_train = X.shape
-        n_classes = np.max(y) + 1 # assume y takes values 0...K-1 where K is number of classes
 
         if self.weights is None:
             # lazily initialize weights
@@ -11351,7 +11343,7 @@ def mlp_loss(weights, X, y, reg):
     err_tol = 1e-10  # Error of tolerance
 
     # Number of samples
-    m = X.shape[1]
+    m = X.shape[0]
 
     # Forward pass
     z.append(0)                 # Dummy element
@@ -11360,39 +11352,39 @@ def mlp_loss(weights, X, y, reg):
     for i in range(0, L):
         W = weights[i]['W']
         b = weights[i]['b']
-        z.append(W.dot(a[-1]) + b.reshape((-1, 1)))
-        a.append(f_ac(z[-1])) # Note the final element in a[:] will not be used
+        z.append(np.dot(a[-1], W) + b)
+        a.append(ac_func(z[-1])) # Note the final element in a[:] will not be used
 
-    zL_max = np.max(z[-1], axis=0)
+    zL_max = np.max(z[-1], axis=1, keepdims=True)
     z[-1] -= zL_max # Avoid numerical problem due to large values of exp(z[-1])
-    proba = np.exp(z[-1]) / np.sum(np.exp(z[-1]), axis=0) + err_tol # Add err_tol to avoid this value too close to zero
+    proba = np.exp(z[-1]) / np.sum(np.exp(z[-1]), axis=1, keepdims=True) + err_tol # Add err_tol to avoid this value too close to zero
 
     # Target matrix of labels
-    target = to_binary_class_matrix(y)
+    Y = to_binary_class_matrix(y)
 
-    # Cost function
-    sum_weight_square = 0.0 # Sum of weight square
+    # loss function
+    sum_squared_weights = 0.0 # Sum of squared weights
     for i in range(L):
         W = weights[i]['W']
-        sum_weight_square += np.sum(W*W)
+        sum_squared_weights += np.sum(W*W)
 
-    cost = -1.0/m * np.sum(target * np.log(proba)) + 0.5*reg*sum_weight_square
+    loss = -1.0/m * np.sum(Y * np.log(proba)) + 0.5*reg*sum_squared_weights
 
     # Backpropagation
-    delta = [-1.0 * (target - proba)]
+    delta = [-1.0 * (Y - proba)]
     for i in reversed(range(L)): # Note that delta[0] will not be used
         W = weights[i]['W']
-        d = W.T.dot(delta[0])*df_ac(z[i])
+        d = np.dot(delta[0], W.T) * ac_func_deriv(z[i])
         delta.insert(0, d) # Insert element at beginning
 
     # Gradients
     grad = [{} for i in range(L)]
     for i in range(L):
         W = weights[i]['W']
-        grad[i]['W'] = delta[i+1].dot(a[i].T) / m + reg*W
-        grad[i]['b'] = np.mean(delta[i+1], axis=1)
+        grad[i]['W'] = np.dot(a[i].T, delta[i+1]) / m + reg*W
+        grad[i]['b'] = np.mean(delta[i+1], axis=0)
 
-    return cost, grad
+    return loss, grad
 
 def mlp_predict(weights, X):
     """
@@ -11409,7 +11401,7 @@ def mlp_predict(weights, X):
     err_tol = 1e-10  # Error of tolerance
 
     # Number of samples
-    m = X.shape[1]
+    m = X.shape[0]
 
     # Forward pass
     z.append(0)                 # Dummy element
@@ -11418,15 +11410,15 @@ def mlp_predict(weights, X):
     for i in range(0, L):
         W = weights[i]['W']
         b = weights[i]['b']
-        z.append(W.dot(a[-1]) + b.reshape((-1, 1)))
-        a.append(f_ac(z[-1])) # Note the final element in a[:] will not be used
+        z.append(np.dot(a[-1], W) + b)
+        a.append(ac_func(z[-1])) # Note the final element in a[:] will not be used
 
-    zL_max = np.max(z[-1], axis=0)
+    zL_max = np.max(z[-1], axis=1, keepdims=True)
     z[-1] -= zL_max # Avoid numerical problem due to large values of exp(z[-1])
-    proba = np.exp(z[-1]) / np.sum(np.exp(z[-1]), axis=0) + err_tol # Add err_tol to avoid this value too close to zero
+    proba = np.exp(z[-1]) / np.sum(np.exp(z[-1]), axis=1, keepdims=True) + err_tol # Add err_tol to avoid this value too close to zero
 
     # Predictions
-    pred = np.argmax(proba, axis=0)
+    pred = np.argmax(proba, axis=1)
 
     return pred
 
@@ -11435,14 +11427,15 @@ def rel_err_gradients():
     Return the relative error between analytic gradients and nemerical ones.
     """
     # Number of layer units
+    n_samples = 100
     input_size  = 4 * 4
     hidden_size_L1 = 4
     hidden_size_L2 = 4
     output_size = 10
     layer_units = (input_size, hidden_size_L1, hidden_size_L2, output_size)
 
-    X_train = np.random.randn(input_size, 100)
-    y_train = np.random.randint(output_size, size=100)
+    X_train = np.random.randn(n_samples, input_size)
+    y_train = np.random.randint(output_size, size=n_samples)
     reg = 1e-4
 
     # Define the classifier
@@ -11466,7 +11459,8 @@ def rel_err_gradients():
     # Compare numerically computed gradients with those computed analytically
     rel_err = rel_norm_diff(numerical_grad, grad)
 
-    return rel_err</code></pre>
+    return rel_err
+</code></pre>
     </noscript>
 </div>
 <p>In case you are interested in all codes related in this demonstration, please check the <a href="https://github.com/tsaith/dnn_play">repository</a>.</p>

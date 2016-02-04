@@ -1455,9 +1455,6 @@ class Softmax(object):
         best_val_acc = 0.0
         best_weights = {}
 
-        input_size, n_train = X.shape
-        n_classes = np.max(y) + 1 # assume y takes values 0...K-1 where K is number of classes
-
         if self.weights is None:
             # lazily initialize weights
             self.weights = init_weights(self.layer_units)
@@ -1524,6 +1521,7 @@ class Softmax(object):
         """
         X: the N x M input matrix, where each column data[:, i] corresponds to
               a single test set
+
         pred: the predicted results.
         """
 
@@ -1544,6 +1542,7 @@ class Softmax(object):
 def softmax_loss(weights, X, y, reg):
     """
     Compute the loss and derivative.
+
     theta: weight matrix
     X: the N x M input matrix, where each column data[:, i] corresponds to
           a single test set
@@ -1558,36 +1557,37 @@ def softmax_loss(weights, X, y, reg):
     b0 = weights[0]['b']
 
     # Number of samples
-    m = X.shape[1]
+    m = X.shape[0]
 
     # Forward pass
     a0 = X                 # Input activation
-    z1 = W0.dot(a0) + b0.reshape((-1, 1))
+    z1 = np.dot(a0, W0) + b0
 
-    z1_max = np.max(z1, axis=0)
+    z1_max = np.max(z1, axis=1, keepdims=True)
     z1 -= z1_max # Avoid numerical problem due to large values of exp(z1)
-    proba = np.exp(z1) / np.sum(np.exp(z1), axis=0) + eps # Add eps to avoid this value too close to zero
+    proba = np.exp(z1) / np.sum(np.exp(z1), axis=1, keepdims=True) + eps # Add eps to avoid this value too close to zero
 
     # Target matrix of labels
     target = to_binary_class_matrix(y)
 
-    # Cost function
-    cost = -1.0/m * np.sum(target* np.log(proba)) + 0.5*reg*np.sum(W0*W0)
+    # loss function
+    loss = -1.0/m * np.sum(target * np.log(proba)) + 0.5*reg*np.sum(W0*W0)
 
     # Gradients
     delta1 = -1.0 * (target - proba)
 
     grad = [{}]
-    grad[0]['W'] = delta1.dot(a0.T)/m + reg*W0
-    grad[0]['b'] = np.mean(delta1, axis=1)
+    grad[0]['W'] = np.dot(a0.T, delta1)/m + reg*W0
+    grad[0]['b'] = np.mean(delta1, axis=0)
 
-    return cost, grad
+    return loss, grad
 
 def softmax_predict(weights, X):
     """
     weights: weights trained using softmax_train
     X: the test matrix, where each column X[:, i] corresponds to
        a single test set
+
     pred: the prediction array.
     """
 
@@ -1603,21 +1603,22 @@ def softmax_predict(weights, X):
 
     # Forward pass
     a0 = X                 # Input activation
-    z1 = W0.dot(a0) + b0.reshape((-1, 1))
+    z1 = np.dot(a0, W0) + b0
 
     # Propabilities
-    z1_max = np.max(z1, axis=0)
+    z1_max = np.max(z1, axis=1, keepdims=True)
     z1 -= z1_max # Avoid numerical problem due to large values of exp(z1)
-    proba = np.exp(z1) / np.sum(np.exp(z1), axis=0) + eps # Add eps to avoid this value too close to zero
+    proba = np.exp(z1) / np.sum(np.exp(z1), axis=1, keepdims=True) + eps # Add eps to avoid this value too close to zero
 
     # Predictions
-    pred = np.argmax(proba, axis=0)
+    pred = np.argmax(proba, axis=1)
 
     return pred
 
 def init_weights(layer_units, eps=1e-4):
     """
     Initialize weights.
+
     layer_units: tuple stores the size of each layer.
     weights: structured weights.
     """
@@ -1625,7 +1626,7 @@ def init_weights(layer_units, eps=1e-4):
     assert len(layer_units) == 2
 
     weights = [{}]
-    weights[0]['W'] = eps * np.random.randn(layer_units[1], layer_units[0])
+    weights[0]['W'] = eps * np.random.randn(layer_units[0], layer_units[1])
     weights[0]['b'] = np.zeros(layer_units[1])
 
     return weights
@@ -1643,7 +1644,7 @@ def rel_err_gradients():
 
     layer_units = (input_size, n_classes)
 
-    X_train = np.random.randn(input_size, 100)
+    X_train = np.random.randn(100, input_size)
     y_train = np.random.randint(n_classes, size=100)
     reg = 1e-4
 
@@ -1668,7 +1669,8 @@ def rel_err_gradients():
     # Compare numerically computed gradients with those computed analytically
     rel_err = rel_norm_diff(numerical_grad, grad)
 
-    return rel_err</code></pre>
+    return rel_err
+</code></pre>
     </noscript>
 </div>
 <p>In case you are interested in all codes related in this demonstration, please check the <a href="https://github.com/tsaith/dnn_play">repository</a>.</p>
