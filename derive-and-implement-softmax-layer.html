@@ -115,35 +115,56 @@ $$</div>
 x_{\text{max}} = max(x)
 $$</div>
 <h3>Code example</h3>
-<div class="gist">
-    <script src='https://gist.github.com/131012ed7441b14d9515.js'></script>
-    <noscript>
-        <pre><code>def softmax_loss(x, y):
-  """
-  Computes the loss and gradient for softmax classification.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">softmax_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Computes the loss and gradient for softmax classification.</span>
+<span class="sd">  x: Input data, of shape (N, K)</span>
+<span class="sd">     where x[i, j] is the score for the jth class</span>
+<span class="sd">     for the ith input.</span>
+<span class="sd">  y: Vector of labels, of shape (N,)</span>
+<span class="sd">     where y[i] is the label for x[i] and 0 &lt;= y[i] &lt; K</span>
 
-  x: Input data, of shape (N, K) where x[i, j] is the score for the jth class
-    for the ith input.
-  y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and 0 <= y[i] < K
+<span class="sd">  Returns</span>
+<span class="sd">  ----</span>
+<span class="sd">  loss: Scalar giving the loss</span>
+<span class="sd">  dx: Gradient of the loss with respect to x</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">N</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_max</span><span class="p">)</span>
+  <span class="n">proba</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">proba</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y</span><span class="p">]))</span> <span class="o">/</span> <span class="n">N</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="n">proba</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+  <span class="n">dx</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+  <span class="n">dx</span> <span class="o">/=</span> <span class="n">N</span>
 
-  Returns a tuple of:
-  loss: Scalar giving the loss
-  dx: Gradient of the loss with respect to x
-  """
-  N = x.shape[0]
-  x_max = np.max(x, axis=1, keepdims=True)
-  proba = np.exp(x - x_max)
-  proba /= np.sum(proba, axis=1, keepdims=True)
-  loss = -np.sum(np.log(proba[range(N), y])) / N
-  dx = proba.copy()
-  dx[range(N), y] -= 1
-  dx /= N
+  <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dx</span>
+</pre></div>
+</td></tr></table>
 
-  return loss, dx
-
-</code></pre>
-    </noscript>
-</div>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
