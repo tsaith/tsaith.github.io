@@ -1,5 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2015-12-23T17:44:51+08:00</updated><entry><title>Implement stacked multilayer perceptron for digit recognition</title><link href="http://tsaith.github.io/implement-stacked-multilayer-perceptron-for-digit-recognition.html" rel="alternate"></link><updated>2015-12-23T17:44:51+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-12-23:implement-stacked-multilayer-perceptron-for-digit-recognition.html</id><summary type="html">&lt;p&gt;This post will demonstrate how to implement stacked multilayer perceptron for digit recognition.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2016-02-14T00:00:00+08:00</updated><entry><title>Derive and implement softmax layer</title><link href="http://tsaith.github.io/derive-and-implement-softmax-layer.html" rel="alternate"></link><updated>2016-02-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2016-02-14:derive-and-implement-softmax-layer.html</id><summary type="html">&lt;h3&gt;Loss&lt;/h3&gt;
+&lt;p&gt;Assuming there are &lt;span class="math"&gt;\(K\)&lt;/span&gt; classes,
+the loss of softmax can be written as&lt;/p&gt;
+&lt;div class="math"&gt;$$
+J = \sum_{i=1}^{N} J^{(i)} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{K} t_j^{(i)} \ln P_j^{(i)}
+$$&lt;/div&gt;
+&lt;p&gt;where&lt;/p&gt;
+&lt;div class="math"&gt;$$
+t_j = 1 \{ y = j \} =
+\left \{
+\begin{aligned}
+  1 \quad \text{for} \quad y = j     \\
+  0 \quad \text{for} \quad y \neq j
+\end{aligned}
+\right.
+$$&lt;/div&gt;
+&lt;div class="math"&gt;$$
+P_j = \frac{ e^{x_j} }{ \sum_{l=1}^{K} e^{x_l}} \quad \text{the probability for the } j \text {th class.}
+$$&lt;/div&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(x_j\)&lt;/span&gt; is the score for the &lt;span class="math"&gt;\(j\)&lt;/span&gt;th class;
+&lt;span class="math"&gt;\(y\)&lt;/span&gt; stands for the correct class label.&lt;/p&gt;
+&lt;h3&gt;Derivative&lt;/h3&gt;
+&lt;div class="math"&gt;$$
+\frac{ \partial J^{(i)} }{ \partial x_k } =
+-\frac{1}{N} \sum_{j=1}^{K} t_j^{(i)} \frac{ \partial }{ \partial x_k } \ln P_j^{(i)} =
+\frac{1}{N} ( P_k^{(i)} - t_k^{(i)} )
+$$&lt;/div&gt;
+&lt;h3&gt;Numerical trick&lt;/h3&gt;
+&lt;p&gt;To avoid the numerical problem when the numerator/denominator of &lt;span class="math"&gt;\(P_j\)&lt;/span&gt; is too large,
+we prefer to calculate &lt;span class="math"&gt;\(P_j\)&lt;/span&gt; as follows.&lt;/p&gt;
+&lt;div class="math"&gt;$$
+P_j = \frac{ e^{x_j} }{ \sum_{l=1}^{K} e^{x_l}}
+= \frac{ e^{x_j - x_{\text{max}}} }{ \sum_{l=1}^{K} e^{x_l - x_{\text{max}}}}
+$$&lt;/div&gt;
+&lt;div class="math"&gt;$$
+x_{\text{max}} = max(x)
+$$&lt;/div&gt;
+&lt;h3&gt;Python example&lt;/h3&gt;
+&lt;div class="gist"&gt;
+    &lt;script src='https://gist.github.com/131012ed7441b14d9515.js'&gt;&lt;/script&gt;
+    &lt;noscript&gt;
+        &lt;pre&gt;&lt;code&gt;def softmax_loss(x, y):
+  """
+  Computes the loss and gradient for softmax classification.
+
+  x: Input data, of shape (N, K) where x[i, j] is the score for the jth class
+    for the ith input.
+  y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and 0 &lt;= y[i] &lt; K
+
+  Returns a tuple of:
+  loss: Scalar giving the loss
+  dx: Gradient of the loss with respect to x
+  """
+  N = x.shape[0]
+  x_max = np.max(x, axis=1, keepdims=True)
+  proba = np.exp(x - x_max)
+  proba /= np.sum(proba, axis=1, keepdims=True)
+  loss = -np.sum(np.log(proba[range(N), y])) / N
+  dx = proba.copy()
+  dx[range(N), y] -= 1
+  dx /= N
+
+  return loss, dx
+
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/noscript&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="cv"></category></entry><entry><title>Implement stacked multilayer perceptron for digit recognition</title><link href="http://tsaith.github.io/implement-stacked-multilayer-perceptron-for-digit-recognition.html" rel="alternate"></link><updated>2015-12-23T17:44:51+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2015-12-23:implement-stacked-multilayer-perceptron-for-digit-recognition.html</id><summary type="html">&lt;p&gt;This post will demonstrate how to implement stacked multilayer perceptron for digit recognition.&lt;/p&gt;
 &lt;p&gt;Here, we consider a &lt;a href="implement-multilayer-perceptron-for-digit-recognition"&gt;multilayer perceptron&lt;/a&gt; with four layers and employ the technology of &lt;a href="implement-sparse-autoencoder-for-digit-recognition"&gt;sparse autoencoder&lt;/a&gt; to determine the initial values of weighting parameters for the first three layers.&lt;/p&gt;
 &lt;h3&gt;Main workflow&lt;/h3&gt;
 &lt;ul&gt;
