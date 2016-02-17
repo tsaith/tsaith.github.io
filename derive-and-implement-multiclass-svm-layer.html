@@ -12,16 +12,16 @@
 
 <meta name="keywords" content="cv, Machine learning, " />
 
-<meta property="og:title" content="Derive and implement Softmax layer "/>
-<meta property="og:url" content="http://tsaith.github.io/derive-and-implement-softmax-layer.html" />
-<meta property="og:description" content="Loss Assuming there are \(K\) classes, the loss of softmax can be written as $$ J = \sum_{i=1}^{N} J^{(i)} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{K} t_j^{(i)} \ln P_j^{(i)} $$ where $$ t_j = 1 \{ y = j \} = \left \{ \begin{aligned} 1 \quad \text{for} \quad y = j \\ 0 \quad \text{for} \quad y \neq j \end{aligned} \right. $$ ...if (!document.getElementById(&#39;mathjaxscript_pelican_#%@#$@#&#39;)) { var align = &#34;center&#34;, indent = &#34;0em&#34;, linebreak = &#34;false&#34;; if (false) { align = (screen.width" />
+<meta property="og:title" content="Derive and implement multiclass SVM layer "/>
+<meta property="og:url" content="http://tsaith.github.io/derive-and-implement-multiclass-svm-layer.html" />
+<meta property="og:description" content="Loss Assuming there are \(K\) classes, the loss of multiclass SVM can be written as $$ J = \sum_{i=1}^{N} J^{(i)} = \frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y^{(i)}}^K max(0, x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta) $$ where \(x_j\) is the score for ...if (!document.getElementById(&#39;mathjaxscript_pelican_#%@#$@#&#39;)) { var align = &#34;center&#34;, indent = &#34;0em&#34;, linebreak = &#34;false&#34;; if (false) { align = (screen.width" />
 <meta property="og:site_name" content="TH&#39;s Notes" />
 <meta property="og:article:author" content="Andrew Tsai" />
 <meta property="og:article:published_time" content="2016-02-14T00:00:00+08:00" />
-<meta name="twitter:title" content="Derive and implement Softmax layer ">
-<meta name="twitter:description" content="Loss Assuming there are \(K\) classes, the loss of softmax can be written as $$ J = \sum_{i=1}^{N} J^{(i)} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{K} t_j^{(i)} \ln P_j^{(i)} $$ where $$ t_j = 1 \{ y = j \} = \left \{ \begin{aligned} 1 \quad \text{for} \quad y = j \\ 0 \quad \text{for} \quad y \neq j \end{aligned} \right. $$ ...if (!document.getElementById(&#39;mathjaxscript_pelican_#%@#$@#&#39;)) { var align = &#34;center&#34;, indent = &#34;0em&#34;, linebreak = &#34;false&#34;; if (false) { align = (screen.width">
+<meta name="twitter:title" content="Derive and implement multiclass SVM layer ">
+<meta name="twitter:description" content="Loss Assuming there are \(K\) classes, the loss of multiclass SVM can be written as $$ J = \sum_{i=1}^{N} J^{(i)} = \frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y^{(i)}}^K max(0, x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta) $$ where \(x_j\) is the score for ...if (!document.getElementById(&#39;mathjaxscript_pelican_#%@#$@#&#39;)) { var align = &#34;center&#34;, indent = &#34;0em&#34;, linebreak = &#34;false&#34;; if (false) { align = (screen.width">
 
-        <title>Derive and implement Softmax layer  · TH&#39;s Notes
+        <title>Derive and implement multiclass SVM layer  · TH&#39;s Notes
 </title>
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
@@ -69,7 +69,7 @@
 <article>
 <div class="row-fluid">
     <header class="page-header span10 offset2">
-    <h1><a href="http://tsaith.github.io/derive-and-implement-softmax-layer.html"> Derive and implement Softmax layer  </a></h1>
+    <h1><a href="http://tsaith.github.io/derive-and-implement-multiclass-svm-layer.html"> Derive and implement multiclass SVM layer  </a></h1>
     </header>
 </div>
 
@@ -79,41 +79,35 @@
             
             <h3>Loss</h3>
 <p>Assuming there are <span class="math">\(K\)</span> classes,
-the loss of softmax can be written as</p>
+the loss of multiclass SVM can be written as</p>
 <div class="math">$$
-J = \sum_{i=1}^{N} J^{(i)} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{K} t_j^{(i)} \ln P_j^{(i)}
+J = \sum_{i=1}^{N} J^{(i)} = \frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y^{(i)}}^K max(0, x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta)
 $$</div>
-<p>where</p>
-<div class="math">$$
-t_j = 1 \{ y = j \} =
-\left \{
-\begin{aligned}
-  1 \quad \text{for} \quad y = j     \\
-  0 \quad \text{for} \quad y \neq j
-\end{aligned}
-\right.
-$$</div>
-<div class="math">$$
-P_j = \frac{ e^{x_j} }{ \sum_{l=1}^{K} e^{x_l}} \quad \text{the probability for the } j \text {th class.}
-$$</div>
-<p><span class="math">\(x_j\)</span> is the score for the <span class="math">\(j\)</span>th class;
-<span class="math">\(y\)</span> stands for the correct class label.</p>
+<p>where <span class="math">\(x_j\)</span> is the score for the <span class="math">\(j\)</span>th class.
+<span class="math">\(y\)</span> stands for the correct label.
+<span class="math">\(\Delta\)</span> is a fixed margin which is usually chosen as one.</p>
 <h3>Derivative</h3>
 <div class="math">$$
 \frac{ \partial J^{(i)} }{ \partial x_k } =
--\frac{1}{N} \sum_{j=1}^{K} t_j^{(i)} \frac{ \partial }{ \partial x_k } \ln P_j^{(i)} =
-\frac{1}{N} ( P_k^{(i)} - t_k^{(i)} )
+\frac{ \partial }{ \partial x_k } \frac{1}{N} \sum_{j \neq y^{(i)}}^K max(0, x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta)
 $$</div>
-<h3>Numerical trick</h3>
-<p>To avoid the numerical problem when the numerator/denominator of <span class="math">\(P_j\)</span> is too large,
-we prefer to calculate <span class="math">\(P_j\)</span> as follows.</p>
+<p>Let <span class="math">\(D_j^{(i)} = x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta\)</span>, which represents the score difference (containing a shift of margin) for the <span class="math">\(j\)</span>th class.</p>
+<p>If <span class="math">\(k \neq y^{(i)}\)</span>,</p>
 <div class="math">$$
-P_j = \frac{ e^{x_j} }{ \sum_{l=1}^{K} e^{x_l}}
-= \frac{ e^{x_j - x_{\text{max}}} }{ \sum_{l=1}^{K} e^{x_l - x_{\text{max}}}}
+\frac{ \partial J^{(i)} }{ \partial x_k } =
+\left \{
+  \begin{aligned}
+    1 / N &amp; \text{ when } D_k^{(i)} &gt; 0  \\
+    0     &amp; \text{ when } D_k^{(i)} \leq 0
+  \end{aligned}
+\right.
 $$</div>
+<p>If <span class="math">\(k = y^{(i)}\)</span>,</p>
 <div class="math">$$
-x_{\text{max}} = max(x)
+\frac{ \partial J^{(i)} }{ \partial x_k } = - N_p / N
 $$</div>
+<p>
+where <span class="math">\(N_p\)</span> is the number of positive differences.</p>
 <h3>Code example</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -138,27 +132,37 @@ $$</div>
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">softmax_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">svm_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Computes the loss and gradient for softmax classification.</span>
+<span class="sd">  Computes the loss and gradient using for multiclass SVM classification.</span>
 <span class="sd">  x: Input data, of shape (N, K)</span>
-<span class="sd">     where x[i, j] is the score for the jth class</span>
-<span class="sd">     for the ith input.</span>
+<span class="sd">  where x[i, j] is the score for the jth class for the ith input.</span>
 <span class="sd">  y: Vector of labels, of shape (N,)</span>
-<span class="sd">     where y[i] is the label for x[i] and 0 &lt;= y[i] &lt; K</span>
+<span class="sd">  where y[i] is the label for x[i] and 0 &lt;= y[i] &lt; K</span>
 
 <span class="sd">  Returns</span>
 <span class="sd">  ----</span>
 <span class="sd">  loss: Scalar giving the loss</span>
 <span class="sd">  dx: Gradient of the loss with respect to x</span>
 <span class="sd">  &quot;&quot;&quot;</span>
+
   <span class="n">N</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-  <span class="n">proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_max</span><span class="p">)</span>
-  <span class="n">proba</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-  <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">proba</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y</span><span class="p">]))</span> <span class="o">/</span> <span class="n">N</span>
-  <span class="n">dx</span> <span class="o">=</span> <span class="n">proba</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-  <span class="n">dx</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c"># A fixed margin</span>
+  <span class="n">correct_scores</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span>
+
+  <span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">correct_scores</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span>
+  <span class="n">diffs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+
+  <span class="n">num_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diffs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c"># Number of positive differences</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">dx</span><span class="p">[</span><span class="n">diffs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">dx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">-=</span> <span class="n">num_pos</span>
   <span class="n">dx</span> <span class="o">/=</span> <span class="n">N</span>
 
   <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dx</span>
@@ -228,7 +232,7 @@ $$</div>
     <div class="accordion-group">
         <div class="accordion-heading">
             <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
-                href="http://tsaith.github.io/derive-and-implement-softmax-layer.html#disqus_thread">
+                href="http://tsaith.github.io/derive-and-implement-multiclass-svm-layer.html#disqus_thread">
                 Comments
             </a>
         </div>
@@ -238,8 +242,8 @@ $$</div>
                     <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'th-notes';
-        var disqus_identifier = 'http://tsaith.github.io/derive-and-implement-softmax-layer.html';
-    var disqus_url = 'http://tsaith.github.io/derive-and-implement-softmax-layer.html';
+        var disqus_identifier = 'http://tsaith.github.io/derive-and-implement-multiclass-svm-layer.html';
+    var disqus_url = 'http://tsaith.github.io/derive-and-implement-multiclass-svm-layer.html';
 
     (function() {
          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

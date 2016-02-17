@@ -1,5 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2016-02-14T00:00:00+08:00</updated><entry><title>Derive and implement softmax layer</title><link href="http://tsaith.github.io/derive-and-implement-softmax-layer.html" rel="alternate"></link><updated>2016-02-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2016-02-14:derive-and-implement-softmax-layer.html</id><summary type="html">&lt;h3&gt;Loss&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2016-02-14T00:00:00+08:00</updated><entry><title>Derive and implement multiclass SVM layer</title><link href="http://tsaith.github.io/derive-and-implement-multiclass-svm-layer.html" rel="alternate"></link><updated>2016-02-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2016-02-14:derive-and-implement-multiclass-svm-layer.html</id><summary type="html">&lt;h3&gt;Loss&lt;/h3&gt;
+&lt;p&gt;Assuming there are &lt;span class="math"&gt;\(K\)&lt;/span&gt; classes,
+the loss of multiclass SVM can be written as&lt;/p&gt;
+&lt;div class="math"&gt;$$
+J = \sum_{i=1}^{N} J^{(i)} = \frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y^{(i)}}^K max(0, x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta)
+$$&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(x_j\)&lt;/span&gt; is the score for the &lt;span class="math"&gt;\(j\)&lt;/span&gt;th class.
+&lt;span class="math"&gt;\(y\)&lt;/span&gt; stands for the correct label.
+&lt;span class="math"&gt;\(\Delta\)&lt;/span&gt; is a fixed margin which is usually chosen as one.&lt;/p&gt;
+&lt;h3&gt;Derivative&lt;/h3&gt;
+&lt;div class="math"&gt;$$
+\frac{ \partial J^{(i)} }{ \partial x_k } =
+\frac{ \partial }{ \partial x_k } \frac{1}{N} \sum_{j \neq y^{(i)}}^K max(0, x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta)
+$$&lt;/div&gt;
+&lt;p&gt;Let &lt;span class="math"&gt;\(D_j^{(i)} = x_j^{(i)} - x_{y^{(i)}}^{(i)} + \Delta\)&lt;/span&gt;, which represents the score difference (containing a shift of margin) for the &lt;span class="math"&gt;\(j\)&lt;/span&gt;th class.&lt;/p&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(k \neq y^{(i)}\)&lt;/span&gt;,&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\frac{ \partial J^{(i)} }{ \partial x_k } =
+\left \{
+  \begin{aligned}
+    1 / N &amp;amp; \text{ when } D_k^{(i)} &amp;gt; 0  \\
+    0     &amp;amp; \text{ when } D_k^{(i)} \leq 0
+  \end{aligned}
+\right.
+$$&lt;/div&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(k = y^{(i)}\)&lt;/span&gt;,&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\frac{ \partial J^{(i)} }{ \partial x_k } = - N_p / N
+$$&lt;/div&gt;
+&lt;p&gt;
+where &lt;span class="math"&gt;\(N_p\)&lt;/span&gt; is the number of positive differences.&lt;/p&gt;
+&lt;h3&gt;Code example&lt;/h3&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;svm_loss&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;  Computes the loss and gradient using for multiclass SVM classification.&lt;/span&gt;
+&lt;span class="sd"&gt;  x: Input data, of shape (N, K)&lt;/span&gt;
+&lt;span class="sd"&gt;  where x[i, j] is the score for the jth class for the ith input.&lt;/span&gt;
+&lt;span class="sd"&gt;  y: Vector of labels, of shape (N,)&lt;/span&gt;
+&lt;span class="sd"&gt;  where y[i] is the label for x[i] and 0 &amp;lt;= y[i] &amp;lt; K&lt;/span&gt;
+
+&lt;span class="sd"&gt;  Returns&lt;/span&gt;
+&lt;span class="sd"&gt;  ----&lt;/span&gt;
+&lt;span class="sd"&gt;  loss: Scalar giving the loss&lt;/span&gt;
+&lt;span class="sd"&gt;  dx: Gradient of the loss with respect to x&lt;/span&gt;
+&lt;span class="sd"&gt;  &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+  &lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="n"&gt;delta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="c"&gt;# A fixed margin&lt;/span&gt;
+  &lt;span class="n"&gt;correct_scores&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+  &lt;span class="n"&gt;diffs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;maximum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;correct_scores&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newaxis&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;delta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;diffs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+  &lt;span class="n"&gt;loss&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;diffs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt;
+
+  &lt;span class="n"&gt;num_pos&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;diffs&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# Number of positive differences&lt;/span&gt;
+  &lt;span class="n"&gt;dx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zeros_like&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;dx&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;diffs&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+  &lt;span class="n"&gt;dx&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="n"&gt;num_pos&lt;/span&gt;
+  &lt;span class="n"&gt;dx&lt;/span&gt; &lt;span class="o"&gt;/=&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt;
+
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="cv"></category></entry><entry><title>Derive and implement Softmax layer</title><link href="http://tsaith.github.io/derive-and-implement-softmax-layer.html" rel="alternate"></link><updated>2016-02-14T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2016-02-14:derive-and-implement-softmax-layer.html</id><summary type="html">&lt;h3&gt;Loss&lt;/h3&gt;
 &lt;p&gt;Assuming there are &lt;span class="math"&gt;\(K\)&lt;/span&gt; classes,
 the loss of softmax can be written as&lt;/p&gt;
 &lt;div class="math"&gt;$$
