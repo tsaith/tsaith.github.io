@@ -1,5 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2016-02-22T00:00:00+08:00</updated><entry><title>Time-frequency analysis with Short-time Fourier transform</title><link href="http://tsaith.github.io/time-frequency-analysis-with-short-time-fourier-transform.html" rel="alternate"></link><updated>2016-02-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2016-02-22:time-frequency-analysis-with-short-time-fourier-transform.html</id><summary type="html">&lt;p&gt;The essential idea of &lt;a href="https://en.wikipedia.org/wiki/Short-time_Fourier_transform"&gt;STFT&lt;/a&gt; is to perform the Fourier transform on each shorter time interval of the total time series to find out the frequency spectrum at each time point.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>TH's Notes</title><link href="http://tsaith.github.io/" rel="alternate"></link><link href="http://tsaith.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tsaith.github.io/</id><updated>2016-02-22T00:00:00+08:00</updated><entry><title>Derivation of the MFSK algorithm used in automotive radar systems</title><link href="http://tsaith.github.io/derivation-of-the-mfsk-algorithm-used-in-automotive-radar-systems.html" rel="alternate"></link><updated>2016-02-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2016-02-22:derivation-of-the-mfsk-algorithm-used-in-automotive-radar-systems.html</id><summary type="html">&lt;p&gt;This article describes the derivation of MFSK algorithm, which provides the possibility to detect the range and velocity of multiple targets in automotive radar systems.&lt;/p&gt;
+&lt;p&gt;Considering the waveform of MFSK as depicted,&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://farm2.staticflickr.com/1551/24891411123_ef7eeb05df_z.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.mathworks.com/help/phased/examples/simultaneous-range-and-speed-estimation-using-mfsk-waveform.html#zmw57dd0e2958"&gt;[This picture is copied from Matlab doc]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Here, there are &lt;span class="math"&gt;\(2N\)&lt;/span&gt; steps in the waveform. &lt;span class="math"&gt;\(f_{sweep} = (N-1) f_{step}\)&lt;/span&gt; is the frequency sweep range.
+&lt;span class="math"&gt;\(f_{step}\)&lt;/span&gt; is the frequency shift between ajacent steps in  sweep 1 or sweep 2 sequence.
+&lt;span class="math"&gt;\(f_{offset}\)&lt;/span&gt; is the frequency offset between sweep 1 and sweep 2.
+&lt;span class="math"&gt;\(T_{chirp} = 2N T_{step}\)&lt;/span&gt; is the chirp time duration.
+&lt;span class="math"&gt;\(T_{step}\)&lt;/span&gt; is the time of single step.&lt;/p&gt;
+&lt;p&gt;Assume the range from radar to target is &lt;span class="math"&gt;\(R\)&lt;/span&gt; and the relative velocity of target to radar is &lt;span class="math"&gt;\(v\)&lt;/span&gt;.
+The beat frequency which is the frequency difference between the transmit and receive signals can be expressed as follows.&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq_fb_raw}
+f_b = \beta T_{delay} + f_d = \frac{f_{sweep}}{T_c} \frac{2R}{c} - \frac{2v}{\lambda}
+\end{equation}&lt;/div&gt;
+&lt;div class="math"&gt;\begin{equation}
+\frac{\Delta \phi}{2 \pi} = f_{offset} T_{delay} + f_d T_{step} = f_{offset} \frac{2R}{c} - \frac{2v}{\lambda} T_{step}
+\end{equation}&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(\beta = f_{sweep} / T_{chirp}\)&lt;/span&gt; is the slope of waveform,
+&lt;span class="math"&gt;\(T_{delay} = 2R / c\)&lt;/span&gt; means the time delay of echoes and
+&lt;span class="math"&gt;\(f_d = - 2v / \lambda\)&lt;/span&gt; stands for the Doppler frequency shift.
+The positive direction of &lt;span class="math"&gt;\(v\)&lt;/span&gt; is defined by the orientation of radar.&lt;/p&gt;
+&lt;p&gt;Let &lt;span class="math"&gt;\(\Delta R = \frac{c}{2 f_{sweep}}\)&lt;/span&gt;, &lt;span class="math"&gt;\(\Delta v = \frac{\lambda}{2 T_{chirp}}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\bar{f_b} = f_b T_{chirp}\)&lt;/span&gt; which is the normalized beat frequency.&lt;/p&gt;
+&lt;p&gt;Then,&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq_fb}
+\bar{f_b} = \frac{R}{\Delta R} - \frac{v}{\Delta v}
+\end{equation}&lt;/div&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq_dphi}
+\frac{\Delta \phi}{2 \pi} = \frac{f_{offset}}{f_{sweep}} \frac{R}{\Delta R}  - \frac{1}{2 N} \frac{v}{\Delta v}
+\end{equation}&lt;/div&gt;
+&lt;p&gt;The &lt;span class="math"&gt;\(R\)&lt;/span&gt; and &lt;span class="math"&gt;\(v\)&lt;/span&gt; can be easily solved from eqs (\ref{eq_fb}) and (\ref{eq_dphi}).&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq_R}
+\frac{R}{\Delta R} = \frac{c}{\pi} \frac{N \Delta \phi - \pi \bar{f_b}} { 4 N \Delta R f_{offset} - c}
+\end{equation}&lt;/div&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq_v}
+\frac{v}{\Delta v} = \frac{N}{\pi} \frac{c \Delta \phi - 4 \phi \Delta R f_{offset} \bar{f_b}} { 4 N \Delta R f_{offset} - c}
+\end{equation}&lt;/div&gt;
+&lt;p&gt;In case we choose &lt;span class="math"&gt;\(f_{offset} = - \frac{1}{2} f_{step} = - \frac{c}{4(N-1) \Delta R}\)&lt;/span&gt;,
+the eqs (\ref{eq_R}) and (\ref{eq_v}) can be further simplified as following.&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq_simple_R}
+\frac{R}{\Delta R} = - \frac{N - 1}{2N - 1} \frac{N}{\pi} \Delta \phi + \frac{N - 1}{2N - 1} \bar{f_b}
+\simeq - \frac{N - 1}{2 \pi} \Delta \phi + \frac{\bar{f_b}}{2}
+\end{equation}&lt;/div&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq_simple_v}
+\frac{v}{\Delta v} = \frac{N - 1}{2N - 1} \frac{N}{\pi} \Delta \phi + \frac{N - 1}{2N - 1} \bar{f_b}
+\simeq \frac{N - 1}{2 \pi} \Delta \phi + \frac{\bar{f_b}}{2}
+\end{equation}&lt;/div&gt;
+&lt;p&gt;From eqs (\ref{eq_simple_R}) and (\ref{eq_simple_v}),
+we know the roles of &lt;span class="math"&gt;\(\Delta R\)&lt;/span&gt; and &lt;span class="math"&gt;\(\Delta v\)&lt;/span&gt; are the range resolution and velocity resolution, respectively.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;References&lt;/p&gt;
+&lt;p&gt;[1] Rohling, H. and M. Meinecke. Waveform Design Principle for Automotive Radar Systems, Proceedings of CIE International Conference on Radar, 2001.&lt;/p&gt;
+&lt;p&gt;[2] &lt;a href="http://www.mathworks.com/help/phased/examples/simultaneous-range-and-speed-estimation-using-mfsk-waveform.html#zmw57dd0e2958"&gt;Simultaneous Range and Speed Estimation Using MFSK Waveform from Matlab documents.&lt;/a&gt;&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="radar"></category></entry><entry><title>Time-frequency analysis with Short-time Fourier transform</title><link href="http://tsaith.github.io/time-frequency-analysis-with-short-time-fourier-transform.html" rel="alternate"></link><updated>2016-02-22T00:00:00+08:00</updated><author><name>Andrew Tsai</name></author><id>tag:tsaith.github.io,2016-02-22:time-frequency-analysis-with-short-time-fourier-transform.html</id><summary type="html">&lt;p&gt;The essential idea of &lt;a href="https://en.wikipedia.org/wiki/Short-time_Fourier_transform"&gt;STFT&lt;/a&gt; is to perform the Fourier transform on each shorter time interval of the total time series to find out the frequency spectrum at each time point.&lt;/p&gt;
 &lt;p&gt;In the following example, we will show how to use STFT to perform time-frequency analysis on signals.&lt;/p&gt;
 &lt;h3&gt;Code example&lt;/h3&gt;
 &lt;p&gt;
