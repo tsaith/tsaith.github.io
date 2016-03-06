@@ -39,11 +39,11 @@ The positive direction of &lt;span class="math"&gt;\(v\)&lt;/span&gt; is defined
 the eqs (\ref{eq_R}) and (\ref{eq_v}) can be further simplified as following.&lt;/p&gt;
 &lt;div class="math"&gt;\begin{equation} \label{eq_simple_R}
 \frac{R}{\Delta R} = - \frac{N - 1}{2N - 1} \frac{N}{\pi} \Delta \phi + \frac{N - 1}{2N - 1} \bar{f_b}
-\simeq - \frac{N - 1}{2 \pi} \Delta \phi + \frac{\bar{f_b}}{2}
+\simeq - (N - 1) \frac{\Delta \phi}{2 \pi} + \frac{\bar{f_b}}{2}
 \end{equation}&lt;/div&gt;
 &lt;div class="math"&gt;\begin{equation} \label{eq_simple_v}
-\frac{v}{\Delta v} = \frac{N - 1}{2N - 1} \frac{N}{\pi} \Delta \phi + \frac{N - 1}{2N - 1} \bar{f_b}
-\simeq \frac{N - 1}{2 \pi} \Delta \phi + \frac{\bar{f_b}}{2}
+\frac{v}{\Delta v} = - \frac{N - 1}{2N - 1} \frac{N}{\pi} \Delta \phi - \frac{N - 1}{2N - 1} \bar{f_b}
+\simeq - (N - 1) \frac{\Delta \phi}{2 \pi} - \frac{\bar{f_b}}{2}
 \end{equation}&lt;/div&gt;
 &lt;p&gt;From eqs (\ref{eq_simple_R}) and (\ref{eq_simple_v}),
 we know the roles of &lt;span class="math"&gt;\(\Delta R\)&lt;/span&gt; and &lt;span class="math"&gt;\(\Delta v\)&lt;/span&gt; are the range resolution and velocity resolution, respectively.&lt;/p&gt;
