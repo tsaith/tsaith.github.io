@@ -11,7 +11,7 @@
 &lt;p&gt;Assume the range from radar to target is &lt;span class="math"&gt;\(R\)&lt;/span&gt; and the relative velocity of target to radar is &lt;span class="math"&gt;\(v\)&lt;/span&gt;.
 The beat frequency which is the frequency difference between the transmit and receive signals can be expressed as follows.&lt;/p&gt;
 &lt;div class="math"&gt;\begin{equation} \label{eq_fb_raw}
-f_b = \beta T_{delay} + f_d = \frac{f_{sweep}}{T_c} \frac{2R}{c} - \frac{2v}{\lambda}
+f_b = \beta T_{delay} + f_d = \frac{f_{sweep}}{T_{chirp}} \frac{2R}{c} - \frac{2v}{\lambda}
 \end{equation}&lt;/div&gt;
 &lt;div class="math"&gt;\begin{equation}
 \frac{\Delta \phi}{2 \pi} = f_{offset} T_{delay} + f_d T_{step} = f_{offset} \frac{2R}{c} - \frac{2v}{\lambda} T_{step}
