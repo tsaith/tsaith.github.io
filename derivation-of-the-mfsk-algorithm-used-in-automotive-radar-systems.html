@@ -87,41 +87,46 @@
 <span class="math">\(T_{chirp} = 2N T_{step}\)</span> is the chirp time duration.
 <span class="math">\(T_{step}\)</span> is the time of single step.</p>
 <p>Assume the range from radar to target is <span class="math">\(R\)</span> and the relative velocity of target to radar is <span class="math">\(v\)</span>.
-The beat frequency which is the frequency difference between the transmit and receive signals can be expressed as follows.</p>
+The beat frequency which is the frequency difference as the receive signal is down-converted by the instantaneous transmitted signal can be expressed as follows.</p>
 <div class="math">\begin{equation} \label{eq_fb_raw}
-f_b = \beta T_{delay} + f_d = \frac{f_{sweep}}{T_{chirp}} \frac{2R}{c} - \frac{2v}{\lambda}
+f_b = -\left( \frac{f_{sweep}}{T_{chirp}} T_{delay} - f_d \right) = \frac{2v}{\lambda} - \frac{f_{sweep}}{T_{chirp}} \frac{2R}{c}
 \end{equation}</div>
 <div class="math">\begin{equation}
-\frac{\Delta \phi}{2 \pi} = f_{offset} T_{delay} + f_d T_{step} = f_{offset} \frac{2R}{c} - \frac{2v}{\lambda} T_{step}
-\end{equation}</div>
-<p>where <span class="math">\(\beta = f_{sweep} / T_{chirp}\)</span> is the slope of waveform,
-<span class="math">\(T_{delay} = 2R / c\)</span> means the time delay of echoes and
-<span class="math">\(f_d = - 2v / \lambda\)</span> stands for the Doppler frequency shift.
-The positive direction of <span class="math">\(v\)</span> is defined by the orientation of radar.</p>
-<p>Let <span class="math">\(\Delta R = \frac{c}{2 f_{sweep}}\)</span>, <span class="math">\(\Delta v = \frac{\lambda}{2 T_{chirp}}\)</span> and <span class="math">\(\bar{f_b} = f_b T_{chirp}\)</span> which is the normalized beat frequency.</p>
-<p>Then,</p>
+\frac{\Delta \phi}{2 \pi} = - \left( f_{offset} T_{delay} - f_d T_{step} \right) = \frac{2v}{\lambda} T_{step}
+ - f_{offset} \frac{2R}{c} \end{equation}</div>
+<p>where <span class="math">\(T_{delay} = 2R / c\)</span> is the time delay of echoes and
+<span class="math">\(f_d = 2v / \lambda\)</span> stands for the Doppler frequency shift.
+The <span class="math">\(v\)</span> is positive when the target is approaching radar.</p>
+<p>Define <span class="math">\(\bar{f_b} = f_b T_{chirp}\)</span>, <span class="math">\(\Delta \bar{\phi} = \Delta \phi / (2\pi)\)</span>, <span class="math">\(\bar{v} = v / \Delta v\)</span>, <span class="math">\(\bar{R} = R / \Delta R\)</span>, <span class="math">\(\bar{T}_{step} = T_{step} / T_{chirp}\)</span>, <span class="math">\(\bar{f}_{offset} = f_{offset} / f_{sweep}\)</span>,</p>
+<div class="math">$$
+\Delta R = \frac{c}{2 f_{sweep}}
+$$</div>
+<p>and</p>
+<div class="math">$$
+\Delta v = \frac{\lambda}{2 T_{chirp}}
+$$</div>
+<p>The equations above can be normalized as following.</p>
 <div class="math">\begin{equation} \label{eq_fb}
-\bar{f_b} = \frac{R}{\Delta R} - \frac{v}{\Delta v}
+\bar{f_b} = \bar{v} - \bar{R}
 \end{equation}</div>
 <div class="math">\begin{equation} \label{eq_dphi}
-\frac{\Delta \phi}{2 \pi} = \frac{f_{offset}}{f_{sweep}} \frac{R}{\Delta R}  - \frac{1}{2 N} \frac{v}{\Delta v}
+\Delta \bar{\phi} = \bar{T}_{step} \bar{v} - \bar{f}_{offset} \bar{R}
 \end{equation}</div>
-<p>The <span class="math">\(R\)</span> and <span class="math">\(v\)</span> can be easily solved from eqs (\ref{eq_fb}) and (\ref{eq_dphi}).</p>
+<p>The <span class="math">\(R\)</span> and <span class="math">\(v\)</span> will be easily solved from eqs (\ref{eq_fb}) and (\ref{eq_dphi}).</p>
 <div class="math">\begin{equation} \label{eq_R}
-\frac{R}{\Delta R} = \frac{c}{\pi} \frac{N \Delta \phi - \pi \bar{f_b}} { 4 N \Delta R f_{offset} - c}
+\bar{R} = ( \bar{T}_{step} - \bar{f}_{offset} )^{-1} ( \Delta \bar{\phi} - \bar{T}_{step} \bar{f}_b )
 \end{equation}</div>
 <div class="math">\begin{equation} \label{eq_v}
-\frac{v}{\Delta v} = \frac{N}{\pi} \frac{c \Delta \phi - 4 \phi \Delta R f_{offset} \bar{f_b}} { 4 N \Delta R f_{offset} - c}
-\end{equation}</div>
-<p>In case we choose <span class="math">\(f_{offset} = - \frac{1}{2} f_{step} = - \frac{c}{4(N-1) \Delta R}\)</span>,
-the eqs (\ref{eq_R}) and (\ref{eq_v}) can be further simplified as following.</p>
+\bar{v} = ( \bar{T}_{step} - \bar{f}_{offset} )^{-1} ( \Delta \bar{\phi} - \bar{f}_{offset} \bar{f}_b )\end{equation}</div>
+<p>In case we choose <span class="math">\(f_{offset} = - \frac{1}{2} f_{step} = - \frac{f_{sweep}}{2(N-1)}\)</span>,
+the eqs (\ref{eq_R}) and (\ref{eq_v}) can be further written as following.</p>
 <div class="math">\begin{equation} \label{eq_simple_R}
-\frac{R}{\Delta R} = - \frac{N - 1}{2N - 1} \frac{N}{\pi} \Delta \phi + \frac{N - 1}{2N - 1} \bar{f_b}
-\simeq - (N - 1) \frac{\Delta \phi}{2 \pi} + \frac{\bar{f_b}}{2}
+\bar{R} = \frac{2N(N - 1)}{2N - 1} \Delta \bar{\phi} - \frac{N - 1}{2N - 1} \bar{f_b}
+\simeq (N - 1) \Delta \bar{\phi} - \frac{\bar{f_b}}{2}
 \end{equation}</div>
 <div class="math">\begin{equation} \label{eq_simple_v}
-\frac{v}{\Delta v} = - \frac{N - 1}{2N - 1} \frac{N}{\pi} \Delta \phi - \frac{N - 1}{2N - 1} \bar{f_b}
-\simeq - (N - 1) \frac{\Delta \phi}{2 \pi} - \frac{\bar{f_b}}{2}
+\bar{v} = \frac{2N(N - 1)}{2N - 1} \Delta \bar{\phi} + \frac{N}{2N - 1} \bar{f_b}
+\simeq (N - 1) \Delta \bar{\phi} + \frac{\bar{f_b}}{2}
 \end{equation}</div>
 <p>From eqs (\ref{eq_simple_R}) and (\ref{eq_simple_v}),
 we know the roles of <span class="math">\(\Delta R\)</span> and <span class="math">\(\Delta v\)</span> are the range resolution and velocity resolution, respectively.</p>
