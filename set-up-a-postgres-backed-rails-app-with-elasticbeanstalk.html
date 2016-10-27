@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
+
+<meta name="keywords" content="rails, Web, " />
+        <title>Set up a postgres-backed rails app with ElasticBeanstalk  · TH's Notes
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://tsaith.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://tsaith.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://tsaith.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://tsaith.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://tsaith.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Full Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Machine learning Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Misc.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Misc Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Signal-processing.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Signal processing Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Web.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Web Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59791323-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://tsaith.github.io/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html"> Set up a postgres-backed rails app with ElasticBeanstalk  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <p>This article will describe the way I set up a Rails app with ElasticBeanstalk and PostgresSQL.
+Here Rails 4.1 based on <a href="https://github.com/puma/puma">Puma</a> 2.10.2 and <a href="http://nginx.org/">Nginx</a> 1.6.2 is demonstrated.</p>
+<h3>Install ElasticBeanstalk CLI</h3>
+<p>AWS provides both <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/GettingStarted.UsingAEB.html#GettingStarted.UsingAEB.console">Management Console</a> and <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-reference-get-started.html">EB CLI</a> to work with ElasticBeanstalk.</p>
+<p>The CLI requires python and is easier to perform some features of ElasticBeanstalk.</p>
+<div class="highlight"><pre><span></span>pip install awsebcli
+</pre></div>
+
+
+<h3>Create an IAM user</h3>
+<p>ElasticBeanstalk will require an IAM user to create app environment.
+In case you have no idea how to create an IAM user,
+please view this <a href="create-an-iam-user-for-elasticbeanstalk.markdown">post</a>.</p>
+<h3>Initialize a git repository</h3>
+<p>Here <code>agileorder</code> is the name of my app.</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> agileorder
+$ git init
+$ git add -A
+$ git commit -m <span class="s2">&quot;Initial commit&quot;</span>
+</pre></div>
+
+
+<h3>Initialize EB environment</h3>
+<div class="highlight"><pre><span></span>$ eb init
+
+Select a default region
+1<span class="o">)</span> us-east-1 : US East <span class="o">(</span>N. Virginia<span class="o">)</span>
+2<span class="o">)</span> us-west-1 : US West <span class="o">(</span>N. California<span class="o">)</span>
+3<span class="o">)</span> us-west-2 : US West <span class="o">(</span>Oregon<span class="o">)</span>
+4<span class="o">)</span> eu-west-1 : EU <span class="o">(</span>Ireland<span class="o">)</span>
+5<span class="o">)</span> eu-central-1 : EU <span class="o">(</span>Frankfurt<span class="o">)</span>
+6<span class="o">)</span> ap-southeast-1 : Asia Pacific <span class="o">(</span>Singapore<span class="o">)</span>
+7<span class="o">)</span> ap-southeast-2 : Asia Pacific <span class="o">(</span>Sydney<span class="o">)</span>
+8<span class="o">)</span> ap-northeast-1 : Asia Pacific <span class="o">(</span>Tokyo<span class="o">)</span>
+9<span class="o">)</span> sa-east-1 : South America <span class="o">(</span>Sao Paulo<span class="o">)</span>
+<span class="o">(</span>default is 3<span class="o">)</span>: 8
+
+Select an application to use
+1<span class="o">)</span> <span class="o">[</span> Create new Application <span class="o">]</span>
+<span class="o">(</span>default is 1<span class="o">)</span>: 1
+
+Enter Application Name: agileorder
+
+It appears you are using Ruby. Is this correct?
+<span class="o">(</span>y/n<span class="o">)</span>: y
+
+Select a platform version.
+1<span class="o">)</span> Ruby 2.2 <span class="o">(</span>Puma<span class="o">)</span>
+2<span class="o">)</span> Ruby 2.1 <span class="o">(</span>Puma<span class="o">)</span>
+3<span class="o">)</span> Ruby 2.0 <span class="o">(</span>Puma<span class="o">)</span>
+4<span class="o">)</span> Ruby 2.2 <span class="o">(</span>Passenger Standalone<span class="o">)</span>
+5<span class="o">)</span> Ruby 2.1 <span class="o">(</span>Passenger Standalone<span class="o">)</span>
+6<span class="o">)</span> Ruby 2.0 <span class="o">(</span>Passenger Standalone<span class="o">)</span>
+7<span class="o">)</span> Ruby 1.9.3
+<span class="o">(</span>default is 1<span class="o">)</span>: 2
+Do you want to <span class="nb">set</span> up SSH <span class="k">for</span> your instances?
+<span class="o">(</span>y/n<span class="o">)</span>: n
+</pre></div>
+
+
+<p>Please note that <code>eb init</code> will add <code>.elasticbeanstalk</code> to the <code>.gitignore</code>.
+Be sure to commit <code>.gitignore</code> once again.</p>
+<div class="highlight"><pre><span></span>$ git add .gitignore
+$ git commit -m <span class="s2">&quot;Update .gitignore&quot;</span>
+</pre></div>
+
+
+<h1>Configure EB to install postgresql-devel</h1>
+<p>Under project directory, create <code>.ebextensions/packages.config</code> with following content.</p>
+<p _="%" endcodeblock="endcodeblock">{% codeblock .ebextensions/packages.config lang:yaml %}
+packages:
+  yum:
+    postgresql93-devel: []</p>
+<p>Then add the <code>.ebextensions</code> to repository</p>
+<div class="highlight"><pre><span></span>git add .ebextensions
+git commit -m &quot;Add .ebextensions&quot;
+</pre></div>
+
+
+<h3>Create environment</h3>
+<div class="highlight"><pre><span></span>$ eb create agileorder-env
+</pre></div>
+
+
+<p>After waiting for a while, the last part of output messages are shown as</p>
+<div class="highlight"><pre><span></span><span class="n">INFO</span><span class="o">:</span> <span class="n">Application</span> <span class="n">available</span> <span class="n">at</span> <span class="n">agileorder</span><span class="o">-</span><span class="n">env</span><span class="o">-</span><span class="n">jmcrf7dbdr</span><span class="o">.</span><span class="na">elasticbeanstalk</span><span class="o">.</span><span class="na">com</span><span class="o">.</span>
+<span class="n">ERROR</span><span class="o">:</span> <span class="n">Create</span> <span class="n">environment</span> <span class="n">operation</span> <span class="k">is</span> <span class="n">complete</span><span class="o">,</span> <span class="n">but</span> <span class="k">with</span> <span class="n">errors</span><span class="o">.</span> <span class="n">For</span> <span class="n">more</span> <span class="n">information</span><span class="o">,</span> <span class="n">see</span> <span class="n">troubleshooting</span> <span class="n">documentation</span><span class="o">.</span>
+<span class="n">INFO</span><span class="o">:</span> <span class="n">Adding</span> <span class="n">instance</span> <span class="s1">&#39;i-72db7287&#39;</span> <span class="n">to</span> <span class="n">your</span> <span class="n">environment</span><span class="o">.</span>
+</pre></div>
+
+
+<p>After checking logs, I figured out the errors come from the missing environment variables used in my app.</p>
+<h3>Set up environment variables</h3>
+<p>Under <code>Software Configuration</code> of <code>Elastic Beanstalk</code> of <code>AWS Management Console</code>,
+add essential environments used in app like <code>SECRET_KEY_BASE</code>, <code>SENTRY_DSN</code>, ...etc.</p>
+<h3>Create a RDS instance</h3>
+<p>Under <code>Data Tier</code> of <code>Elastic Beanstalk</code> of <code>AWS Management Console</code>,
+create a new <a href="http://aws.amazon.com/rds/">RDS</a> database and set the DB engine to <code>postgres</code>.</p>
+<p><img src="https://c1.staticflickr.com/9/8693/17514909495_6704f394e1_b.jpg"></p>
+<p>After setting <code>Master Username</code> and <code>Master Password</code>, then click <code>Save</code>, environment variables will have been added to EB environment automatically.</p>
+<h3>Configure database.yml to work with RDS instance</h3>
+<p>Under project directory, modify the <code>database.yml</code> as</p>
+<p>config/database.yml:</p>
+<div class="highlight"><pre><span></span><span class="nn">...</span> <span class="l l-Scalar l-Scalar-Plain">skip the parts of development and test modes ...</span>
+
+<span class="l l-Scalar l-Scalar-Plain">production</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">adapter</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">postgresql</span>
+  <span class="l l-Scalar l-Scalar-Plain">encoding</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">unicode</span>
+  <span class="l l-Scalar l-Scalar-Plain">database</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;%= ENV[&#39;RDS_DB_NAME&#39;] %&gt;</span>
+  <span class="l l-Scalar l-Scalar-Plain">username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;%= ENV[&#39;RDS_USERNAME&#39;] %&gt;</span>
+  <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;%= ENV[&#39;RDS_PASSWORD&#39;] %&gt;</span>
+  <span class="l l-Scalar l-Scalar-Plain">host</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;%= ENV[&#39;RDS_HOSTNAME&#39;] %&gt;</span>
+  <span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;%= ENV[&#39;RDS_PORT&#39;] %&gt;</span>
+</pre></div>
+
+
+<p>Commit the <code>database.yml</code> to repository</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m &quot;Update database.yml&quot;
+</pre></div>
+
+
+<p>Finally, deploy the app to AWS.</p>
+<div class="highlight"><pre><span></span>eb deploy
+</pre></div>
+
+
+<p>To open the app URL in a browser, simply execute</p>
+<div class="highlight"><pre><span></span>eb open
+</pre></div>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://tsaith.github.io/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+        var disqus_identifier = 'http://tsaith.github.io/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html';
+    var disqus_url = 'http://tsaith.github.io/set-up-a-postgres-backed-rails-app-with-elasticbeanstalk.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://tsaith.github.io/wait-for-ajax-with-capybara-automatically.html" title="Previous: Wait for Ajax with Capybara Automatically">Wait for Ajax with Capybara Automatically</a></li>
+ 
+                <li class="next_article"><a href="http://tsaith.github.io/create-an-iam-user-for-elasticbeanstalk.html" title="Next: Create an IAM user for ElasticBeanstalk">Create an IAM user for ElasticBeanstalk</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-05-11T00:00:00+08:00">May 11, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Web-ref">Web</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#rails-ref">rails
+                    <span>63</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

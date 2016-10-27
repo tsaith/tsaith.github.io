@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
+
+<meta name="keywords" content="rails, Web, " />
+        <title>Setting up Nginx+Unicorn production server  · TH's Notes
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://tsaith.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://tsaith.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://tsaith.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://tsaith.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://tsaith.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Full Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Machine learning Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Misc.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Misc Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Signal-processing.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Signal processing Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Web.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Web Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59791323-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://tsaith.github.io/setting-up-nginxunicorn-production-server.html"> Setting up Nginx+Unicorn production server  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <p>This article will describe how to install and configure <a href="http://nginx.org/">Nginx</a> with <a href="http://unicorn.bogomips.org/">Unicorn</a> to build a concurrent rails server based on Ubuntu.</p>
+<p>Assume that we have logged in with a user account named <code>deployer</code>.</p>
+<ul>
+<li>Install Unicorn</li>
+</ul>
+<p>Adding the following line to your <code>Gemfile</code> and execute <code>bundle install</code>.</p>
+<div class="highlight"><pre><span></span>gem &#39;unicorn&#39;
+</pre></div>
+
+
+<ul>
+<li>Switch to <code>root</code></li>
+</ul>
+<div class="highlight"><pre><span></span>sudo su -l
+</pre></div>
+
+
+<ul>
+<li>Write a init script for Unicorn</li>
+</ul>
+<p>Asuming the name of your app is <code>myflix</code>,
+create <code>/etc/init.d/unicorn</code> with the following content:</p>
+<p>/etc/init.d/unicorn:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="c1"># File: /etc/init.d/unicorn</span>
+
+<span class="c1">### BEGIN INIT INFO</span>
+<span class="c1"># Provides:          unicorn</span>
+<span class="c1"># Required-Start:    $local_fs $remote_fs $network $syslog</span>
+<span class="c1"># Required-Stop:     $local_fs $remote_fs $network $syslog</span>
+<span class="c1"># Default-Start:     2 3 4 5</span>
+<span class="c1"># Default-Stop:      0 1 6</span>
+<span class="c1"># Short-Description: starts the unicorn web server</span>
+<span class="c1"># Description:       starts unicorn</span>
+<span class="c1">### END INIT INFO</span>
+
+<span class="c1"># Feel free to change any of the following variables for your app:</span>
+
+<span class="c1"># Set user</span>
+<span class="nv">USER</span><span class="o">=</span>deployer
+<span class="c1"># Set app name</span>
+<span class="nv">APP_NAME</span><span class="o">=</span>myflix
+
+<span class="c1"># Replace [PATH_TO_RAILS_ROOT_FOLDER] with your application&#39;s path.</span>
+<span class="nv">APP_ROOT</span><span class="o">=</span>/home/<span class="nv">$USER</span>/apps/<span class="nv">$APP_NAME</span>/current
+<span class="c1"># Set the environment. This can be changed to staging or development for staging</span>
+<span class="c1"># servers.</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production
+<span class="c1"># This should match the pid setting in $APP_ROOT/config/unicorn.rb.</span>
+<span class="nv">PID_FILE</span><span class="o">=</span><span class="nv">$APP_ROOT</span>/tmp/unicorn.pid
+<span class="c1"># A simple description for service output.</span>
+<span class="nv">DESC</span><span class="o">=</span><span class="s2">&quot;Unicorn app - </span><span class="nv">$RAILS_ENV</span><span class="s2">&quot;</span>
+<span class="c1"># If you&#39;re using rbenv, you may need to use the following setup to get things</span>
+<span class="c1"># working properly:</span>
+<span class="nv">RBENV_RUBY_VERSION</span><span class="o">=</span><span class="sb">`</span>cat <span class="nv">$APP_ROOT</span>/.ruby-version<span class="sb">`</span>
+<span class="nv">RBENV_ROOT</span><span class="o">=</span><span class="s2">&quot;/home/</span><span class="nv">$USER</span><span class="s2">/.rbenv&quot;</span>
+<span class="nv">RBENV</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$RBENV_ROOT</span><span class="s2">/bin/rbenv&quot;</span>
+<span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$RBENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nv">SET_PATH</span><span class="o">=</span><span class="s2">&quot;cd </span><span class="nv">$APP_ROOT</span><span class="s2"> &amp;&amp; </span><span class="nv">$RBENV</span><span class="s2"> rehash &amp;&amp; </span><span class="nv">$RBENV</span><span class="s2"> local </span><span class="nv">$RBENV_RUBY_VERSION</span><span class="s2">&quot;</span>
+
+<span class="c1"># Unicorn can be run using `bundle exec unicorn` or `bin/unicorn`.</span>
+<span class="nv">UNICORN</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$RBENV_ROOT</span><span class="s2">/shims/unicorn&quot;</span>
+<span class="c1"># Execute the unicorn executable as a daemon, with the appropriate configuration</span>
+<span class="c1"># and in the appropriate environment.</span>
+<span class="nv">UNICORN_OPTS</span><span class="o">=</span><span class="s2">&quot;-c </span><span class="nv">$APP_ROOT</span><span class="s2">/config/unicorn.rb -E </span><span class="nv">$RAILS_ENV</span><span class="s2"> -D&quot;</span>
+<span class="nv">CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$UNICORN</span><span class="s2"> </span><span class="nv">$UNICORN_OPTS</span><span class="s2">&quot;</span>
+
+<span class="c1"># Give your upgrade action a timeout of 60 seconds.</span>
+<span class="nv">TIMEOUT</span><span class="o">=</span>60
+
+<span class="c1"># Store the action that we should take from the service command&#39;s first</span>
+<span class="c1"># argument (e.g. start, stop, upgrade).</span>
+<span class="nv">action</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+
+<span class="c1"># Make sure the script exits if any variables are unset. This is short for</span>
+<span class="c1"># set -o nounset.</span>
+<span class="nb">set</span> -u
+
+<span class="c1"># Set the location of the old pid. The old pid is the process that is getting</span>
+<span class="c1"># replaced.</span>
+<span class="nv">old_pid</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PID_FILE</span><span class="s2">.oldbin&quot;</span>
+
+<span class="c1"># Make sure the APP_ROOT is actually a folder that exists. An error message from</span>
+<span class="c1"># the cd command will be displayed if it fails.</span>
+<span class="nb">cd</span> <span class="nv">$APP_ROOT</span> <span class="o">||</span> <span class="nb">exit</span> 1
+
+<span class="c1"># A function to send a signal to the current unicorn master process.</span>
+sig <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">test</span> -s <span class="s2">&quot;</span><span class="nv">$PID_FILE</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">kill</span> -<span class="nv">$1</span> <span class="sb">`</span>cat <span class="nv">$PID_FILE</span><span class="sb">`</span>
+<span class="o">}</span>
+
+<span class="c1"># Send a signal to the old process.</span>
+oldsig <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">test</span> -s <span class="nv">$old_pid</span> <span class="o">&amp;&amp;</span> <span class="nb">kill</span> -<span class="nv">$1</span> <span class="sb">`</span>cat <span class="nv">$old_pid</span><span class="sb">`</span>
+<span class="o">}</span>
+
+<span class="c1"># A switch for handling the possible actions to take on the unicorn process.</span>
+<span class="k">case</span> <span class="nv">$action</span> in
+  <span class="c1"># Start the process by testing if it&#39;s there (sig 0), failing if it is,</span>
+  <span class="c1"># otherwise running the command as specified above.</span>
+  start<span class="o">)</span>
+    sig <span class="m">0</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;</span><span class="nv">$DESC</span><span class="s2"> is already running&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> 0
+    su - <span class="nv">$USER</span> -c <span class="s2">&quot;</span><span class="nv">$CMD</span><span class="s2">&quot;</span>
+    <span class="p">;;</span>
+
+  <span class="c1"># Graceful shutdown. Send QUIT signal to the process. Requests will be</span>
+  <span class="c1"># completed before the processes are terminated.</span>
+  stop<span class="o">)</span>
+    sig QUIT <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Stopping </span><span class="nv">$DESC</span><span class="s2">&quot;</span> <span class="nb">exit</span> 0
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;Not running&quot;</span>
+    <span class="p">;;</span>
+
+  <span class="c1"># Quick shutdown - kills all workers immediately.</span>
+  force-stop<span class="o">)</span>
+    sig TERM <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Force-stopping </span><span class="nv">$DESC</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> 0
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;Not running&quot;</span>
+    <span class="p">;;</span>
+
+  <span class="c1"># Graceful shutdown and then start.</span>
+  restart<span class="o">)</span>
+    sig QUIT <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Restarting </span><span class="nv">$DESC</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> sleep <span class="m">2</span> <span class="se">\</span>
+      <span class="o">&amp;&amp;</span> su - <span class="nv">$USER</span> -c <span class="s2">&quot;</span><span class="nv">$CMD</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> 0
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;Couldn&#39;t restart.&quot;</span>
+    <span class="p">;;</span>
+
+  <span class="c1"># Reloads config file (unicorn.rb) and gracefully restarts all workers. This</span>
+  <span class="c1"># command won&#39;t pick up application code changes if you have `preload_app</span>
+  <span class="c1"># true` in your unicorn.rb config file.</span>
+  reload<span class="o">)</span>
+    sig HUP <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Reloading configuration for </span><span class="nv">$DESC</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> 0
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;Couldn&#39;t reload configuration.&quot;</span>
+    <span class="p">;;</span>
+
+  <span class="c1"># Re-execute the running binary, then gracefully shutdown old process. This</span>
+  <span class="c1"># command allows you to have zero-downtime deployments. The application may</span>
+  <span class="c1"># spin for a minute, but at least the user doesn&#39;t get a 500 error page or</span>
+  <span class="c1"># the like. Unicorn interprets the USR2 signal as a request to start a new</span>
+  <span class="c1"># master process and phase out the old worker processes. If the upgrade fails</span>
+  <span class="c1"># for some reason, a new process is started.</span>
+  upgrade<span class="o">)</span>
+    <span class="k">if</span> sig USR2 <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Upgrading </span><span class="nv">$DESC</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> sleep <span class="m">10</span> <span class="se">\</span>
+      <span class="o">&amp;&amp;</span> sig <span class="m">0</span> <span class="o">&amp;&amp;</span> oldsig QUIT
+    <span class="k">then</span>
+      <span class="nv">n</span><span class="o">=</span><span class="nv">$TIMEOUT</span>
+      <span class="k">while</span> <span class="nb">test</span> -s <span class="nv">$old_pid</span> <span class="o">&amp;&amp;</span> <span class="nb">test</span> <span class="nv">$n</span> -ge 0
+      <span class="k">do</span>
+        <span class="nb">printf</span> <span class="s1">&#39;.&#39;</span> <span class="o">&amp;&amp;</span> sleep <span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nv">n</span><span class="o">=</span><span class="k">$((</span> <span class="nv">$n</span> <span class="o">-</span> <span class="m">1</span> <span class="k">))</span>
+      <span class="k">done</span>
+      <span class="nb">echo</span>
+
+      <span class="k">if</span> <span class="nb">test</span> <span class="nv">$n</span> -lt <span class="m">0</span> <span class="o">&amp;&amp;</span> <span class="nb">test</span> -s <span class="nv">$old_pid</span>
+      <span class="k">then</span>
+        <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;</span><span class="nv">$old_pid</span><span class="s2"> still exists after </span><span class="nv">$TIMEOUT</span><span class="s2"> seconds&quot;</span>
+        <span class="nb">exit</span> 1
+      <span class="k">fi</span>
+      <span class="nb">exit</span> 0
+    <span class="k">fi</span>
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;Couldn&#39;t upgrade, starting &#39;su - </span><span class="nv">$USER</span><span class="s2"> -c \&quot;</span><span class="nv">$CMD</span><span class="s2">\&quot;&#39; instead&quot;</span>
+    su - <span class="nv">$USER</span> -c <span class="s2">&quot;</span><span class="nv">$CMD</span><span class="s2">&quot;</span>
+    <span class="p">;;</span>
+
+  <span class="c1"># A basic status checker. Just checks if the master process is responding to</span>
+  <span class="c1"># the `kill` command.</span>
+  status<span class="o">)</span>
+    sig <span class="m">0</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;</span><span class="nv">$DESC</span><span class="s2"> is running.&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> 0
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;</span><span class="nv">$DESC</span><span class="s2"> is not running.&quot;</span>
+    <span class="p">;;</span>
+
+  <span class="c1"># Reopen all logs owned by the master and all workers.</span>
+  reopen-logs<span class="o">)</span>
+    sig USR1
+    <span class="p">;;</span>
+
+  <span class="c1"># Any other action gets the usage message.</span>
+  *<span class="o">)</span>
+    <span class="c1"># Usage</span>
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> &lt;start|stop|restart|reload|upgrade|force-stop|reopen-logs&gt;&quot;</span>
+    <span class="nb">exit</span> 1
+    <span class="p">;;</span>
+<span class="k">esac</span>
+</pre></div>
+
+
+<p>Then, execute</p>
+<div class="highlight"><pre><span></span>chmod +x /etc/init.d/unicorn
+update-rc.d unicorn defaults
+service unicorn restart
+</pre></div>
+
+
+<ul>
+<li>Prepare the configuration file of Unicorn under project directory</li>
+</ul>
+<p>Create <code>config/unicorn.rb</code> with content as</p>
+<p>config/unicorn.rb:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Set the current app&#39;s path for later reference. Rails.root isn&#39;t available at</span>
+<span class="c1"># this point, so we have to point up a directory.</span>
+<span class="n">app_path</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/..&#39;</span><span class="p">)</span>
+
+<span class="c1"># The number of worker processes you have here should equal the number of CPU cores your server has.</span>
+<span class="n">worker_processes</span> <span class="p">(</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;RAILS_ENV&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;production&#39;</span> <span class="p">?</span> <span class="mi">2</span> <span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># You can listen on a port or a socket. Listening on a socket is good in a</span>
+<span class="c1"># production environment, but listening on a port can be useful for local</span>
+<span class="c1"># debugging purposes.</span>
+<span class="n">listen</span> <span class="n">app_path</span> <span class="o">+</span> <span class="s1">&#39;/tmp/unicorn.sock&#39;</span><span class="p">,</span> <span class="ss">backlog</span><span class="p">:</span> <span class="mi">64</span>
+
+<span class="c1"># For development, you may want to listen on port 3000 so that you can make sure</span>
+<span class="c1"># your unicorn.rb file is soundly configured.</span>
+<span class="n">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="ss">backlog</span><span class="p">:</span> <span class="mi">64</span><span class="p">)</span> <span class="k">if</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;RAILS_ENV&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;development&#39;</span>
+<span class="c1"># After the timeout is exhausted, the unicorn worker will be killed and a new</span>
+<span class="c1"># one brought up in its place. Adjust this to your application&#39;s needs. The</span>
+<span class="c1"># default timeout is 60. Anything under 3 seconds won&#39;t work properly.</span>
+<span class="n">timeout</span> <span class="mi">60</span>
+
+<span class="c1"># Set the working directory of this unicorn instance.</span>
+<span class="n">working_directory</span> <span class="n">app_path</span>
+
+<span class="c1"># Set the location of the unicorn pid file. This should match what we put in the</span>
+<span class="c1"># unicorn init script later.</span>
+<span class="n">pid</span> <span class="n">app_path</span> <span class="o">+</span> <span class="s1">&#39;/tmp/unicorn.pid&#39;</span>
+
+<span class="c1"># You should define your stderr and stdout here. If you don&#39;t, stderr defaults</span>
+<span class="c1"># to /dev/null and you&#39;ll lose any error logging when in daemon mode.</span>
+<span class="n">stderr_path</span> <span class="n">app_path</span> <span class="o">+</span> <span class="s1">&#39;/log/unicorn.log&#39;</span>
+<span class="n">stdout_path</span> <span class="n">app_path</span> <span class="o">+</span> <span class="s1">&#39;/log/unicorn.log&#39;</span>
+
+<span class="c1"># Load the app up before forking.</span>
+<span class="n">preload_app</span> <span class="kp">true</span>
+
+<span class="c1"># Garbage collection settings.</span>
+<span class="no">GC</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:copy_on_write_friendly</span><span class="o">=</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+  <span class="no">GC</span><span class="o">.</span><span class="n">copy_on_write_friendly</span> <span class="o">=</span> <span class="kp">true</span>
+
+<span class="c1"># If using ActiveRecord, disconnect (from the database) before forking.</span>
+<span class="n">before_fork</span> <span class="k">do</span> <span class="o">|</span><span class="n">server</span><span class="p">,</span> <span class="n">worker</span><span class="o">|</span>
+  <span class="n">defined?</span><span class="p">(</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">disconnect!</span>
+<span class="k">end</span>
+
+<span class="c1"># After forking, restore your ActiveRecord connection.</span>
+<span class="n">after_fork</span> <span class="k">do</span> <span class="o">|</span><span class="n">server</span><span class="p">,</span> <span class="n">worker</span><span class="o">|</span>
+  <span class="n">defined?</span><span class="p">(</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">establish_connection</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<ul>
+<li>Install and configure Nginx</li>
+</ul>
+<div class="highlight"><pre><span></span>apt-get install nginx
+</pre></div>
+
+
+<p>Edit <code>/etc/nginx/nginx.conf</code> as below</p>
+<p>/etc/nginx/nginx.conf:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Run nginx as www-data.</span>
+user www-data<span class="p">;</span>
+<span class="c1"># One worker process per CPU core is a good guideline.</span>
+worker_processes 1<span class="p">;</span>
+
+pid /var/run/nginx.pid<span class="p">;</span>
+
+<span class="c1"># For a single core server, 1024 is a good starting point. Use `ulimit -n` to</span>
+<span class="c1"># determine if your server can handle more.</span>
+events <span class="o">{</span>
+    worker_connections 1024<span class="p">;</span>
+<span class="o">}</span>
+
+http <span class="o">{</span>
+
+  <span class="c1">##</span>
+  <span class="c1"># Basic Settings</span>
+  <span class="c1">##</span>
+
+  sendfile on<span class="p">;</span>
+  tcp_nopush on<span class="p">;</span>
+  tcp_nodelay off<span class="p">;</span>
+  keepalive_timeout 65<span class="p">;</span>
+  types_hash_max_size 2048<span class="p">;</span>
+  server_tokens off<span class="p">;</span>
+
+  include /etc/nginx/mime.types<span class="p">;</span>
+  default_type application/octet-stream<span class="p">;</span>
+
+  <span class="c1">##</span>
+  <span class="c1"># Logging Settings</span>
+  <span class="c1">##</span>
+
+  access_log /var/log/nginx/access.log<span class="p">;</span>
+  error_log /var/log/nginx/error.log<span class="p">;</span>
+
+  <span class="c1">##</span>
+  <span class="c1"># Gzip Settings</span>
+  <span class="c1">##</span>
+
+  gzip on<span class="p">;</span>
+  gzip_disable <span class="s2">&quot;msie6&quot;</span><span class="p">;</span>
+  gzip_http_version 1.1<span class="p">;</span>
+  gzip_proxied any<span class="p">;</span>
+  gzip_min_length 500<span class="p">;</span>
+  gzip_types text/plain text/xml text/css
+    text/comma-separated-values text/javascript
+    application/x-javascript application/atom+xml<span class="p">;</span>
+
+  <span class="c1">##</span>
+  <span class="c1"># Unicorn Rails</span>
+  <span class="c1">##</span>
+
+  <span class="c1"># The socket here must match the socket path that you set up in unicorn.rb.</span>
+  upstream unicorn <span class="o">{</span>
+    server unix:/home/deployer/apps/myflix/current/tmp/unicorn.sock <span class="nv">fail_timeout</span><span class="o">=</span>0<span class="p">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">##</span>
+  <span class="c1"># Virtual Host Configs</span>
+  <span class="c1">##</span>
+
+  include /etc/nginx/conf.d/*.conf<span class="p">;</span>
+  include /etc/nginx/sites-enabled/*<span class="p">;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>Create <code>/etc/nginx/sites-available/myflix</code> with content:</p>
+<p>/etc/nginx/sites-available/myflix:</p>
+<div class="highlight"><pre><span></span>server <span class="o">{</span>
+  listen 80<span class="p">;</span>
+  server_name myflix.com<span class="p">;</span> <span class="c1"># Set server name</span>
+
+  keepalive_timeout 300<span class="p">;</span>
+
+  client_max_body_size 4G<span class="p">;</span>
+
+  root /home/deployer/apps/myflix/current/public<span class="p">;</span> <span class="c1"># Set this to the public folder location of your Rails application.</span>
+
+  try_files <span class="nv">$uri</span>/index.html <span class="nv">$uri</span>.html <span class="nv">$uri</span> @unicorn<span class="p">;</span>
+
+  location @unicorn <span class="o">{</span>
+          proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+          proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
+          proxy_set_header X-Forwarded_Proto <span class="nv">$scheme</span><span class="p">;</span>
+          proxy_redirect off<span class="p">;</span>
+          <span class="c1"># This passes requests to unicorn, as defined in /etc/nginx/nginx.conf</span>
+          proxy_pass http://unicorn<span class="p">;</span>
+          proxy_read_timeout 300s<span class="p">;</span>
+          proxy_send_timeout 300s<span class="p">;</span>
+  <span class="o">}</span>
+
+  <span class="c1"># You can override error pages by redirecting the requests to a file in your</span>
+  <span class="c1"># application&#39;s public folder, if you so desire:</span>
+  error_page <span class="m">500</span> <span class="m">502</span> <span class="m">503</span> <span class="m">504</span> /500.html<span class="p">;</span>
+  <span class="nv">location</span> <span class="o">=</span> /500.html <span class="o">{</span>
+          root /home/deployer/apps/myflix/current/public<span class="p">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>Finally, execute the following commands:</p>
+<div class="highlight"><pre><span></span>cd /etc/nginx/sites-enabled
+rm default
+ln -s ../sites-available/myflix myflix
+service nginx restart
+</pre></div>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://tsaith.github.io/setting-up-nginxunicorn-production-server.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+        var disqus_identifier = 'http://tsaith.github.io/setting-up-nginxunicorn-production-server.html';
+    var disqus_url = 'http://tsaith.github.io/setting-up-nginxunicorn-production-server.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://tsaith.github.io/deploy-production-with-capistrano.html" title="Previous: Deploy production with Capistrano">Deploy production with Capistrano</a></li>
+ 
+                <li class="next_article"><a href="http://tsaith.github.io/setting-up-logrotate-for-production-server.html" title="Next: Setting up logrotate for production server">Setting up logrotate for production server</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-03-30T00:00:00+08:00">Mar 30, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Web-ref">Web</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#rails-ref">rails
+                    <span>63</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

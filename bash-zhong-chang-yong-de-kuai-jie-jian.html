@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
+
+<meta name="keywords" content="utils, Misc, " />
+        <title>Bash 中常用的快捷鍵  · TH's Notes
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://tsaith.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://tsaith.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://tsaith.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://tsaith.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://tsaith.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Full Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Machine learning Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Misc.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Misc Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Signal-processing.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Signal processing Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Web.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Web Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59791323-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://tsaith.github.io/bash-zhong-chang-yong-de-kuai-jie-jian.html"> Bash 中常用的快捷鍵  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <p>目前 Mac 預設的 shell 是 Bash，這裡列出一些常用的快捷鍵。</p>
+<ul>
+<li><code>ctrl</code> + <code>a</code>: 將游標移到開頭</li>
+<li><code>ctrl</code> + <code>e</code>: 將游標移到結尾</li>
+<li><code>alt</code> + <code>f</code>: 將游標向前移動一個單字</li>
+<li><code>alt</code> + <code>b</code>: 將游標向後移動一個單字</li>
+<li><code>ctrl</code> + <code>k</code>: 刪除游標後面的所有字元</li>
+<li><code>ctrl</code> + <code>u</code>: 刪除游標前面的所有字元</li>
+<li><code>ctrl</code> + <code>w</code>: 刪除游標前面的一個單字</li>
+<li><code>ctrl</code> + <code>t</code>: 將游標前的兩個字母對調</li>
+<li><code>esc</code> + <code>t</code>: 將游標前的兩個單字對調</li>
+<li><code>tab</code>: 自動完成檔案或目錄名稱</li>
+<li><code>ctrl</code> + <code>d</code>: 刪除游標後的一個字元</li>
+<li><code>ctrl</code> + <code>c</code>: 中斷執行</li>
+<li><code>ctrl</code> + <code>z</code>: 暫停程序並將它丟到背景</li>
+</ul>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://tsaith.github.io/bash-zhong-chang-yong-de-kuai-jie-jian.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+        var disqus_identifier = 'http://tsaith.github.io/bash-zhong-chang-yong-de-kuai-jie-jian.html';
+    var disqus_url = 'http://tsaith.github.io/bash-zhong-chang-yong-de-kuai-jie-jian.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://tsaith.github.io/hao-yong-de-debug-gong-ju-pry.html" title="Previous: 好用的 Debug 工具: Pry">好用的 Debug 工具: Pry</a></li>
+ 
+                <li class="next_article"><a href="http://tsaith.github.io/zai-rspec-zhong-shi-yong-shared-examples.html" title="Next: 在 RSpec 中使用 shared examples">在 RSpec 中使用 shared examples</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2014-12-16T00:00:00+08:00">Dec 16, 2014</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Misc-ref">Misc</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#utils-ref">utils
+                    <span>10</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

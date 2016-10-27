@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
+
+<meta name="keywords" content="rails, Web, " />
+        <title>製作和發佈 gem  · TH's Notes
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://tsaith.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://tsaith.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://tsaith.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://tsaith.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://tsaith.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Full Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Machine learning Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Misc.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Misc Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Signal-processing.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Signal processing Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Web.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Web Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59791323-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://tsaith.github.io/zhi-zuo-he-fa-bu-gem.html"> 製作和發佈 gem  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <p>當我們在某個專案中完成了某個功能並且模組化後，
+倘若其他專案也需要同樣功能，
+或是希望分享給開源社群時，
+這時候就可以將它製作成 gem 方便大家使用。</p>
+<h3>製作過程</h3>
+<ul>
+<li>新增一個 gem 的資料夾，假設名稱為 voteable-gem</li>
+<li>進入資料夾中，新增 lib 資料夾，並將寫好的程式檔案放進 lib/</li>
+</ul>
+<div class="highlight"><pre><span></span>$ ls lib
+voteable_th.rb
+</pre></div>
+
+
+<p>在上面的範例中，voteable_th.rb 是一個用來投票的模組，內容如下</p>
+<div class="highlight"><pre><span></span><span class="k">module</span> <span class="nn">VoteableTh</span>
+  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span> <span class="no">Concern</span>
+
+  <span class="n">included</span> <span class="k">do</span>
+    <span class="n">has_many</span> <span class="ss">:votes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:voteable</span><span class="p">,</span> <span class="ss">:dependent</span> <span class="o">=&gt;</span> <span class="ss">:destroy</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">total_votes</span>
+    <span class="n">up_votes</span> <span class="o">-</span> <span class="n">down_votes</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">up_votes</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">votes</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">vote</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">down_votes</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">votes</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">vote</span><span class="p">:</span> <span class="kp">false</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+
+
+<ul>
+<li>在 voteable-gem 資料夾下新增檔案 voteable.gemspec 來定義
+gem specification，內容如下</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="no">Gem</span><span class="o">::</span><span class="no">Specification</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">name</span>        <span class="o">=</span> <span class="s1">&#39;voteable_th&#39;</span>              <span class="c1"># gem 的名字</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">version</span>     <span class="o">=</span> <span class="s1">&#39;0.0.0&#39;</span>                    <span class="c1"># 版本號碼</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">summary</span>     <span class="o">=</span> <span class="s2">&quot;A voting gem&quot;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;A voting gem for Rails&quot;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">authors</span>     <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Tsung-Hua Tsai&quot;</span><span class="o">]</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">email</span>       <span class="o">=</span> <span class="s1">&#39;tsai.tsunghua@gmail.com&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">files</span>       <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;lib/voteable_th.rb&quot;</span><span class="o">]</span>     <span class="c1"># 檔案位置</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">homepage</span>    <span class="o">=</span> <span class="s1">&#39;http://tsaith.github.io/&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">license</span>     <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<ul>
+<li>使用 <code>gem build</code> 來製作 gem</li>
+</ul>
+<div class="highlight"><pre><span></span>$ gem build voteable.gemspec
+Successfully built RubyGem
+Name: voteable_th
+Version: 0.0.1
+File: voteable_th-0.0.0.gem
+</pre></div>
+
+
+<h3>發佈到開源社群</h3>
+<ul>
+<li>
+<p>到 <a href="https://rubygems.org/">Rubygems.org</a> 上面<a href="https://rubygems.org/sign_up">註冊</a></p>
+</li>
+<li>
+<p>使用 <code>gem push</code> 將 gem 發佈到 Rubygems.org</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span>$ gem push voteable_th-0.0.0.gem
+Pushing gem to https://rubygems.org...
+Successfully registered gem: voteable_th <span class="o">(</span>0.0.0<span class="o">)</span>
+</pre></div>
+
+
+<p>倘若一切順利，恭喜你已經成功地將 gem 發佈出去。
+如果要查詢剛剛發佈的 gem 請執行</p>
+<div class="highlight"><pre><span></span>$ gem search -r voteable_th
+
+*** REMOTE GEMS ***
+
+voteable_th <span class="o">(</span>0.0.0<span class="o">)</span>
+</pre></div>
+
+
+<p>假設發現已發佈的 gem 有嚴重 bug 時，
+可使用 <code>gem yank</code> 來避免以後的使用者下載</p>
+<div class="highlight"><pre><span></span>$ gem yank voteable_th -v 0.0.0
+Yanking gem from https://rubygems.org...
+Successfully yanked gem: voteable_th <span class="o">(</span>0.0.0<span class="o">)</span>
+</pre></div>
+
+
+<p>倘若想回復上面的動作，則執行</p>
+<div class="highlight"><pre><span></span>$ gem yank voteable_th -v 0.0.0 --undo
+Unyanking gem from https://rubygems.org...
+Successfully unyanked gem: voteable_th <span class="o">(</span>0.0.0<span class="o">)</span>
+</pre></div>
+
+
+<p>其他進階的操作說明可參考<a href="http://guides.rubygems.org/">RubyGems Guides</a>。</p>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://tsaith.github.io/zhi-zuo-he-fa-bu-gem.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+        var disqus_identifier = 'http://tsaith.github.io/zhi-zuo-he-fa-bu-gem.html';
+    var disqus_url = 'http://tsaith.github.io/zhi-zuo-he-fa-bu-gem.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://tsaith.github.io/zai-rails-zhong-shi-yong-ajax.html" title="Previous: 在 Rails 中使用 Ajax">在 Rails 中使用 Ajax</a></li>
+ 
+                <li class="next_article"><a href="http://tsaith.github.io/zai-rails-zhong-shi-yong-module.html" title="Next: 在 Rails 中使用 module">在 Rails 中使用 module</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2014-11-21T00:00:00+08:00">Nov 21, 2014</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Web-ref">Web</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#rails-ref">rails
+                    <span>63</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

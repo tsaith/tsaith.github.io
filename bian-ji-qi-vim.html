@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
+
+<meta name="keywords" content="vim, Misc, " />
+        <title>編輯器: Vim  · TH's Notes
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://tsaith.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://tsaith.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://tsaith.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://tsaith.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://tsaith.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Full Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Machine learning Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Misc.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Misc Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Signal-processing.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Signal processing Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Web.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Web Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59791323-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://tsaith.github.io/bian-ji-qi-vim.html"> 編輯器: Vim  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <p>在編程領域中，
+<a href="http://zh.wikipedia.org/wiki/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B%E6%88%98">編輯器之戰</a>的兩位主角
+<a href="http://zh.wikipedia.org/wiki/Vi">Vi</a> 和
+<a href="http://zh.wikipedia.org/wiki/Emacs">Emacs</a> 經歷幾十年的歲月後，
+直到現在依然擁有許多信徒;
+而隨著時間的過去，
+Vi (Visual，<a href="http://zh.wikipedia.org/wiki/%E6%AF%94%E5%B0%94%C2%B7%E4%B9%94%E4%BC%8A">Bill Joy</a> 於 1976 年發表 ) 的功能不斷地被增強，
+最後演化出目前受歡迎的 <a href="http://zh.wikipedia.org/wiki/Vim">Vim</a>;
+Vim 不管是可擴展性或高效的編輯速度，
+都讓一般的編輯器難以望其項背，
+也因此有了<a href="http://os.51cto.com/art/201101/242518.htm">編輯器之神</a>的封號!
+不過 GNU 計劃的創始人
+<a href="http://zh.wikipedia.org/wiki/%E7%90%86%E6%9F%A5%E5%BE%B7%C2%B7%E6%96%AF%E6%89%98%E6%9B%BC">RMS</a>
+說它比較像魔鬼的編輯器
+(因為 vi-vi-vi 是<a href="http://zh.wikipedia.org/wiki/%E7%8D%B8%E5%90%8D%E6%95%B8%E7%9B%AE">獸名數目</a> XD )</p>
+<p>關於 Vim 的詳細使用方法請查詢<a href="http://vimdoc.sourceforge.net/htmldoc/usr_toc.html">官方文件</a>，
+這裡只介紹我自己常用的一些操作。</p>
+<h3>環境設定</h3>
+<ul>
+<li>~/.vimrc 環境設定檔</li>
+<li>~/.vim  Vim 專屬的資料夾</li>
+</ul>
+<h3>符號定義</h3>
+<p>為方便之後的說明，先在此定義兩個按鍵符號</p>
+<ul>
+<li><code>C</code> 表示 Ctrl</li>
+<li><code>M</code> 表示 Alt</li>
+</ul>
+<h3>常用模式</h3>
+<ul>
+<li>command mode 按 <code>Esc</code></li>
+<li>insert mode 在 command mode 中，按 <code>i</code> 或 <code>a</code></li>
+<li>plain visual mode 在 command mode 中，按 <code>v</code></li>
+<li>block visual mode 在 command mode 中，按 <code>C</code>+ <code>v</code></li>
+<li>command line 在 command mode 中，按 <code>:</code></li>
+</ul>
+<h3>存取檔案</h3>
+<ul>
+<li><code>vi file_name</code> 開啟檔案</li>
+<li><code>:w</code> 存檔</li>
+<li><code>:q</code> 離開</li>
+<li><code>:q!</code> 強制離開(不須先存檔)</li>
+<li><code>:e file_name</code> 編輯其它檔案</li>
+</ul>
+<h3>字元操作</h3>
+<ul>
+<li><code>i</code> 在游標所在處開始輸入</li>
+<li><code>a</code> 從下個字元開始輸入</li>
+<li><code>x</code> 刪除一個字元</li>
+<li><code>o</code> 插入空白行並開始輸入</li>
+</ul>
+<h3>字元操作</h3>
+<ul>
+<li><code>d</code> <code>w</code> 刪除一個單字</li>
+<li><code>d</code> <code>W</code> 刪除一個單字(忽略特殊字元)</li>
+</ul>
+<h3>拷貝和貼上</h3>
+<ul>
+<li><code>yy</code> 拷貝游標所在的那一行</li>
+<li><code>3</code> <code>yy</code> 拷貝連續三行</li>
+<li><code>dd</code> 剪下游標所在的那一行</li>
+<li><code>3</code> <code>dd</code> 剪下連續三行</li>
+<li><code>y</code> 將標記區域 yank 到剪貼簿</li>
+<li><code>p</code> 將剪貼簿的資料貼上</li>
+</ul>
+<h3>段落操作</h3>
+<ul>
+<li><code>J</code> 連接下一行</li>
+<li><code>d</code> <code>$</code> 從游標所在刪除到本行結尾</li>
+<li><code>d</code> <code>^</code> 從游標所在刪除到本行開頭</li>
+<li><code>D</code> 從游標所在刪除到本行結尾</li>
+</ul>
+<h3>暫存區操作</h3>
+<ul>
+<li><code>ma</code> <code>"c</code> <code>y</code> <code>'a</code> 將選擇區段拷貝到 register c</li>
+<li><code>"c</code> <code>p</code> 將 register c 的資料貼上</li>
+<li><code>ma</code> <code>"+</code> <code>y</code> <code>'a</code> 選擇區塊並拷貝到系統的剪貼板</li>
+<li><code>3</code> <code>"+</code> <code>yy</code> 將連續三行 yank 到系統的剪貼板</li>
+<li><code>:%y+</code> 將檔案內容 yank 到剪貼板</li>
+</ul>
+<h3>移動游標</h3>
+<ul>
+<li><code>gg</code> 第一行開頭</li>
+<li><code>G</code> 最後一行的開頭</li>
+<li><code>^</code> 移到游標所在行的開頭</li>
+<li><code>$</code> 移到游標所在行的結尾</li>
+<li><code>C</code>+<code>f</code> 下一頁</li>
+<li><code>C</code>+<code>b</code> 上一頁</li>
+<li><code>M</code>+<code>f</code> 往後移到一個單字</li>
+<li><code>M</code>+<code>b</code> 往前移到一個單字</li>
+<li><code>M</code>+<code>F</code> 往後移到一個單字並且標記</li>
+<li><code>M</code>+<code>b</code> 往前移到一個單字並且標記</li>
+</ul>
+<h3>切換目錄</h3>
+<ul>
+<li><code>:cd %:h</code> 將工作目錄改變到編輯的檔案下</li>
+<li><code>:lcd %:h</code> 僅將目前視窗的工作目錄改變到編輯的檔案下</li>
+<li><code>autocmd BufEnter * silent! lcd %:p:h</code> 自動改變工作目錄到編輯的檔案下</li>
+</ul>
+<h3>切換檔案</h3>
+<ul>
+<li><code>gf</code> 跳到關聯檔 ( goto file )</li>
+<li><code>C</code>+<code>^</code> 回到上一個檔案</li>
+</ul>
+<h3>分頁操作</h3>
+<ul>
+<li><code>:tab_new</code> 新分頁</li>
+<li><code>:tabprevious</code> 上一個分頁</li>
+<li><code>:tabnext</code> 下一個分頁</li>
+<li><code>:ab tn tab_new</code> 將 tab_new 縮寫為 tn</li>
+</ul>
+<h3>視窗操作</h3>
+<ul>
+<li><code>:vs</code>       垂直分割</li>
+<li><code>:sp</code>       水平分割</li>
+<li><code>C</code>+<code>w</code> <code>v</code> 垂直分割</li>
+<li>
+<p><code>C</code>+<code>w</code> <code>s</code> 水平分割</p>
+</li>
+<li>
+<p><code>C</code>+<code>w</code> <code>left[right] arrow</code> 左[右]切換視窗</p>
+</li>
+<li><code>C</code>+<code>w</code> <code>up[down] arrow</code>    上[下]切換視窗</li>
+<li><code>C</code>+<code>w</code> <code>h[l]</code> 左[右]切換視窗</li>
+<li><code>C</code>+<code>w</code> <code>k[j]</code> 上[下]切換視窗</li>
+</ul>
+<h3>其他操作</h3>
+<ul>
+<li><code>u</code>: 回到上一步</li>
+<li>
+<p><code>C</code>+<code>r</code>: 回到下一步</p>
+</li>
+<li>
+<p><code>:set nu</code> 顯示行數</p>
+</li>
+<li><code>:set nonu</code> 不顯示行數</li>
+<li><code>:syntax enable</code> 語法顏色</li>
+<li>
+<p><code>:set ai</code> 自動縮行</p>
+</li>
+<li>
+<p><code>:!外部命令</code> 執行外部命令，例如 <code>:!ls</code></p>
+</li>
+<li>
+<p><code>C</code>+<code>r</code> <code>%</code> 在 insert mode 下貼上檔案路徑</p>
+</li>
+</ul>
+<h3>自定按鍵</h3>
+<ul>
+<li><code>map &lt;C-k&gt; :tabprevious &lt;CR&gt;</code> 用 <code>C</code>+<code>k</code> 映射 <code>:tabpreview</code></li>
+<li><code>map &lt;C-j&gt; :tabnext &lt;CR&gt;</code> 用 <code>C</code>+<code>j</code> 映射 <code>:tabnext</code></li>
+</ul>
+<h3>好用的 plugins</h3>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=1567">rails.vim</a>:
+Rails 套件(語法顏色，快速切換檔案... 等)</p>
+<ul>
+<li>
+<p><code>:Rcd 目錄</code> 切換目錄(從專案目錄出發)</p>
+</li>
+<li>
+<p><code>:Rmodel 檔案</code>      編輯 model 檔案</p>
+</li>
+<li>
+<p><code>:Rview 檔案</code>       編輯 view 檔案</p>
+</li>
+<li>
+<p><code>:Rcontroller 檔案</code> 編輯 controller 檔案</p>
+</li>
+</ul>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=2540">snipMate</a>: 加入程式片段</p>
+<ul>
+<li><code>Tab</code> 加入程式片段</li>
+</ul>
+<p><a href="https://github.com/kien/ctrlp.vim">ctrp</a>: 模糊搜尋</p>
+<ul>
+<li><code>C</code>+<code>p</code> 啟動模糊搜尋</li>
+</ul>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=1708">fencview.vim</a>: 自動偵測多國編碼</p>
+<ul>
+<li><code>:FencAutoDetect</code> 啟動偵測</li>
+</ul>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=1658">nerdtree.vim</a>: 檔案瀏覽器</p>
+<ul>
+<li><code>:e .</code> 瀏覽工作目錄</li>
+</ul>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=1643">supertab.vmb</a>: 補全程式碼</p>
+<ul>
+<li><code>Tab</code> 補全程式碼</li>
+</ul>
+<p>雖然 Vim 對初學者而言需要投入多一些的時間來熟悉，
+但只要上手後， 就會大幅提升你的編程效率。</p>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://tsaith.github.io/bian-ji-qi-vim.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+        var disqus_identifier = 'http://tsaith.github.io/bian-ji-qi-vim.html';
+    var disqus_url = 'http://tsaith.github.io/bian-ji-qi-vim.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://tsaith.github.io/cong-rvm-qian-yi-dao-rbenv.html" title="Previous: 從 rvm 遷移到 rbenv">從 rvm 遷移到 rbenv</a></li>
+ 
+                <li class="next_article"><a href="http://tsaith.github.io/bian-ji-qi-emacs.html" title="Next: 編輯器: Emacs">編輯器: Emacs</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-01-03T00:00:00+08:00">Jan 3, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Misc-ref">Misc</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#vim-ref">vim
+                    <span>3</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

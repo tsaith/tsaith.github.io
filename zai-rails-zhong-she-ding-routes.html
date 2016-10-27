@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
+
+<meta name="keywords" content="rails, Web, " />
+        <title>在 Rails 中設定 routes  · TH's Notes
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://tsaith.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://tsaith.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://tsaith.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://tsaith.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://tsaith.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Full Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Machine learning Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Misc.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Misc Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Signal-processing.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Signal processing Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Web.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Web Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59791323-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://tsaith.github.io/zai-rails-zhong-she-ding-routes.html"> 在 Rails 中設定 routes  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <p>在 Rails 中，當伺服器接受到 http request 時將會根據路由中的設定，
+來決定這個 request 將會送往 controller 的哪個 action 進行處理;
+這裡將介紹如何設定路由的路徑表。</p>
+<p>在 config/routes.rb 可使用 <code>root to:</code> 來設定當使用者存取網站根目錄時的伺服器將會將 request 導向哪裡;假設我們設定如下</p>
+<div class="highlight"><pre><span></span><span class="no">PostitTemplate</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">root</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;posts#index&#39;</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>接著使用 <code>bundle exec rake routes</code> 來查詢路徑表</p>
+<div class="highlight"><pre><span></span>$ bundle <span class="nb">exec</span> rake routes
+Prefix Verb URI Pattern Controller#Action
+root   GET  /   posts#index
+</pre></div>
+
+
+<p>在上面的範例中，當 http verb 為 GET 而存取路徑是 / 時，伺服器會將 request
+導向 posts controller 的 index action。</p>
+<p>倘若我們有個物件模型 Post，這時可以使用 <code>resources</code> 簡潔地來設定對這類物件的一些常用存取路徑</p>
+<div class="highlight"><pre><span></span><span class="no">PostitTemplate</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:posts</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>這時候的路徑表為</p>
+<div class="highlight"><pre><span></span>$ bundle <span class="nb">exec</span> rake routes
+   Prefix Verb   URI Pattern               Controller#Action
+    posts GET    /posts<span class="o">(</span>.:format<span class="o">)</span>          posts#index
+          POST   /posts<span class="o">(</span>.:format<span class="o">)</span>          posts#create
+ new_post GET    /posts/new<span class="o">(</span>.:format<span class="o">)</span>      posts#new
+edit_post GET    /posts/:id/edit<span class="o">(</span>.:format<span class="o">)</span> posts#edit
+     post GET    /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#show
+          PATCH  /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#update
+          PUT    /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#update
+          DELETE /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#destroy
+</pre></div>
+
+
+<p>如果我們只想使用其中幾個路徑，可以用 <code>only:</code> 來達成</p>
+<div class="highlight"><pre><span></span><span class="no">PostitTemplate</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:posts</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:new</span><span class="p">,</span> <span class="ss">:create</span><span class="o">]</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>上面只允許加入 <code>new</code> 和 <code>create</code> 兩個對應的路徑</p>
+<div class="highlight"><pre><span></span>$ bundle <span class="nb">exec</span> rake routes
+  Prefix Verb URI Pattern          Controller#Action
+   posts POST /posts<span class="o">(</span>.:format<span class="o">)</span>     posts#create
+new_post GET  /posts/new<span class="o">(</span>.:format<span class="o">)</span> posts#new
+</pre></div>
+
+
+<p>如果要排除一些路徑，則使用 <code>except:</code></p>
+<div class="highlight"><pre><span></span><span class="no">PostitTemplate</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:posts</span><span class="p">,</span> <span class="ss">except</span><span class="p">:</span> <span class="o">[</span><span class="ss">:new</span><span class="p">,</span> <span class="ss">:create</span><span class="o">]</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>這時將加入除了 <code>new</code> 和 <code>create</code> 之外的其他路徑</p>
+<div class="highlight"><pre><span></span>$ bundle <span class="nb">exec</span> rake routes
+   Prefix Verb   URI Pattern               Controller#Action
+    posts GET    /posts<span class="o">(</span>.:format<span class="o">)</span>          posts#index
+edit_post GET    /posts/:id/edit<span class="o">(</span>.:format<span class="o">)</span> posts#edit
+     post GET    /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#show
+          PATCH  /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#update
+          PUT    /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#update
+          DELETE /posts/:id<span class="o">(</span>.:format<span class="o">)</span>      posts#destroy
+</pre></div>
+
+
+<p>倘若需要多層的路徑組合，例如每個 post 下面可以 create comment，
+這時候可以寫成</p>
+<div class="highlight"><pre><span></span><span class="no">PostitTemplate</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:posts</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:create</span><span class="o">]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>這樣一來，路徑表就會新增一個 comments controller 的 create action 對應的路徑</p>
+<div class="highlight"><pre><span></span>$ bundle <span class="nb">exec</span> rake routes
+       Prefix Verb   URI Pattern                        Controller#Action
+post_comments POST   /posts/:post_id/comments<span class="o">(</span>.:format<span class="o">)</span> comments#create
+        posts GET    /posts<span class="o">(</span>.:format<span class="o">)</span>                   posts#index
+              POST   /posts<span class="o">(</span>.:format<span class="o">)</span>                   posts#create
+     new_post GET    /posts/new<span class="o">(</span>.:format<span class="o">)</span>               posts#new
+    edit_post GET    /posts/:id/edit<span class="o">(</span>.:format<span class="o">)</span>          posts#edit
+         post GET    /posts/:id<span class="o">(</span>.:format<span class="o">)</span>               posts#show
+              PATCH  /posts/:id<span class="o">(</span>.:format<span class="o">)</span>               posts#update
+              PUT    /posts/:id<span class="o">(</span>.:format<span class="o">)</span>               posts#update
+              DELETE /posts/:id<span class="o">(</span>.:format<span class="o">)</span>               posts#destroy
+</pre></div>
+
+
+<p _="%" endblockquote="endblockquote">{% blockquote Rick Cook %}
+Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to build bigger and better idiots. So far, the universe is winning.</p>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://tsaith.github.io/zai-rails-zhong-she-ding-routes.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+        var disqus_identifier = 'http://tsaith.github.io/zai-rails-zhong-she-ding-routes.html';
+    var disqus_url = 'http://tsaith.github.io/zai-rails-zhong-she-ding-routes.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://tsaith.github.io/zai-rails-zhong-she-ding-yi-dui-duo-guan-lian-xing.html" title="Previous: 在 Rails 中設定一對多關聯性">在 Rails 中設定一對多關聯性</a></li>
+ 
+                <li class="next_article"><a href="http://tsaith.github.io/zai-rails-zhong-she-ding-duo-dui-duo-guan-lian-xing.html" title="Next: 在 Rails 中設定多對多關聯性">在 Rails 中設定多對多關聯性</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2014-10-29T00:00:00+08:00">Oct 29, 2014</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Web-ref">Web</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#rails-ref">rails
+                    <span>63</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

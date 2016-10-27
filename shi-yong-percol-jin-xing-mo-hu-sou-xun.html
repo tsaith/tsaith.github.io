@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andrew Tsai" />
+        <meta name="copyright" content="Andrew Tsai" />
+
+<meta name="keywords" content="utils, Misc, " />
+        <title>使用 Percol 進行模糊搜尋  · TH's Notes
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://tsaith.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://tsaith.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://tsaith.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://tsaith.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://tsaith.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://tsaith.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://tsaith.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://tsaith.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Full Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Machine learning Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Misc.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Misc Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Signal-processing.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Signal processing Category Atom Feed" />
+        <link href="http://tsaith.github.io/feeds/Web.atom.xml" type="application/atom+xml" rel="alternate" title="TH's Notes - Web Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59791323-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://tsaith.github.io/"><span class=site-name>TH's Notes</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://tsaith.github.io">Home</a></li>
+                            <li ><a href="http://tsaith.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://tsaith.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://tsaith.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://tsaith.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://tsaith.github.io/shi-yong-percol-jin-xing-mo-hu-sou-xun.html"> 使用 Percol 進行模糊搜尋  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <p>在開發專案時，我們常常需要在眾多資料夾下搜尋某個檔案，
+可是往往卻無法記得完整的檔案名稱，或是找到檔案後，
+希望能快速地將檔案路徑貼到其他應用程式上面。
+針對以上的問題，
+網路上有篇<a href="http://blog.binchen.org/posts/how-to-do-the-file-navigation-efficiently.html">文章</a>提出了使用
+<a href="https://github.com/mooz/percol">percol</a>
+結合 shell 命令的解決方案。
+我稍微修改了一些流程，並記錄如下。</p>
+<h3>安裝 percol</h3>
+<p>因為 percol 是用 python 開發的工具，
+所以我們需要先安裝 python 環境</p>
+<div class="highlight"><pre><span></span>brew install python
+</pre></div>
+
+
+<p>接著安裝 percol</p>
+<div class="highlight"><pre><span></span>pip install percol
+</pre></div>
+
+
+<h3>設定 percol 快捷鍵</h3>
+<p>在 ~/.percol.d/rc.py 裡面定義常用的快捷鍵</p>
+<div class="highlight"><pre><span></span><span class="c1"># X / _ / X</span>
+<span class="n">percol</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">PROMPT</span>  <span class="o">=</span> <span class="s2">&quot;&lt;bold&gt;&lt;yellow&gt;X / _ / X&lt;/yellow&gt;&lt;/bold&gt; %q&quot;</span>
+
+<span class="c1"># Emacs like</span>
+<span class="n">percol</span><span class="o">.</span><span class="n">import_keymap</span><span class="p">({</span>
+    <span class="s2">&quot;C-h&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">delete_backward_char</span><span class="p">(),</span>
+    <span class="s2">&quot;C-d&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">delete_forward_char</span><span class="p">(),</span>
+    <span class="s2">&quot;C-k&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">kill_end_of_line</span><span class="p">(),</span>
+    <span class="s2">&quot;C-y&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">yank</span><span class="p">(),</span>
+    <span class="s2">&quot;C-t&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">transpose_chars</span><span class="p">(),</span>
+    <span class="s2">&quot;C-a&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">beginning_of_line</span><span class="p">(),</span>
+    <span class="s2">&quot;C-e&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">end_of_line</span><span class="p">(),</span>
+    <span class="s2">&quot;C-b&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">backward_char</span><span class="p">(),</span>
+    <span class="s2">&quot;C-f&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">forward_char</span><span class="p">(),</span>
+    <span class="s2">&quot;M-f&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">forward_word</span><span class="p">(),</span>
+    <span class="s2">&quot;M-b&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">backward_word</span><span class="p">(),</span>
+    <span class="s2">&quot;M-d&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">delete_forward_word</span><span class="p">(),</span>
+    <span class="s2">&quot;M-h&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">delete_backward_word</span><span class="p">(),</span>
+    <span class="s2">&quot;C-n&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">select_next</span><span class="p">(),</span>
+    <span class="s2">&quot;C-p&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">select_previous</span><span class="p">(),</span>
+    <span class="s2">&quot;C-v&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">select_next_page</span><span class="p">(),</span>
+    <span class="s2">&quot;M-v&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">select_previous_page</span><span class="p">(),</span>
+    <span class="s2">&quot;M-&lt;&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">select_top</span><span class="p">(),</span>
+    <span class="s2">&quot;M-&gt;&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">select_bottom</span><span class="p">(),</span>
+    <span class="s2">&quot;C-m&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">finish</span><span class="p">(),</span>
+    <span class="s2">&quot;C-j&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">finish</span><span class="p">(),</span>
+    <span class="s2">&quot;C-g&quot;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">percol</span><span class="p">:</span> <span class="n">percol</span><span class="o">.</span><span class="n">cancel</span><span class="p">(),</span>
+<span class="p">})</span>
+</pre></div>
+
+
+<h3>定義 shell 命令</h3>
+<p>在 ~/.bash_profile 裡面自定常用的命令，如下</p>
+<div class="highlight"><pre><span></span># file navigation with percol
+[ $(uname -s | grep -c CYGWIN) -eq 1 ] <span class="err">&amp;&amp;</span> OS_NAME=&quot;CYGWIN&quot; || OS_NAME=`uname -s`
+function pclip() {
+    if [ <span class="nv">$OS_NAME</span> == CYGWIN ]; then
+        putclip $@;
+    elif [ <span class="nv">$OS_NAME</span> == Darwin ]; then
+        pbcopy $@;
+    else
+        if [ -x /usr/bin/xsel ]; then
+            xsel -ib $@;
+        else
+            if [ -x /usr/bin/xclip ]; then
+                xclip -selection c $@;
+            else
+                echo &quot;Neither xsel or xclip is installed!&quot;
+            fi
+        fi
+    fi
+}
+
+function ff()
+{
+    local fullpath=$*
+    local filename=<span class="cp">${</span><span class="n">fullpath</span><span class="c1">##*/</span><span class="cp">}</span> # remove &quot;/&quot; from the beginning
+    filename=<span class="cp">${</span><span class="n">filename</span><span class="c1">##*./</span><span class="cp">}</span> # remove  &quot;.../&quot; from the beginning
+    echo file=<span class="nv">$filename</span>
+    #  only the filename without path is needed
+    # filename should be reasonable
+    local cli=`find <span class="nv">$PWD</span> -not -iwholename &#39;*/target/*&#39; -not -iwholename &#39;*.svn*&#39; -not -iwholename &#39;*.git*&#39; -not -iwholename &#39;*.sass-cache*&#39; -not -iwholename &#39;*.hg*&#39; -type f -iwholename &#39;*&#39;<span class="cp">${</span><span class="n">filename</span><span class="cp">}</span>&#39;*&#39; -print | percol`
+    echo <span class="cp">${</span><span class="n">cli</span><span class="cp">}</span>
+    echo -n <span class="cp">${</span><span class="n">cli</span><span class="cp">}</span> |pclip;
+}
+
+function h () {
+    # reverse history, pick up one line, remove new line characters and put it into clipboard
+    if [ -z &quot;$1&quot; ]; then
+        history | sed &#39;1!G;h;$!d&#39; | percol | sed -n &#39;s/^ *[0-9][0-9]* *\(.*\)$/\1/p&#39;| tr -d &#39;\n&#39; | pclip
+    else
+        history | grep &quot;$1&quot; | sed &#39;1!G;h;$!d&#39; | percol | sed -n &#39;s/^ *[0-9][0-9]* *\(.*\)$/\1/p&#39;| tr -d &#39;\n&#39; | pclip
+    fi
+}
+
+function glsf () {
+    local str=`git --no-pager log --oneline --stat $* |  percol`
+    if [[ <span class="nv">$str</span> =~ ^[[:space:]]*([a-z0-9A-Z_.\/-]*).*$ ]]; then
+        echo -n <span class="cp">${</span><span class="n">BASH_REMATCH</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="cp">}</span> | pclip;
+        echo <span class="cp">${</span><span class="n">BASH_REMATCH</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="cp">}</span>
+    fi
+}
+
+function ppgrep() {
+    if [[ $1 == &quot;&quot; ]]; then
+        PERCOL=percol
+    else
+        PERCOL=&quot;percol --query $1&quot;
+    fi
+    ps aux | eval <span class="nv">$PERCOL</span> | awk &#39;{ print $2 }&#39;
+}
+
+function ppkill() {
+    if [[ $1 =~ &quot;^-&quot; ]]; then
+        QUERY=&quot;&quot;            # options only
+    else
+        QUERY=$1            # with a query
+        [[ $# &gt; 0 ]] <span class="err">&amp;&amp;</span> shift
+    fi
+    ppgrep <span class="nv">$QUERY</span> | xargs kill $*
+}
+</pre></div>
+
+
+<p>存檔後，若不想重開 terminal 可直接執行
+<code>source ~/.bash_profile</code>
+就可以立刻使用上面定義的命令。</p>
+<h3>使用範例</h3>
+<p>在專案下執行 <code>ff</code>，可以使用片段的檔名進行搜尋，
+選擇檔案後按 <code>Return</code> 就會自動將檔名拷貝到系統的剪貼簿上。</p>
+<p><img src="https://farm9.staticflickr.com/8659/16260930815_87c4d30484_b.jpg"></p>
+<p>直接執行 <code>h</code>，可搜尋並拷貝歷史命令。
+<img src="https://farm9.staticflickr.com/8644/15641025303_2ca6346fb7_b.jpg"></p>
+<p>如果想強制離開搜尋畫面，請按 <code>Ctrl</code>+ <code>c</code>。</p>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://tsaith.github.io/shi-yong-percol-jin-xing-mo-hu-sou-xun.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+        var disqus_identifier = 'http://tsaith.github.io/shi-yong-percol-jin-xing-mo-hu-sou-xun.html';
+    var disqus_url = 'http://tsaith.github.io/shi-yong-percol-jin-xing-mo-hu-sou-xun.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://tsaith.github.io/shi-yong-procfile-he-foreman.html" title="Previous: 使用 Procfile 和 Foreman">使用 Procfile 和 Foreman</a></li>
+ 
+                <li class="next_article"><a href="http://tsaith.github.io/zai-heroku-shang-jia-she-staging-server.html" title="Next: 在 Heroku 上架設 staging server">在 Heroku 上架設 staging server</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-01-12T00:00:00+08:00">Jan 12, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Misc-ref">Misc</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#utils-ref">utils
+                    <span>10</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'th-notes';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>
