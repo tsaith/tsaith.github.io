@@ -1,6 +1,11 @@
 # macOS
 .DS_Store
 
+
+# Tmp
+public/
+resources/
+
 # Editors
 *.swp
 *.swo
