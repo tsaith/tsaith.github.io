@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Editors
+*.swp
+*.swo
+.#*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.tools/
+
+# Pelican generated output/cache
+output/
+cache/
+_nb_header.html
+
+# Notebooks
+notebooks/
+*.ipynb
