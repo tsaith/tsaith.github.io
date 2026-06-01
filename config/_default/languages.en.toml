@@ -17,7 +17,8 @@ title = "Blowfish"
  [params.author]
    name = "Tsunghua Tsai"
    email = "tsai.tsunghua@gmail.com"
-   image = "img/blowfish_logo.png"
+   image = "img/headshot.png"
+   #image = "img/blowfish_logo.png"
    imageQuality = 48
    headline = "Keep curiosity in daily life."
 #   bio = ""
